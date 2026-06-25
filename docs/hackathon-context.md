@@ -209,7 +209,7 @@ For speed and simplicity, the project should stay lean.
 ## Preferred stack
 
 * **Frontend / App:** React / Next.js + TypeScript + Tailwind
-* **Hosting:** Vercel
+* **Hosting:** (Front-End) Vercel + (Back-End) Render
 * **LLM API:** OpenRouter
 * **Data layer:** local CSV / preprocessed JSON
 * **Scoring / logic:** lightweight in-app logic or a small preprocessing script
