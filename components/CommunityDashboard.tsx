@@ -2,17 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import CommunityHero from "@/components/CommunityHero";
+import ConfidenceBadge from "@/components/ConfidenceBadge";
+import MetricCard from "@/components/MetricCard";
+import ScoreCard from "@/components/ScoreCard";
 import {
   communityMeta,
   formatNumber,
-  formatScore,
-  getPriorityLabel,
 } from "@/lib/communityData";
-import type {
-  ConfidenceLevel,
-  District,
-  GapLevel,
-} from "@/lib/communityTypes";
+import type { District } from "@/lib/communityTypes";
 import type { DistrictRecord } from "@/lib/communityGapTypes";
 import type { DistrictRecommendation } from "@/lib/communityGapTypes";
 import { fetchDistrictRecommendation } from "@/lib/recommendationClient";
@@ -26,33 +23,6 @@ const DEMO_PICKS = [
 interface CommunityDashboardProps {
   districts: District[];
   defaultDistrict: District;
-}
-
-function levelTone(level: GapLevel | ConfidenceLevel): string {
-  switch (level) {
-    case "High":
-      return "bg-emerald-400/10 text-emerald-300 ring-emerald-400/25";
-    case "Medium":
-      return "bg-amber-400/10 text-amber-300 ring-amber-400/25";
-    case "Low":
-      return "bg-sky-400/10 text-sky-300 ring-sky-400/25";
-  }
-}
-
-function LevelBadge({
-  label,
-  level,
-}: {
-  label: string;
-  level: GapLevel | ConfidenceLevel;
-}) {
-  return (
-    <span
-      className={`inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${levelTone(level)}`}
-    >
-      {label}: {level}
-    </span>
-  );
 }
 
 function Panel({
@@ -79,19 +49,6 @@ function Panel({
       ) : null}
       <div className="mt-4">{children}</div>
     </section>
-  );
-}
-
-function ScoreCard({ label, value }: { label: string; value: number }) {
-  return (
-    <div className="rounded-lg border border-white/[0.06] bg-night-900/50 p-4">
-      <p className="text-xs font-medium uppercase tracking-wider text-sand-50/45">
-        {label}
-      </p>
-      <p className="mt-2 text-2xl font-semibold tabular-nums text-sand-50">
-        {formatScore(value)}
-      </p>
-    </div>
   );
 }
 
@@ -245,8 +202,8 @@ export default function CommunityDashboard({
           </div>
         </section>
 
-        {/* District header */}
-        <div className="flex flex-wrap items-start justify-between gap-4">
+        {/* District summary */}
+        <div className="grid gap-4 lg:grid-cols-[1fr_minmax(280px,360px)]">
           <div>
             <p className="text-xs font-medium uppercase tracking-wider text-sand-50/45">
               Selected district
@@ -260,31 +217,46 @@ export default function CommunityDashboard({
                 ? ` · Rank ${selectedDistrict.rank}`
                 : ""}
             </p>
-            <p className="mt-2 text-sm font-medium text-amber-300/90">
-              {getPriorityLabel(selectedDistrict)}
-            </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <LevelBadge
-              label="Gap level"
-              level={classification.gap_level}
-            />
-            <LevelBadge
-              label="Confidence"
-              level={classification.confidence_level}
-            />
-          </div>
+          <ConfidenceBadge district={selectedDistrict} />
         </div>
 
-        {/* Main dashboard scores */}
+        {/* Community metrics */}
+        <Panel
+          title="Community metrics"
+          description="Demand, mobility, and experience signals from the pipeline."
+        >
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            <MetricCard
+              label="Population estimate"
+              value={community_metrics.population_estimate}
+              format="count"
+            />
+            <MetricCard
+              label="Service demand index"
+              value={community_metrics.service_demand_index}
+            />
+            <MetricCard
+              label="Mobility score"
+              value={community_metrics.mobility_score}
+            />
+            <MetricCard
+              label="Resident experience"
+              value={community_metrics.resident_experience_score}
+            />
+          </div>
+        </Panel>
+
+        {/* Pipeline scores */}
         <Panel
           title="Gap & confidence scores"
           description="All values from the deterministic pipeline — not recalculated in the browser."
         >
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             <ScoreCard
               label="Community gap score"
               value={scores.community_gap_score}
+              emphasized
             />
             <ScoreCard
               label="Community need"
@@ -295,67 +267,19 @@ export default function CommunityDashboard({
               value={scores.amenity_shortage_score}
             />
             <ScoreCard
-              label="Confidence score"
-              value={scores.confidence_score}
-            />
-          </div>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <ScoreCard
-              label="Amenity adequacy"
-              value={scores.amenity_adequacy_score}
-            />
-            <ScoreCard
-              label="Market pressure"
-              value={scores.market_pressure_score}
-            />
-            <ScoreCard
               label="Intervention feasibility"
               value={scores.intervention_feasibility_score}
             />
             <ScoreCard
-              label="Data completeness"
-              value={scores.data_completeness_score}
+              label="Confidence score"
+              value={scores.confidence_score}
             />
-          </div>
-          <div className="mt-4 rounded-lg border border-white/[0.06] bg-night-900/50 p-4">
-            <p className="text-xs font-medium uppercase tracking-wider text-sand-50/45">
-              Recommended intervention
-            </p>
-            <p className="mt-1 text-sm font-semibold text-sand-50">
-              {classification.recommended_intervention_category}
-            </p>
-            <p className="mt-1 text-sm text-sand-50/55">
-              Priority: {classification.recommendation_priority}
-            </p>
           </div>
         </Panel>
 
-        {/* Community metrics + OSM amenities */}
-        <div className="grid gap-4 lg:grid-cols-2">
-          <Panel title="Community metrics">
-            <MetricRow
-              label="Population estimate"
-              value={formatNumber(community_metrics.population_estimate)}
-            />
-            <MetricRow
-              label="Occupancy rate"
-              value={String(community_metrics.occupancy_rate)}
-            />
-            <MetricRow
-              label="Service demand index"
-              value={formatScore(community_metrics.service_demand_index)}
-            />
-            <MetricRow
-              label="Mobility score"
-              value={formatScore(community_metrics.mobility_score)}
-            />
-            <MetricRow
-              label="Resident experience"
-              value={formatScore(community_metrics.resident_experience_score)}
-            />
-          </Panel>
-
-          <Panel title="OSM amenity coverage">
+        {/* OSM amenities */}
+        <Panel title="OSM amenity coverage">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <MetricRow
               label="Education"
               value={formatNumber(amenity_counts.education)}
@@ -388,8 +312,8 @@ export default function CommunityDashboard({
               label="Category diversity"
               value={formatNumber(amenity_counts.amenity_diversity_count)}
             />
-          </Panel>
-        </div>
+          </div>
+        </Panel>
 
         {/* AI recommendation */}
         <Panel
@@ -398,10 +322,9 @@ export default function CommunityDashboard({
         >
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap gap-2">
-              <LevelBadge
-                label="Pipeline confidence"
-                level={classification.confidence_level}
-              />
+              <span className="inline-flex items-center rounded-full bg-amber-400/10 px-2.5 py-1 text-xs font-semibold text-amber-300 ring-1 ring-inset ring-amber-400/25">
+                Pipeline confidence: {classification.confidence_level}
+              </span>
               {recommendationSource ? (
                 <span className="inline-flex items-center rounded-full bg-night-900 px-2.5 py-1 text-xs font-medium text-sand-50/70 ring-1 ring-inset ring-white/10">
                   Source: {recommendationSource}
