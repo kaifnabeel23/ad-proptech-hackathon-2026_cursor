@@ -12,7 +12,7 @@ const TRACKS: Record<Track, { label: string; classes: string }> = {
   },
   communities: {
     label: "Future Communities",
-    classes: "bg-amber-400/10 text-amber-300 ring-amber-400/30",
+    classes: "bg-amber-50 text-amber-700 ring-amber-200",
   },
   decision: {
     label: "Decision Intelligence",
