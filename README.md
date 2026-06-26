@@ -14,7 +14,7 @@ A hackathon prototype that identifies underserved Abu Dhabi districts by compari
 |-------|---------|
 | **`community_gap/`** | Deterministic Python pipeline — load, aggregate, score, evidence, export |
 | **`processed/`** | Frontend-ready JSON + debug CSV (regenerate with build script) |
-| **`app/` + `components/`** | Next.js dashboard (template UI — wire to `processed/`) |
+| **`app/` + `components/`** | Next.js dashboard — reads `processed/community_gap_outputs.json` |
 | **`docs/`** | Methodology, handoff, demo districts, Cursor build log |
 
 **Design rule:** scores and evidence come from the data pipeline. The UI and LLM only display and explain them.

@@ -1,4 +1,4 @@
-// The four challenge tracks. Set yours once in app/page.tsx.
+// Challenge track badge — Future Communities is used in CommunityHero.
 export type Track = "land" | "investment" | "communities" | "decision";
 
 const TRACKS: Record<Track, { label: string; classes: string }> = {
