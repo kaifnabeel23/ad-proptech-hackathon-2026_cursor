@@ -64,6 +64,33 @@ LISTING_CONTEXT_COLUMNS = LISTING_COUNT_COLUMNS + [
     "active_listing_share",
 ]
 
+# Supporting context only — feasibility / evidence, not core gap drivers.
+PARCEL_COUNT_COLUMNS = [
+    "parcel_count",
+    "vacant_or_available_parcel_count",
+    "mixed_use_or_community_parcel_count",
+]
+
+PARCEL_CONTEXT_COLUMNS = PARCEL_COUNT_COLUMNS + [
+    "avg_parcel_size_sqm",
+    "avg_infrastructure_score",
+    "avg_potential_score",
+]
+
+# Parcel statuses treated as intervention-ready when current_status is present.
+VACANT_OR_AVAILABLE_STATUSES = frozenset({"vacant", "under_development", "available"})
+
+# Land uses counted toward community/mixed-use intervention capacity.
+MIXED_OR_COMMUNITY_LAND_USES = frozenset({"mixed_use", "community"})
+
+# Column name fallbacks when starter-kit schemas vary slightly.
+_SIZE_COLUMNS = ("parcel_size_sqm", "size_sqm", "parcel_size")
+_INFRASTRUCTURE_COLUMNS = ("infrastructure_score",)
+_POTENTIAL_COLUMNS = ("development_potential_score", "development_potential", "potential_score")
+_STATUS_COLUMNS = ("current_status", "status", "parcel_status")
+_LAND_USE_COLUMNS = ("land_use", "zoning", "zone_use")
+_ID_COLUMNS = ("parcel_id",)
+
 def build_amenity_counts(osm_amenities: pd.DataFrame) -> pd.DataFrame:
     """
     Count OSM amenities per district and pivot to one row per district.
@@ -211,6 +238,101 @@ def add_listing_context(core_df: pd.DataFrame, listings_df: pd.DataFrame) -> pd.
     return merged
 
 
+def _first_present_column(df: pd.DataFrame, candidates: tuple[str, ...]) -> str | None:
+    """Return the first candidate column name that exists in *df*."""
+    for col in candidates:
+        if col in df.columns:
+            return col
+    return None
+
+
+def build_parcel_context(parcels: pd.DataFrame) -> pd.DataFrame:
+    """
+    Build district-level parcel / intervention-feasibility features.
+
+    Uses whichever of the expected columns are present in *parcels*; missing
+    columns are skipped rather than raising errors.
+
+    Known starter-kit schema::
+
+        parcel_id, district, zone, land_use, parcel_size_sqm, current_status,
+        infrastructure_score, development_potential_score, estimated_value_aed,
+        recommended_use
+
+    Returns one row per district. Supporting context only.
+    """
+    id_col = _first_present_column(parcels, _ID_COLUMNS)
+    status_col = _first_present_column(parcels, _STATUS_COLUMNS)
+    land_use_col = _first_present_column(parcels, _LAND_USE_COLUMNS)
+    size_col = _first_present_column(parcels, _SIZE_COLUMNS)
+    infra_col = _first_present_column(parcels, _INFRASTRUCTURE_COLUMNS)
+    potential_col = _first_present_column(parcels, _POTENTIAL_COLUMNS)
+
+    grouped = parcels.groupby("district", observed=True)
+
+    if id_col:
+        context = grouped[id_col].count().to_frame("parcel_count")
+    else:
+        context = grouped.size().to_frame("parcel_count")
+
+    if status_col:
+        vacant_counts = (
+            parcels.groupby("district", observed=True)[status_col]
+            .apply(lambda s: s.isin(VACANT_OR_AVAILABLE_STATUSES).sum())
+            .rename("vacant_or_available_parcel_count")
+        )
+        context = context.join(vacant_counts, how="left")
+
+    if land_use_col:
+        mixed_counts = (
+            parcels.groupby("district", observed=True)[land_use_col]
+            .apply(lambda s: s.isin(MIXED_OR_COMMUNITY_LAND_USES).sum())
+            .rename("mixed_use_or_community_parcel_count")
+        )
+        context = context.join(mixed_counts, how="left")
+
+    if size_col:
+        avg_size = grouped[size_col].mean().rename("avg_parcel_size_sqm")
+        context = context.join(avg_size, how="left")
+
+    if infra_col:
+        avg_infra = grouped[infra_col].mean().rename("avg_infrastructure_score")
+        context = context.join(avg_infra, how="left")
+
+    if potential_col:
+        avg_potential = grouped[potential_col].mean().rename("avg_potential_score")
+        context = context.join(avg_potential, how="left")
+
+    context = context.reset_index()
+
+    for col in PARCEL_COUNT_COLUMNS:
+        if col in context.columns:
+            context[col] = context[col].fillna(0).astype(int)
+
+    for col in ("avg_parcel_size_sqm", "avg_infrastructure_score", "avg_potential_score"):
+        if col in context.columns:
+            context[col] = context[col].round(2)
+
+    return context
+
+
+def add_parcel_context(core_df: pd.DataFrame, parcels_df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Merge district parcel context into the core community dataset.
+
+    Parcel count columns are filled with 0 when a district has no parcel rows.
+    Average score/size columns are left as NA when unavailable.
+    """
+    parcel_context = build_parcel_context(parcels_df)
+    merged = core_df.merge(parcel_context, on="district", how="left")
+
+    for col in PARCEL_COUNT_COLUMNS:
+        if col in merged.columns:
+            merged[col] = merged[col].fillna(0).astype(int)
+
+    return merged
+
+
 def count_amenities_by_district(amenities: pd.DataFrame) -> pd.DataFrame:
     """Alias for :func:`build_amenity_counts` (backward compatibility)."""
     return build_amenity_counts(amenities)
@@ -251,13 +373,13 @@ def build_feasibility_features(
     districts: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Build supporting intervention-feasibility features from parcels + infrastructure.
+    Build supporting intervention-feasibility features from parcels.
 
-    Should produce vacant_parcel_count, avg_development_potential, etc.
+    Deprecated in favour of :func:`build_parcel_context`.
     """
-    raise NotImplementedError(
-        "TODO: build_feasibility_features — parcel availability by district"
-    )
+    if parcels is None:
+        raise ValueError("parcels dataframe is required for feasibility features")
+    return build_parcel_context(parcels)
 
 
 def build_district_feature_table(bundle: DatasetBundle) -> pd.DataFrame:
