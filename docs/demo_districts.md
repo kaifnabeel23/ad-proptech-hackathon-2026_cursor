@@ -10,53 +10,53 @@ Recommended districts for the 2–3 minute hackathon demo video.
 ## 1. High urgency (main walkthrough)
 
 **District:** Al Ghadeer
-**Gap score:** 74
+**Gap score:** 70
 **Gap level:** Medium
 **Confidence level:** High
 **Recommended intervention:** Education capacity
 
 **Top evidence bullets:**
-- Service demand is above the city median (78 vs 60).
-- Mobility score is below the city median (45 vs 76).
-- Resident experience is weaker than the city median (69 vs 90).
+- Service demand is above the city median (80 vs 63).
+- Mobility score is below the city median (56 vs 72).
+- Resident experience is weaker than the city median (75 vs 87).
 - Education amenity coverage is below the city median (0 OSM amenities vs median 10).
 
 **Why it is useful in the demo:**
-Use Al Ghadeer as the main walkthrough: gap score 74 with High confidence, clear OSM-backed evidence, and a concrete recommendation (Education capacity). Shows the full need → shortage → evidence → confidence story.
+Use Al Ghadeer as the main walkthrough: gap score 70 with High confidence, clear OSM-backed evidence, and a concrete recommendation (Education capacity). Shows the full need → shortage → evidence → confidence story.
 
 ## 2. Mixed evidence (confidence / uncertainty)
 
 **District:** Al Raha Beach
-**Gap score:** 57
+**Gap score:** 53
 **Gap level:** Medium
 **Confidence level:** Medium
 **Recommended intervention:** Mobility improvement
 
 **Top evidence bullets:**
-- Mobility score is below the city median (75 vs 76).
 - Education amenity coverage is below the city median (0 OSM amenities vs median 10).
 - Healthcare amenity coverage is below the city median (5 OSM amenities vs median 10).
 - Mobility-related amenities are limited compared with other districts (10 OSM vs median 19).
+- Parcel/infrastructure context suggests the intervention may be feasible (15 vacant or developable parcels).
 
 **Why it is useful in the demo:**
-Use Al Raha Beach to demonstrate honest uncertainty: gap score 57 with Medium confidence and mixed amenity signals. Explains why the confidence badge matters and when decision-makers should validate before acting.
+Use Al Raha Beach to demonstrate honest uncertainty: gap score 53 with Medium confidence and mixed amenity signals. Explains why the confidence badge matters and when decision-makers should validate before acting.
 
 ## 3. Low urgency (monitor / balanced reference)
 
 **District:** Al Khalidiyah
-**Gap score:** 30
+**Gap score:** 29
 **Gap level:** Low
 **Confidence level:** Low
 **Recommended intervention:** Monitor / no urgent intervention
 
 **Top evidence bullets:**
-- Service demand is above the city median (61 vs 60).
 - Parcel/infrastructure context suggests the intervention may be feasible (18 vacant or developable parcels).
 - Amenity coverage is mixed, so the recommendation should be treated cautiously.
 - District has 275 mapped OSM amenities across six categories.
+- Community need score is 45 and amenity shortage score is 2.
 
 **Why it is useful in the demo:**
-Use Al Khalidiyah as the balanced reference: low gap score 30 (Low confidence). Shows the copilot does not over-flag every district and when to monitor rather than intervene.
+Use Al Khalidiyah as the balanced reference: low gap score 29 (Low confidence). Shows the copilot does not over-flag every district and when to monitor rather than intervene.
 
 ---
 

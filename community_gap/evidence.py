@@ -374,7 +374,7 @@ def _build_bullet_candidates(row: pd.Series) -> list[tuple[int, str]]:
         population = row.get("population_estimate")
         if not pd.isna(population):
             candidates.append(
-                (13, f"Estimated population in this community record: {int(population):,}.")
+                (13, f"Estimated district population: {int(population):,}.")
             )
 
     return candidates

@@ -169,19 +169,74 @@ def _percentile_rank(series: pd.Series) -> pd.Series:
     return (series.rank(pct=True) * 100).round(2)
 
 
+def _population_weighted_mean(group: pd.DataFrame, value_col: str, weight_col: str) -> float:
+    """Population-weighted mean when weights are positive; otherwise simple mean."""
+    values = group[value_col]
+    weights = group[weight_col]
+    valid = values.notna() & weights.notna() & (weights > 0)
+    if valid.any() and weights.loc[valid].sum() > 0:
+        return float((values.loc[valid] * weights.loc[valid]).sum() / weights.loc[valid].sum())
+    return float(values.mean()) if values.notna().any() else float("nan")
+
+
+def _mode_or_first_non_null(series: pd.Series) -> object:
+    """Return the most common non-null value, or the first non-null if mode is unavailable."""
+    non_null = series.dropna()
+    if non_null.empty:
+        return pd.NA
+    mode = non_null.mode()
+    if not mode.empty:
+        return mode.iloc[0]
+    return non_null.iloc[0]
+
+
+def aggregate_community_features(communities: pd.DataFrame) -> pd.DataFrame:
+    """
+    Roll community rows up to district level.
+
+    Returns one row per district with aggregated community metrics.
+    """
+    if "district" not in communities.columns:
+        raise ValueError("communities dataframe must include a 'district' column")
+
+    grouped = communities.groupby("district", observed=True)
+
+    aggregated = grouped.agg(
+        population_estimate=("population_estimate", "sum"),
+        occupancy_rate=("occupancy_rate", "mean"),
+        mobility_score=("mobility_score", "mean"),
+        resident_experience_score=("resident_experience_score", "mean"),
+        community_record_count=("district", "size"),
+    ).reset_index()
+
+    demand_weighted = grouped.apply(
+        lambda g: _population_weighted_mean(g, "service_demand_index", "population_estimate"),
+        include_groups=False,
+    )
+    aggregated["service_demand_index"] = aggregated["district"].map(demand_weighted).round(2)
+
+    if "optimization_opportunity" in communities.columns:
+        opportunity = grouped["optimization_opportunity"].apply(_mode_or_first_non_null)
+        aggregated["optimization_opportunity"] = aggregated["district"].map(opportunity)
+
+    return aggregated
+
+
 def build_core_dataset(
     communities: pd.DataFrame,
     districts: pd.DataFrame,
     osm_amenities: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Merge communities with district metadata and amenity counts.
+    Merge aggregated community metrics with district metadata and amenity counts.
 
-    Returns one row per community record with city median and percentile columns.
+    Returns one row per district with city median and percentile columns computed
+    across district rows (not raw community records).
     """
     amenity_counts = build_amenity_counts(osm_amenities)
+    communities_by_district = aggregate_community_features(communities)
 
-    df = communities.merge(districts, on="district", how="left")
+    df = communities_by_district.merge(districts, on="district", how="left")
     df = df.merge(amenity_counts, on="district", how="left")
 
     for col in AMENITY_COUNT_COLUMNS:
@@ -189,7 +244,7 @@ def build_core_dataset(
             df[col] = df[col].fillna(0).astype(int)
 
     for median_col, source_col in CITY_MEDIAN_COMMUNITY_COLUMNS.items():
-        df[median_col] = communities[source_col].median()
+        df[median_col] = df[source_col].median()
 
     for median_col, source_col in CITY_MEDIAN_AMENITY_COLUMNS.items():
         df[median_col] = amenity_counts[source_col].median()
@@ -544,7 +599,7 @@ def build_full_feature_dataset(data: dict[str, pd.DataFrame]) -> pd.DataFrame:
     Returns
     -------
     pd.DataFrame
-        One row per community record with core, amenity, and supporting context
+        One row per district with core, amenity, and supporting context
         columns merged on ``district``.
     """
     communities = _require_dataframe(data, _COMMUNITIES_KEYS, "communities")
@@ -571,21 +626,6 @@ def build_full_feature_dataset(data: dict[str, pd.DataFrame]) -> pd.DataFrame:
 def count_amenities_by_district(amenities: pd.DataFrame) -> pd.DataFrame:
     """Alias for :func:`build_amenity_counts` (backward compatibility)."""
     return build_amenity_counts(amenities)
-
-
-def aggregate_community_features(communities: pd.DataFrame) -> pd.DataFrame:
-    """
-    Roll community rows up to district level.
-
-    Expected outputs per district:
-      - population_estimate (sum)
-      - occupancy_rate, mobility_score, resident_experience_score (mean)
-      - service_demand_index (population-weighted mean)
-      - community_count, top_optimization_opportunity
-    """
-    raise NotImplementedError(
-        "TODO: aggregate_community_features — roll up sample_communities.csv by district"
-    )
 
 
 def build_market_features(
@@ -623,7 +663,7 @@ def build_district_feature_table(bundle: DatasetBundle) -> pd.DataFrame:
 
     This is the main input to :mod:`community_gap.scoring`.
 
-    Returns one row per community record with all feature columns.
+    Returns one row per district with all feature columns.
     """
     data = {
         "districts": bundle.districts,
@@ -642,8 +682,8 @@ def build_district_feature_table(bundle: DatasetBundle) -> pd.DataFrame:
 def _sample_display_columns(df: pd.DataFrame) -> list[str]:
     """Pick readable columns for CLI sample output."""
     preferred = [
-        "community_id",
         "district",
+        "community_record_count",
         "service_demand_index",
         "mobility_score",
         "total_amenities",
