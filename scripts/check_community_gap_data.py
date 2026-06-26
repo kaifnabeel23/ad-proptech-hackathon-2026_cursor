@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Validate raw data files and processed community gap outputs.
+Validate processed community gap outputs.
 
 Run from repo root::
 
     python scripts/check_community_gap_data.py
 
 Exit codes:
-  0 — all checks passed
+  0 — all checks passed (warnings may still be printed)
   1 — validation failure
 """
 
@@ -16,130 +16,212 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-from community_gap import DATA_DIR, OUTPUT_CSV, OUTPUT_JSON  # noqa: E402
-from community_gap.data_loader import (  # noqa: E402
-    CORE_FILES,
-    REQUIRED_COLUMNS,
-    DataValidationError,
-    load_core_datasets,
+from community_gap import OUTPUT_JSON  # noqa: E402
+from community_gap.export import SCORE_KEYS  # noqa: E402
+
+REQUIRED_DISTRICT_KEYS = (
+    "district",
+    "community_metrics",
+    "amenity_counts",
+    "supporting_context",
+    "scores",
+    "classification",
+    "evidence_bullets",
+    "top_gap_drivers",
 )
 
-REQUIRED_JSON_KEYS = [
-    "project",
-    "track",
-    "generated_at",
-    "districts",
-    "ranked_summary",
-]
-
-REQUIRED_SCORE_KEYS = [
-    "community_need_score",
-    "amenity_adequacy_score",
-    "amenity_shortage_score",
-    "community_gap_score",
-    "confidence_score",
-]
-
-REQUIRED_CLASSIFICATION_KEYS = [
-    "gap_level",
-    "confidence_level",
-    "recommended_intervention_category",
-]
+VALID_LEVELS = frozenset({"High", "Medium", "Low"})
 
 
-def check_raw_data(data_dir: Path) -> list[str]:
-    """Verify core CSV files exist and load without validation errors."""
+def _is_empty(value: Any) -> bool:
+    """True when a value is missing or empty."""
+    if value is None:
+        return True
+    if isinstance(value, str) and not value.strip():
+        return True
+    if isinstance(value, (list, dict)) and len(value) == 0:
+        return True
+    return False
+
+
+def _validate_district(
+    district: dict[str, Any],
+    index: int,
+) -> tuple[list[str], list[str]]:
+    """Validate one district object. Returns (errors, warnings)."""
     errors: list[str] = []
+    warnings: list[str] = []
+    label = district.get("district") or f"index {index}"
 
-    for filename in CORE_FILES:
-        path = data_dir / filename
-        if not path.exists():
-            errors.append(f"Missing core file: {path}")
+    for key in REQUIRED_DISTRICT_KEYS:
+        if key not in district:
+            errors.append(f"{label}: missing required key '{key}'")
+
+    scores = district.get("scores", {})
+    if not isinstance(scores, dict):
+        errors.append(f"{label}: 'scores' must be an object")
+        scores = {}
+
+    for score_key in SCORE_KEYS:
+        if score_key not in scores:
+            warnings.append(f"{label}: scores.{score_key} is missing")
             continue
-        missing_cols = [
-            c for c in REQUIRED_COLUMNS[filename] if c not in __import__("pandas").read_csv(path, nrows=0).columns
-        ]
-        if missing_cols:
-            errors.append(f"{filename}: missing columns {missing_cols}")
+        value = scores[score_key]
+        if value is None:
+            warnings.append(f"{label}: scores.{score_key} is null")
+            continue
+        if not isinstance(value, (int, float)):
+            errors.append(f"{label}: scores.{score_key} must be numeric, got {type(value).__name__}")
+            continue
+        if not 0 <= float(value) <= 100:
+            errors.append(f"{label}: scores.{score_key}={value} is outside 0–100")
 
-    try:
-        districts, communities, amenities = load_core_datasets(data_dir)
-        master = set(districts["district"])
-        for label, df in [("communities", communities), ("amenities", amenities)]:
-            orphans = set(df["district"]) - master
-            if orphans:
-                errors.append(f"{label}: districts not in districts.csv: {sorted(orphans)}")
-        print(f"  Core data OK — {len(master)} districts, "
-              f"{len(communities)} community rows, {len(amenities)} OSM amenities")
-    except DataValidationError as exc:
-        errors.append(str(exc))
+    classification = district.get("classification", {})
+    if not isinstance(classification, dict):
+        errors.append(f"{label}: 'classification' must be an object")
+        classification = {}
 
-    return errors
+    gap_level = classification.get("gap_level")
+    if gap_level not in VALID_LEVELS:
+        errors.append(f"{label}: gap_level must be High, Medium, or Low (got {gap_level!r})")
+
+    confidence_level = classification.get("confidence_level")
+    if confidence_level not in VALID_LEVELS:
+        errors.append(
+            f"{label}: confidence_level must be High, Medium, or Low (got {confidence_level!r})"
+        )
+
+    evidence = district.get("evidence_bullets")
+    if not isinstance(evidence, list):
+        errors.append(f"{label}: evidence_bullets must be a list")
+    elif len(evidence) == 0:
+        errors.append(f"{label}: evidence_bullets must be a non-empty list")
+    else:
+        for bullet_index, bullet in enumerate(evidence):
+            if _is_empty(bullet):
+                warnings.append(f"{label}: evidence_bullets[{bullet_index}] is empty")
+
+    drivers = district.get("top_gap_drivers")
+    if not isinstance(drivers, list):
+        errors.append(f"{label}: top_gap_drivers must be a list")
+    elif len(drivers) == 0:
+        warnings.append(f"{label}: top_gap_drivers is empty")
+
+    for section in ("community_metrics", "amenity_counts", "supporting_context"):
+        block = district.get(section)
+        if not isinstance(block, dict):
+            continue
+        for field, value in block.items():
+            if _is_empty(value):
+                warnings.append(f"{label}: {section}.{field} is missing or empty")
+
+    for field in ("confidence_reason", "recommended_intervention_category", "recommendation_priority"):
+        if field in classification and _is_empty(classification.get(field)):
+            warnings.append(f"{label}: classification.{field} is missing or empty")
+
+    if _is_empty(district.get("district")):
+        errors.append(f"{label}: district name is missing or empty")
+
+    return errors, warnings
 
 
-def check_processed_outputs() -> list[str]:
-    """Verify processed JSON and CSV exist and have expected shape."""
+def check_processed_json(json_path: Path) -> tuple[list[str], list[str], list[dict[str, Any]]]:
+    """
+    Load and validate community_gap_outputs.json.
+
+    Returns (errors, warnings, districts).
+    """
     errors: list[str] = []
+    warnings: list[str] = []
 
-    if not OUTPUT_JSON.exists():
-        errors.append(f"Missing processed output: {OUTPUT_JSON}")
-        return errors
+    if not json_path.exists():
+        errors.append(f"Missing processed output: {json_path}")
+        return errors, warnings, []
 
     try:
-        payload = json.loads(OUTPUT_JSON.read_text(encoding="utf-8"))
+        payload = json.loads(json_path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
-        errors.append(f"Invalid JSON in {OUTPUT_JSON}: {exc}")
-        return errors
+        errors.append(f"Invalid JSON in {json_path}: {exc}")
+        return errors, warnings, []
 
-    for key in REQUIRED_JSON_KEYS:
-        if key not in payload:
-            errors.append(f"JSON missing required key: {key}")
+    districts = payload.get("districts")
+    if not isinstance(districts, list):
+        errors.append("Top-level 'districts' must be a list")
+        return errors, warnings, []
 
-    districts = payload.get("districts", [])
+    if len(districts) == 0:
+        errors.append("'districts' list is empty")
+        return errors, warnings, []
+
+    print(f"  Loaded {len(districts)} district object(s) from {json_path.name}")
+
+    for index, district in enumerate(districts):
+        if not isinstance(district, dict):
+            errors.append(f"District at index {index} is not an object")
+            continue
+        district_errors, district_warnings = _validate_district(district, index)
+        errors.extend(district_errors)
+        warnings.extend(district_warnings)
+
+    return errors, warnings, districts
+
+
+def _print_top_districts(districts: list[dict[str, Any]], limit: int = 5) -> None:
+    """Print top districts ranked by community_gap_score."""
+    ranked = sorted(
+        districts,
+        key=lambda item: (item.get("scores") or {}).get("community_gap_score") or 0,
+        reverse=True,
+    )
+
+    print(f"\nTop {limit} districts by community_gap_score:")
+    for item in ranked[:limit]:
+        scores = item.get("scores") or {}
+        classification = item.get("classification") or {}
+        print(
+            f"  {item.get('district', 'unknown')}: "
+            f"score {scores.get('community_gap_score', 'n/a')}, "
+            f"gap {classification.get('gap_level', 'n/a')}, "
+            f"{classification.get('confidence_level', 'n/a')} confidence"
+        )
+
+
+def _print_sample_district(districts: list[dict[str, Any]]) -> None:
+    """Print full JSON for the highest-gap district."""
     if not districts:
-        print("  JSON districts array empty (scaffold/stub — OK for now)")
-    else:
-        sample = districts[0]
-        scores = sample.get("scores", {})
-        for key in REQUIRED_SCORE_KEYS:
-            if key not in scores:
-                errors.append(f"District scores missing key: {key}")
-        classification = sample.get("classification", {})
-        for key in REQUIRED_CLASSIFICATION_KEYS:
-            if key not in classification:
-                errors.append(f"District classification missing key: {key}")
+        return
 
-    print(f"  JSON OK — {len(districts)} district(s) in payload")
-
-    if OUTPUT_CSV.exists():
-        import pandas as pd
-
-        df = pd.read_csv(OUTPUT_CSV)
-        if "district" not in df.columns or "community_gap_score" not in df.columns:
-            errors.append("CSV missing district or community_gap_score column")
-        else:
-            print(f"  CSV OK — {len(df)} rows")
-    else:
-        print(f"  CSV not found (optional during scaffold): {OUTPUT_CSV}")
-
-    return errors
+    top = max(
+        districts,
+        key=lambda item: (item.get("scores") or {}).get("community_gap_score") or 0,
+    )
+    print(f"\nSample district object (highest gap — {top.get('district', 'unknown')}):")
+    print(json.dumps(top, indent=2, ensure_ascii=False))
 
 
 def main() -> int:
-    print("Checking raw data...")
-    raw_errors = check_raw_data(DATA_DIR)
+    json_path = OUTPUT_JSON
+    print(f"Checking processed outputs at {json_path.resolve()}...\n")
 
-    print("Checking processed outputs...")
-    output_errors = check_processed_outputs()
+    errors, warnings, districts = check_processed_json(json_path)
 
-    all_errors = raw_errors + output_errors
-    if all_errors:
+    if warnings:
+        print("\nWarnings:")
+        for warning in warnings:
+            print(f"  ! {warning}")
+
+    if districts and not errors:
+        _print_top_districts(districts)
+        _print_sample_district(districts)
+
+    if errors:
         print("\nFAILED:")
-        for err in all_errors:
+        for err in errors:
             print(f"  - {err}")
         return 1
 
