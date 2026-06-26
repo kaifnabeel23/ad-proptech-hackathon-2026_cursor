@@ -1,20 +1,18 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import CommunityHero from "@/components/CommunityHero";
 import ConfidenceBadge from "@/components/ConfidenceBadge";
 import AmenityBreakdown from "@/components/AmenityBreakdown";
 import EvidencePanel from "@/components/EvidencePanel";
 import MetricCard from "@/components/MetricCard";
+import RecommendationPanel from "@/components/RecommendationPanel";
 import SupportingContext from "@/components/SupportingContext";
 import ScoreCard from "@/components/ScoreCard";
 import {
   communityMeta,
 } from "@/lib/communityData";
 import type { District } from "@/lib/communityTypes";
-import type { DistrictRecord } from "@/lib/communityGapTypes";
-import type { DistrictRecommendation } from "@/lib/communityGapTypes";
-import { fetchDistrictRecommendation } from "@/lib/recommendationClient";
 
 const DEMO_PICKS = [
   { name: "Al Ghadeer", hint: "Top priority" },
@@ -54,37 +52,11 @@ function Panel({
   );
 }
 
-function RecommendationField({
-  label,
-  value,
-}: {
-  label: string;
-  value: string;
-}) {
-  return (
-    <div>
-      <p className="text-xs font-medium uppercase tracking-wider text-sand-50/45">
-        {label}
-      </p>
-      <p className="mt-1.5 text-sm leading-relaxed text-sand-50/85">{value}</p>
-    </div>
-  );
-}
-
 export default function CommunityDashboard({
   districts,
   defaultDistrict,
 }: CommunityDashboardProps) {
   const [selectedName, setSelectedName] = useState(defaultDistrict.district);
-  const [recommendation, setRecommendation] =
-    useState<DistrictRecommendation | null>(null);
-  const [recommendationSource, setRecommendationSource] = useState<
-    "llm" | "fallback" | null
-  >(null);
-  const [loadingRecommendation, setLoadingRecommendation] = useState(false);
-  const [recommendationError, setRecommendationError] = useState<string | null>(
-    null
-  );
 
   const sortedDistricts = useMemo(() => {
     return [...districts].sort((a, b) => {
@@ -100,31 +72,6 @@ export default function CommunityDashboard({
       districts.find((d) => d.district === selectedName) ?? defaultDistrict,
     [districts, selectedName, defaultDistrict]
   );
-
-  const loadRecommendation = useCallback(async (district: District) => {
-    setLoadingRecommendation(true);
-    setRecommendationError(null);
-
-    try {
-      const result = await fetchDistrictRecommendation(
-        district as DistrictRecord
-      );
-      setRecommendation(result.recommendation);
-      setRecommendationSource(result.source);
-    } catch (err) {
-      setRecommendation(null);
-      setRecommendationSource(null);
-      setRecommendationError(
-        err instanceof Error ? err.message : "Failed to load recommendation."
-      );
-    } finally {
-      setLoadingRecommendation(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    loadRecommendation(selectedDistrict);
-  }, [selectedDistrict, loadRecommendation]);
 
   const { community_metrics, amenity_counts, supporting_context, scores, classification } =
     selectedDistrict;
@@ -266,69 +213,10 @@ export default function CommunityDashboard({
 
         <AmenityBreakdown amenity_counts={amenity_counts} />
 
-        {/* AI recommendation */}
-        <Panel
-          title="AI recommendation"
-          description="Planner-style guidance from POST /api/recommendation, shown alongside pipeline evidence."
-        >
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-            <div className="flex flex-wrap gap-2">
-              <span className="inline-flex items-center rounded-full bg-amber-400/10 px-2.5 py-1 text-xs font-semibold text-amber-300 ring-1 ring-inset ring-amber-400/25">
-                Pipeline confidence: {classification.confidence_level}
-              </span>
-              {recommendationSource ? (
-                <span className="inline-flex items-center rounded-full bg-night-900 px-2.5 py-1 text-xs font-medium text-sand-50/70 ring-1 ring-inset ring-white/10">
-                  Source: {recommendationSource}
-                </span>
-              ) : null}
-            </div>
-            <button
-              type="button"
-              onClick={() => loadRecommendation(selectedDistrict)}
-              disabled={loadingRecommendation}
-              className="rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold text-sand-50/90 transition hover:border-white/30 disabled:opacity-40"
-            >
-              {loadingRecommendation ? "Generating…" : "Refresh"}
-            </button>
-          </div>
-
-          {loadingRecommendation ? (
-            <p className="text-sm text-sand-50/60">Generating recommendation…</p>
-          ) : recommendationError ? (
-            <p className="text-sm text-red-300/90">{recommendationError}</p>
-          ) : recommendation ? (
-            <div className="grid gap-5 sm:grid-cols-2">
-              <RecommendationField
-                label="District summary"
-                value={recommendation.district_summary}
-              />
-              <RecommendationField
-                label="Main gap"
-                value={recommendation.main_gap}
-              />
-              <RecommendationField
-                label="Recommended intervention"
-                value={recommendation.recommended_intervention}
-              />
-              <RecommendationField
-                label="Why this matters"
-                value={recommendation.why_this_matters}
-              />
-              <RecommendationField
-                label="Confidence note"
-                value={recommendation.confidence_note}
-              />
-              <RecommendationField
-                label="Uncertainty note"
-                value={recommendation.uncertainty_note}
-              />
-            </div>
-          ) : (
-            <p className="text-sm text-sand-50/60">
-              No recommendation loaded yet.
-            </p>
-          )}
-        </Panel>
+        <RecommendationPanel
+          district={selectedDistrict}
+          confidenceLevel={classification.confidence_level}
+        />
 
         <EvidencePanel
           evidence_bullets={selectedDistrict.evidence_bullets}
