@@ -1,7 +1,7 @@
 {
   "project": "Community Gap & Confidence Copilot",
   "track": "Future Communities",
-  "generated_at": "2026-06-26T10:34:39.453207+00:00",
+  "generated_at": "2026-06-26T10:38:19.010722+00:00",
   "methodology_version": "1.0.0",
   "scoring_weights": {
     "community_need": 0.55,
@@ -51,13 +51,13 @@
         "market_pressure_score": 91,
         "intervention_feasibility_score": 52,
         "community_gap_score": 70,
-        "confidence_score": 88,
+        "confidence_score": 100,
         "data_completeness_score": 100
       },
       "classification": {
         "gap_level": "Medium",
         "confidence_level": "High",
-        "confidence_reason": "High confidence: multiple demand, experience, mobility, amenity, and market signals point in the same direction.",
+        "confidence_reason": "High confidence for Al Ghadeer: 8/8 signals agree, including elevated service demand, below-median mobility, below-median resident experience (+5 more).",
         "recommended_intervention_category": "Education capacity",
         "recommendation_priority": "Medium"
       },
@@ -68,7 +68,7 @@
         "Education amenity coverage is below the city median (0 OSM amenities vs median 10).",
         "Healthcare amenity coverage is below the city median (1 OSM amenities vs median 10).",
         "Mobility-related amenities are limited compared with other districts (1 OSM vs median 19).",
-        "Residential listing activity suggests added community pressure (315 listings in district)."
+        "Community need (53) and amenity shortage (90) both exceed city medians, reinforcing the gap story."
       ],
       "top_gap_drivers": [
         "Service demand",
@@ -128,7 +128,7 @@
       "classification": {
         "gap_level": "Medium",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Al Raha Beach: community need and amenity shortage do not fully align (3/8 signals agree).",
         "recommended_intervention_category": "Mobility improvement",
         "recommendation_priority": "Medium"
       },
@@ -137,7 +137,7 @@
         "Healthcare amenity coverage is below the city median (5 OSM amenities vs median 10).",
         "Mobility-related amenities are limited compared with other districts (10 OSM vs median 19).",
         "Parcel/infrastructure context suggests the intervention may be feasible (15 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Education shortage",
@@ -188,13 +188,13 @@
         "market_pressure_score": 66,
         "intervention_feasibility_score": 64,
         "community_gap_score": 49,
-        "confidence_score": 75,
+        "confidence_score": 88,
         "data_completeness_score": 100
       },
       "classification": {
         "gap_level": "Low",
         "confidence_level": "High",
-        "confidence_reason": "High confidence: multiple demand, experience, mobility, amenity, and market signals point in the same direction.",
+        "confidence_reason": "High confidence for Khalifa City: 7/8 signals agree, including elevated service demand, below-median mobility, below-median resident experience (+4 more).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -204,8 +204,8 @@
         "Resident experience is weaker than the city median (79 vs 87).",
         "Healthcare amenity coverage is below the city median (9 OSM amenities vs median 10).",
         "Mobility-related amenities are limited compared with other districts (4 OSM vs median 19).",
-        "Residential listing activity suggests added community pressure (323 listings in district).",
-        "Transaction activity indicates active market movement in this district (226 transactions)."
+        "Community need (51) and amenity shortage (41) both exceed city medians, reinforcing the gap story.",
+        "Residential listing activity suggests added community pressure (323 listings in district)."
       ],
       "top_gap_drivers": [
         "Service demand",
@@ -213,8 +213,7 @@
         "Resident experience",
         "Healthcare shortage",
         "Mobility amenity shortage",
-        "Market pressure",
-        "Mixed evidence"
+        "Market pressure"
       ],
       "rank": 3
     },
@@ -265,7 +264,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Yas Island: community need and amenity shortage do not fully align (4/8 signals agree).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -275,7 +274,7 @@
         "Healthcare amenity coverage is below the city median (5 OSM amenities vs median 10).",
         "Mobility-related amenities are limited compared with other districts (16 OSM vs median 19).",
         "Parcel/infrastructure context suggests the intervention may be feasible (12 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Resident experience",
@@ -327,13 +326,13 @@
         "market_pressure_score": 43,
         "intervention_feasibility_score": 58,
         "community_gap_score": 48,
-        "confidence_score": 38,
+        "confidence_score": 50,
         "data_completeness_score": 100
       },
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Al Reem Island: several indicators suggest a gap, but not all categories align (elevated service demand, education amenity shortage, healthcare amenity shortage; 4/8 signals).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -341,13 +340,12 @@
         "Service demand is above the city median (63 vs 63).",
         "Education amenity coverage is below the city median (5 OSM amenities vs median 10).",
         "Healthcare amenity coverage is below the city median (4 OSM amenities vs median 10).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Community need (47) and amenity shortage (52) both exceed city medians, reinforcing the gap story."
       ],
       "top_gap_drivers": [
         "Service demand",
         "Education shortage",
-        "Healthcare shortage",
-        "Mixed evidence"
+        "Healthcare shortage"
       ],
       "rank": 5
     },
@@ -398,7 +396,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Mussafah: community need and amenity shortage do not fully align (4/8 signals agree).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -408,7 +406,7 @@
         "Resident experience is weaker than the city median (65 vs 87).",
         "Education amenity coverage is below the city median (1 OSM amenities vs median 10).",
         "Parcel/infrastructure context suggests the intervention may be feasible (17 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Service demand",
@@ -460,13 +458,13 @@
         "market_pressure_score": 71,
         "intervention_feasibility_score": 70,
         "community_gap_score": 46,
-        "confidence_score": 75,
+        "confidence_score": 88,
         "data_completeness_score": 100
       },
       "classification": {
         "gap_level": "Low",
         "confidence_level": "High",
-        "confidence_reason": "High confidence: multiple demand, experience, mobility, amenity, and market signals point in the same direction.",
+        "confidence_reason": "High confidence for Al Reef: 7/8 signals agree, including elevated service demand, below-median mobility, below-median resident experience (+4 more).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -476,8 +474,8 @@
         "Resident experience is weaker than the city median (78 vs 87).",
         "Healthcare amenity coverage is below the city median (5 OSM amenities vs median 10).",
         "Mobility-related amenities are limited compared with other districts (10 OSM vs median 19).",
-        "Residential listing activity suggests added community pressure (320 listings in district).",
-        "Transaction activity indicates active market movement in this district (242 transactions)."
+        "Community need (46) and amenity shortage (38) both exceed city medians, reinforcing the gap story.",
+        "Residential listing activity suggests added community pressure (320 listings in district)."
       ],
       "top_gap_drivers": [
         "Service demand",
@@ -485,8 +483,7 @@
         "Resident experience",
         "Healthcare shortage",
         "Mobility amenity shortage",
-        "Market pressure",
-        "Mixed evidence"
+        "Market pressure"
       ],
       "rank": 7
     },
@@ -537,7 +534,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Low",
-        "confidence_reason": "Low confidence: limited or mixed signals support a strong intervention claim.",
+        "confidence_reason": "Low confidence for Al Bateen: only 2/8 signals agree (education amenity shortage, healthcare amenity shortage).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -545,7 +542,7 @@
         "Education amenity coverage is below the city median (1 OSM amenities vs median 10).",
         "Healthcare amenity coverage is below the city median (3 OSM amenities vs median 10).",
         "Parcel/infrastructure context suggests the intervention may be feasible (14 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Education shortage",
@@ -601,7 +598,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Masdar City: community need and amenity shortage do not fully align (3/8 signals agree).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -611,7 +608,7 @@
         "Residential listing activity suggests added community pressure (308 listings in district).",
         "Transaction activity indicates active market movement in this district (265 transactions).",
         "Parcel/infrastructure context suggests the intervention may be feasible (15 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Healthcare shortage",
@@ -668,7 +665,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Al Shamkha: community need and amenity shortage do not fully align (5/8 signals agree).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -679,7 +676,7 @@
         "Mobility-related amenities are limited compared with other districts (6 OSM vs median 19).",
         "Residential listing activity suggests added community pressure (304 listings in district).",
         "Transaction activity indicates active market movement in this district (244 transactions).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Service demand",
@@ -738,7 +735,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Mohammed Bin Zayed City: community need and amenity shortage do not fully align (5/8 signals agree).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -749,7 +746,7 @@
         "Education amenity coverage is below the city median (10 OSM amenities vs median 10).",
         "Mobility-related amenities are limited compared with other districts (6 OSM vs median 19).",
         "Parcel/infrastructure context suggests the intervention may be feasible (22 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Service demand",
@@ -808,7 +805,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Al Bahia: community need and amenity shortage do not fully align (3/8 signals agree).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -818,7 +815,7 @@
         "Residential listing activity suggests added community pressure (353 listings in district).",
         "Transaction activity indicates active market movement in this district (250 transactions).",
         "Parcel/infrastructure context suggests the intervention may be feasible (23 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Mobility weakness",
@@ -875,7 +872,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Low",
-        "confidence_reason": "Low confidence: limited or mixed signals support a strong intervention claim.",
+        "confidence_reason": "Low confidence for Corniche: only 2/8 signals agree (education amenity shortage, elevated market pressure).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -884,7 +881,7 @@
         "Residential listing activity suggests added community pressure (310 listings in district).",
         "Transaction activity indicates active market movement in this district (251 transactions).",
         "Parcel/infrastructure context suggests the intervention may be feasible (22 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Education shortage",
@@ -940,7 +937,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Low",
-        "confidence_reason": "Low confidence: limited or mixed signals support a strong intervention claim.",
+        "confidence_reason": "Low confidence for Saadiyat Island: only 2/8 signals agree (education amenity shortage, healthcare amenity shortage).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -948,7 +945,7 @@
         "Education amenity coverage is below the city median (8 OSM amenities vs median 10).",
         "Healthcare amenity coverage is below the city median (2 OSM amenities vs median 10).",
         "Parcel/infrastructure context suggests the intervention may be feasible (21 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Education shortage",
@@ -1004,7 +1001,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Zayed City: community need and amenity shortage do not fully align (4/8 signals agree).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -1014,7 +1011,7 @@
         "Resident experience is weaker than the city median (71 vs 87).",
         "Mobility-related amenities are limited compared with other districts (13 OSM vs median 19).",
         "Parcel/infrastructure context suggests the intervention may be feasible (19 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Service demand",
@@ -1072,14 +1069,14 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Low",
-        "confidence_reason": "Low confidence: limited or mixed signals support a strong intervention claim.",
+        "confidence_reason": "Low confidence for Al Maryah Island: only 1/8 signals agree (education amenity shortage).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
       "evidence_bullets": [
         "Education amenity coverage is below the city median (1 OSM amenities vs median 10).",
         "Parcel/infrastructure context suggests the intervention may be feasible (11 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously.",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously.",
         "District has 95 mapped OSM amenities across six categories.",
         "Community need score is 33 and amenity shortage score is 45.",
         "Estimated district population: 445,889."
@@ -1137,7 +1134,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Low",
-        "confidence_reason": "Low confidence: limited or mixed signals support a strong intervention claim.",
+        "confidence_reason": "Low confidence for Al Maqta: only 2/8 signals agree (elevated service demand, below-median mobility).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -1145,7 +1142,7 @@
         "Service demand is above the city median (70 vs 63).",
         "Mobility score is below the city median (68 vs 72).",
         "Parcel/infrastructure context suggests the intervention may be feasible (32 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Service demand",
@@ -1201,7 +1198,7 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Medium",
-        "confidence_reason": "Medium confidence: several indicators suggest a gap, but the evidence is mixed across categories.",
+        "confidence_reason": "Medium confidence for Al Zahiyah: community need and amenity shortage do not fully align (4/8 signals agree).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
@@ -1212,7 +1209,7 @@
         "Residential listing activity suggests added community pressure (317 listings in district).",
         "Transaction activity indicates active market movement in this district (262 transactions).",
         "Parcel/infrastructure context suggests the intervention may be feasible (14 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously."
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
       ],
       "top_gap_drivers": [
         "Service demand",
@@ -1270,21 +1267,19 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Low",
-        "confidence_reason": "Low confidence: limited or mixed signals support a strong intervention claim.",
+        "confidence_reason": "Low confidence for Danet Abu Dhabi: only 1/8 signals agree (below-median resident experience).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
       "evidence_bullets": [
         "Resident experience is weaker than the city median (86 vs 87).",
         "Parcel/infrastructure context suggests the intervention may be feasible (28 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously.",
         "District has 443 mapped OSM amenities across six categories.",
         "Community need score is 44 and amenity shortage score is 0.",
         "Estimated district population: 562,345."
       ],
       "top_gap_drivers": [
-        "Resident experience",
-        "Mixed evidence"
+        "Resident experience"
       ],
       "rank": 19
     },
@@ -1335,20 +1330,17 @@
       "classification": {
         "gap_level": "Low",
         "confidence_level": "Low",
-        "confidence_reason": "Low confidence: limited or mixed signals support a strong intervention claim.",
+        "confidence_reason": "Low confidence for Al Khalidiyah: limited signal agreement (0/8 signals support a strong intervention claim).",
         "recommended_intervention_category": "Monitor / no urgent intervention",
         "recommendation_priority": "Low"
       },
       "evidence_bullets": [
         "Parcel/infrastructure context suggests the intervention may be feasible (18 vacant or developable parcels).",
-        "Amenity coverage is mixed, so the recommendation should be treated cautiously.",
         "District has 275 mapped OSM amenities across six categories.",
         "Community need score is 45 and amenity shortage score is 2.",
         "Estimated district population: 487,073."
       ],
-      "top_gap_drivers": [
-        "Mixed evidence"
-      ],
+      "top_gap_drivers": [],
       "rank": 20
     }
   ],

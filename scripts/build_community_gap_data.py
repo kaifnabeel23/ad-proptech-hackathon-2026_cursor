@@ -19,7 +19,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-from community_gap.data_loader import DataValidationError  # noqa: E402
+from community_gap.data_loader import DataValidationError, LAST_LOAD_WARNINGS  # noqa: E402
 from community_gap.export import export_outputs  # noqa: E402
 
 DATA_DIR = REPO_ROOT / "data"
@@ -41,12 +41,12 @@ def main() -> int:
     except DataValidationError as exc:
         print(f"\nData validation error: {exc}", file=sys.stderr)
         return 1
-    except ValueError as exc:
-        print(f"\nBuild failed: {exc}", file=sys.stderr)
-        return 1
     except Exception as exc:
         print(f"\nBuild failed: {exc}", file=sys.stderr)
         return 1
+
+    if LAST_LOAD_WARNINGS:
+        print(f"\n{len(LAST_LOAD_WARNINGS)} optional data warning(s) during load (see stderr).")
 
     print("\nBuild complete.")
     return 0

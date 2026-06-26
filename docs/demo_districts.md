@@ -51,9 +51,9 @@ Use Al Raha Beach to demonstrate honest uncertainty: gap score 53 with Medium co
 
 **Top evidence bullets:**
 - Parcel/infrastructure context suggests the intervention may be feasible (18 vacant or developable parcels).
-- Amenity coverage is mixed, so the recommendation should be treated cautiously.
 - District has 275 mapped OSM amenities across six categories.
 - Community need score is 45 and amenity shortage score is 2.
+- Estimated district population: 487,073.
 
 **Why it is useful in the demo:**
 Use Al Khalidiyah as the balanced reference: low gap score 29 (Low confidence). Shows the copilot does not over-flag every district and when to monitor rather than intervene.

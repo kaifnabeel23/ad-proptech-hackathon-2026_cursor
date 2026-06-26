@@ -20,6 +20,18 @@ _DRIVER_ORDER: list[tuple[str, str]] = [
     ("signal_high_market_pressure", "Market pressure"),
 ]
 
+_COMMUNITY_SIGNAL_KEYS = (
+    "signal_high_service_demand",
+    "signal_weak_mobility",
+    "signal_weak_resident_experience",
+)
+
+_AMENITY_SIGNAL_KEYS = (
+    "signal_low_education",
+    "signal_low_healthcare",
+    "signal_low_mobility_amenities",
+)
+
 _MIN_BULLETS = 4
 _MAX_BULLETS = 7
 
@@ -79,16 +91,58 @@ def _amenity_signals_mixed(row: pd.Series) -> bool:
     return 0 < low_count < 3
 
 
+def _count_true_signals(row: pd.Series, keys: tuple[str, ...]) -> int:
+    """Count how many boolean signal columns are true on the row."""
+    return sum(_is_true(row, key) for key in keys)
+
+
+def _core_signals_split(row: pd.Series) -> bool:
+    """True when community demand signals and amenity shortage signals diverge."""
+    community_count = _count_true_signals(row, _COMMUNITY_SIGNAL_KEYS)
+    amenity_count = _count_true_signals(row, _AMENITY_SIGNAL_KEYS)
+    if community_count >= 2 and amenity_count == 0:
+        return True
+    if amenity_count >= 2 and community_count == 0:
+        return True
+    return False
+
+
+def _at_or_above_median(row: pd.Series, value_col: str, median_col: str) -> bool:
+    """True when value is at or above the city median on the row."""
+    if value_col not in row.index or median_col not in row.index:
+        return False
+    value = row[value_col]
+    median = row[median_col]
+    if pd.isna(value) or pd.isna(median):
+        return False
+    return float(value) >= float(median)
+
+
 def _should_flag_mixed_evidence(row: pd.Series, drivers: list[str]) -> bool:
-    """Decide whether to append the Mixed evidence driver."""
-    confidence = row.get("confidence_level", "")
-    if confidence in ("Medium", "Low"):
+    """True only when core signals genuinely disagree — not for every Medium/Low row."""
+    if (
+        _at_or_above_median(row, "community_need_score", "city_median_community_need_score")
+        and _below_median(row, "amenity_shortage_score", "city_median_amenity_shortage_score")
+    ):
         return True
-    if _amenity_signals_mixed(row):
+
+    if (
+        _below_median(row, "community_need_score", "city_median_community_need_score")
+        and _at_or_above_median(row, "amenity_shortage_score", "city_median_amenity_shortage_score")
+    ):
         return True
-    agreement = row.get("signal_agreement_count", 0)
-    if not pd.isna(agreement) and 3 <= int(agreement) <= 5:
+
+    if _is_true(row, "signal_high_market_pressure") and _below_median(
+        row, "community_gap_score", "city_median_community_gap_score"
+    ):
         return True
+
+    if str(row.get("confidence_level", "")) == "Medium":
+        if not _is_true(row, "signal_need_and_shortage_agree") and (
+            _core_signals_split(row) or _amenity_signals_mixed(row)
+        ):
+            return True
+
     return False
 
 
@@ -288,10 +342,15 @@ def _build_bullet_candidates(row: pd.Series) -> list[tuple[int, str]]:
             )
         )
 
-    if _is_true(row, "signal_high_gap"):
-        gap = _fmt_num(row.get("community_gap_score"))
+    if _is_true(row, "signal_need_and_shortage_agree"):
+        need = _fmt_num(row.get("community_need_score"))
+        shortage = _fmt_num(row.get("amenity_shortage_score"))
         candidates.append(
-            (6, f"Community gap score is high ({gap}/100), indicating priority for review.")
+            (
+                6,
+                f"Community need ({need}) and amenity shortage ({shortage}) both exceed "
+                f"city medians, reinforcing the gap story.",
+            )
         )
 
     # --- Supporting context (after core evidence) ---
@@ -344,7 +403,8 @@ def _build_bullet_candidates(row: pd.Series) -> list[tuple[int, str]]:
         candidates.append(
             (
                 10,
-                "Amenity coverage is mixed, so the recommendation should be treated cautiously.",
+                "Core need and amenity signals disagree, so the recommendation should be "
+                "treated cautiously.",
             )
         )
 

@@ -82,7 +82,7 @@ SIGNAL_COLUMNS = [
     "signal_low_healthcare",
     "signal_low_mobility_amenities",
     "signal_high_market_pressure",
-    "signal_high_gap",
+    "signal_need_and_shortage_agree",
 ]
 
 CORE_COMPLETENESS_FIELDS = [
@@ -97,18 +97,15 @@ CORE_COMPLETENESS_FIELDS = [
     "total_amenities",
 ]
 
-CONFIDENCE_REASONS = {
-    "High": (
-        "High confidence: multiple demand, experience, mobility, amenity, and market "
-        "signals point in the same direction."
-    ),
-    "Medium": (
-        "Medium confidence: several indicators suggest a gap, but the evidence is "
-        "mixed across categories."
-    ),
-    "Low": (
-        "Low confidence: limited or mixed signals support a strong intervention claim."
-    ),
+CONFIDENCE_SIGNAL_LABELS = {
+    "signal_high_service_demand": "elevated service demand",
+    "signal_weak_mobility": "below-median mobility",
+    "signal_weak_resident_experience": "below-median resident experience",
+    "signal_low_education": "education amenity shortage",
+    "signal_low_healthcare": "healthcare amenity shortage",
+    "signal_low_mobility_amenities": "mobility amenity shortage",
+    "signal_high_market_pressure": "elevated market pressure",
+    "signal_need_and_shortage_agree": "aligned need and amenity shortage",
 }
 
 SIGNAL_COUNT = len(SIGNAL_COLUMNS)
@@ -325,6 +322,61 @@ def _confidence_level_from_agreement(count: pd.Series) -> pd.Series:
     )
 
 
+def _confidence_reason_for_row(row: pd.Series) -> str:
+    """Build a district-specific confidence explanation from signal agreement."""
+    district = row.get("district", "This district")
+    level = str(row.get("confidence_level", "Low"))
+    count = int(row.get("signal_agreement_count", 0) or 0)
+    total = SIGNAL_COUNT
+
+    agreeing = [
+        CONFIDENCE_SIGNAL_LABELS[signal]
+        for signal in SIGNAL_COLUMNS
+        if bool(row.get(signal))
+    ]
+
+    if level == "High":
+        if agreeing:
+            preview = ", ".join(agreeing[:3])
+            suffix = f" (+{len(agreeing) - 3} more)" if len(agreeing) > 3 else ""
+            return (
+                f"High confidence for {district}: {count}/{total} signals agree, "
+                f"including {preview}{suffix}."
+            )
+        return (
+            f"High confidence for {district}: {count}/{total} independent signals "
+            f"point in the same direction."
+        )
+
+    if level == "Medium":
+        if not bool(row.get("signal_need_and_shortage_agree")):
+            return (
+                f"Medium confidence for {district}: community need and amenity shortage "
+                f"do not fully align ({count}/{total} signals agree)."
+            )
+        if agreeing:
+            preview = ", ".join(agreeing[:3])
+            return (
+                f"Medium confidence for {district}: several indicators suggest a gap, "
+                f"but not all categories align ({preview}; {count}/{total} signals)."
+            )
+        return (
+            f"Medium confidence for {district}: partial signal agreement "
+            f"({count}/{total} signals)."
+        )
+
+    if agreeing:
+        preview = ", ".join(agreeing[:2])
+        return (
+            f"Low confidence for {district}: only {count}/{total} signals agree "
+            f"({preview})."
+        )
+    return (
+        f"Low confidence for {district}: limited signal agreement "
+        f"({count}/{total} signals support a strong intervention claim)."
+    )
+
+
 def add_confidence(df: pd.DataFrame) -> pd.DataFrame:
     """
     Add evidence-agreement confidence fields to a scored dataframe.
@@ -348,7 +400,14 @@ def add_confidence(df: pd.DataFrame) -> pd.DataFrame:
         out["mobility"] < out["city_median_mobility_amenities"]
     )
     out["signal_high_market_pressure"] = out["market_pressure_score"] >= 60
-    out["signal_high_gap"] = out["community_gap_score"] >= 75
+
+    out["city_median_community_need_score"] = out["community_need_score"].median()
+    out["city_median_amenity_shortage_score"] = out["amenity_shortage_score"].median()
+    out["city_median_community_gap_score"] = out["community_gap_score"].median()
+
+    out["signal_need_and_shortage_agree"] = (
+        out["community_need_score"] >= out["city_median_community_need_score"]
+    ) & (out["amenity_shortage_score"] >= out["city_median_amenity_shortage_score"])
 
     out["signal_agreement_count"] = out[SIGNAL_COLUMNS].sum(axis=1).astype(int)
 
@@ -366,7 +425,7 @@ def add_confidence(df: pd.DataFrame) -> pd.DataFrame:
         "Medium"
     )
 
-    out["confidence_reason"] = out["confidence_level"].map(CONFIDENCE_REASONS)
+    out["confidence_reason"] = out.apply(_confidence_reason_for_row, axis=1)
 
     return out
 
