@@ -17,7 +17,10 @@ import numpy as np
 import pandas as pd
 
 from community_gap import OUTPUT_CSV, OUTPUT_JSON, PROCESSED_DIR
-from community_gap.scoring import GAP_WEIGHTS
+from community_gap.data_loader import load_challenge_data
+from community_gap.evidence import add_evidence, add_recommendations
+from community_gap.features import build_full_feature_dataset
+from community_gap.scoring import GAP_WEIGHTS, add_confidence, add_scores
 
 COMMUNITY_METRIC_KEYS = (
     "population_estimate",
@@ -149,20 +152,83 @@ def row_to_output(row: pd.Series) -> dict[str, Any]:
     }
 
 
+def build_scored_dataset(data_dir: str | Path = "data") -> pd.DataFrame:
+    """
+    Run the full deterministic pipeline and return the scored feature table.
+
+    Steps: load → features → scores → confidence → evidence → recommendations.
+    """
+    raw = load_challenge_data(data_dir)
+    df = build_full_feature_dataset(raw)
+    df = add_scores(df)
+    df = add_confidence(df)
+    df = add_evidence(df)
+    df = add_recommendations(df)
+    df = df.sort_values("community_gap_score", ascending=False).reset_index(drop=True)
+    df["intervention_rank"] = range(1, len(df) + 1)
+    return df
+
+
+def _district_level_frame(scored: pd.DataFrame) -> pd.DataFrame:
+    """Keep the highest community_gap_score row per district."""
+    return (
+        scored.sort_values("community_gap_score", ascending=False)
+        .drop_duplicates(subset="district", keep="first")
+        .reset_index(drop=True)
+    )
+
+
+def build_all_district_outputs(data_dir: str | Path = "data") -> list[dict[str, Any]]:
+    """Build one frontend-ready output dict per district (highest-gap community row)."""
+    scored = build_scored_dataset(data_dir)
+    district_rows = _district_level_frame(scored)
+
+    outputs = [row_to_output(row) for _, row in district_rows.iterrows()]
+    outputs.sort(key=lambda item: item["scores"]["community_gap_score"] or 0, reverse=True)
+
+    for index, item in enumerate(outputs, start=1):
+        item["rank"] = index
+
+    return outputs
+
+
+def analyze_district(district_name: str, data_dir: str | Path = "data") -> dict[str, Any]:
+    """
+    Return the frontend-ready output for one district (case-insensitive match).
+
+    When multiple community rows exist, uses the row with the highest gap score.
+    """
+    scored = build_scored_dataset(data_dir)
+    needle = district_name.strip().casefold()
+    matches = scored[scored["district"].astype(str).str.casefold() == needle]
+
+    if matches.empty:
+        available = sorted(scored["district"].dropna().unique().tolist())
+        raise ValueError(
+            f"District '{district_name}' not found. "
+            f"Available districts: {', '.join(available)}"
+        )
+
+    row = matches.sort_values("community_gap_score", ascending=False).iloc[0]
+    output = row_to_output(row)
+    district_rank = (
+        _district_level_frame(scored)["district"].tolist().index(output["district"]) + 1
+    )
+    output["rank"] = district_rank
+    return output
+
+
 def build_frontend_payload(scored: pd.DataFrame) -> dict[str, Any]:
     """
     Build the frontend-ready JSON structure.
 
     Shape is defined in docs/data_handoff.md — do not change without updating docs.
     """
-    districts = [row_to_output(row) for _, row in scored.iterrows()]
+    district_rows = _district_level_frame(scored)
+    districts = [row_to_output(row) for _, row in district_rows.iterrows()]
+    districts.sort(key=lambda item: item["scores"]["community_gap_score"] or 0, reverse=True)
 
-    ranked = sorted(
-        districts,
-        key=lambda item: (item["scores"]["community_gap_score"] or 0),
-        reverse=True,
-    )
-    for index, district in enumerate(ranked, start=1):
+    for index, district in enumerate(districts, start=1):
         district["rank"] = index
 
     ranked_summary = [
@@ -173,7 +239,7 @@ def build_frontend_payload(scored: pd.DataFrame) -> dict[str, Any]:
             "confidence_level": item["classification"]["confidence_level"],
             "recommended_intervention": item["classification"]["recommended_intervention_category"],
         }
-        for item in ranked
+        for item in districts
     ]
 
     return {
@@ -183,7 +249,7 @@ def build_frontend_payload(scored: pd.DataFrame) -> dict[str, Any]:
         "methodology_version": "1.0.0",
         "scoring_weights": GAP_WEIGHTS,
         "district_count": len(districts),
-        "districts": ranked,
+        "districts": districts,
         "ranked_summary": ranked_summary,
     }
 
@@ -234,6 +300,39 @@ def export_all(scored: pd.DataFrame, output_dir: Path | None = None) -> tuple[Pa
     json_path = export_json(payload, out_dir / OUTPUT_JSON.name)
     csv_path = export_csv_summary(scored, out_dir / OUTPUT_CSV.name)
     return json_path, csv_path
+
+
+def export_outputs(
+    data_dir: str | Path = "data",
+    output_json: str | Path = "processed/community_gap_outputs.json",
+    output_csv: str | Path = "processed/community_gap_scores.csv",
+) -> None:
+    """
+    Build, export, and print a summary of community gap outputs.
+
+    Writes pretty JSON and a flat district-level CSV.
+    """
+    scored = build_scored_dataset(data_dir)
+    district_rows = _district_level_frame(scored)
+
+    json_path = Path(output_json)
+    csv_path = Path(output_csv)
+
+    payload = build_frontend_payload(scored)
+    export_json(payload, json_path)
+    export_csv_summary(district_rows, csv_path)
+
+    district_count = len(district_rows)
+    print(f"Districts exported: {district_count}")
+    print("\nTop 5 highest-gap districts:")
+    top5 = district_rows.nlargest(5, "community_gap_score")
+    for _, row in top5.iterrows():
+        print(
+            f"  {row['district']}: gap {int(row['community_gap_score'])} "
+            f"({row.get('gap_level', 'n/a')}, {row.get('confidence_level', 'n/a')} confidence)"
+        )
+    print(f"\nJSON: {json_path.resolve()}")
+    print(f"CSV:  {csv_path.resolve()}")
 
 
 def build_metadata_stub() -> dict[str, Any]:

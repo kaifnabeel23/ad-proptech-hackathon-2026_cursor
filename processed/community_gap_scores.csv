@@ -1,0 +1,21 @@
+district,area_type,profile,population_estimate,service_demand_index,mobility_score,resident_experience_score,total_amenities,community_need_score,amenity_adequacy_score,amenity_shortage_score,market_pressure_score,intervention_feasibility_score,community_gap_score,confidence_score,data_completeness_score,gap_level,confidence_level,recommended_intervention_category,recommendation_priority,intervention_rank
+Al Ghadeer,border,affordable,77098,78,45,69,26,61,10,90,93,52,74,88,100,Medium,High,Education capacity,Medium,1
+Al Raha Beach,waterfront,high,73678,54,75,92,27,43,18,82,44,71,57,50,100,Medium,Medium,Mobility improvement,Medium,4
+Khalifa City,mainland,mid,130973,76,73,74,94,60,59,41,69,63,54,75,100,Medium,High,Healthcare access,Medium,6
+Al Reem Island,island,mid_high,164322,65,87,86,89,50,48,52,44,57,50,50,100,Medium,Medium,Education capacity,Medium,10
+Yas Island,island,leisure,100192,55,88,84,57,40,35,65,51,61,50,50,100,Medium,Medium,Mobility improvement,Medium,11
+Mussafah,mainland,industrial,38686,82,64,57,158,61,66,34,31,63,49,50,100,Low,Medium,Monitor / no urgent intervention,Low,15
+Saadiyat Island,island,premium,123421,45,70,92,68,43,41,59,33,79,48,38,100,Low,Medium,Monitor / no urgent intervention,Low,17
+Al Bateen,waterfront,premium,77782,60,71,92,78,45,37,63,17,67,48,38,100,Low,Medium,Monitor / no urgent intervention,Low,19
+Al Shamkha,mainland,affordable,85710,84,54,71,120,57,72,28,64,56,48,62,100,Low,Medium,Monitor / no urgent intervention,Low,20
+Masdar City,mainland,innovation,99314,53,82,92,71,41,51,49,74,70,47,38,100,Low,Medium,Monitor / no urgent intervention,Low,23
+Mohammed Bin Zayed City,mainland,mid_affordable,105032,74,59,69,102,55,64,36,41,72,47,62,100,Low,Medium,Monitor / no urgent intervention,Low,24
+Al Reef,mainland,affordable,24101,72,57,78,130,47,62,38,74,69,47,75,100,Low,High,Monitor / no urgent intervention,Low,26
+Al Bahia,coastal,mid,92958,67,70,77,100,47,70,30,75,74,44,62,100,Low,Medium,Monitor / no urgent intervention,Low,35
+Corniche,central,established,120699,58,93,81,133,47,71,29,64,83,42,38,100,Low,Medium,Monitor / no urgent intervention,Low,41
+Zayed City,mainland,emerging,32634,76,66,72,158,55,87,13,46,69,39,50,100,Low,Medium,Monitor / no urgent intervention,Low,52
+Al Maryah Island,island,premium,97585,51,75,92,95,36,55,45,31,61,39,25,100,Low,Low,Monitor / no urgent intervention,Low,53
+Al Maqta,mainland,mid,123652,74,73,80,252,55,94,6,56,80,38,38,100,Low,Medium,Monitor / no urgent intervention,Low,60
+Al Zahiyah,central,mid,114246,69,61,77,679,54,100,0,73,61,37,50,100,Low,Medium,Monitor / no urgent intervention,Low,61
+Danet Abu Dhabi,central,mid_high,119621,61,66,86,443,52,100,0,56,82,34,38,100,Low,Medium,Monitor / no urgent intervention,Low,69
+Al Khalidiyah,central,established,109790,61,86,92,275,46,98,2,37,75,30,12,100,Low,Low,Monitor / no urgent intervention,Low,77
