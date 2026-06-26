@@ -1,62 +1,72 @@
 # Demo Districts
 
-**Status:** Pending — run `python scripts/find_demo_districts.py` after scoring is implemented.
+**Generated:** run `python scripts/find_demo_districts.py` to refresh.
+**Source:** `processed/community_gap_outputs.json`
 
-This file will list recommended districts for the 2–3 minute hackathon demo video.
-
----
-
-## What we need from demo districts
-
-| Slot | Purpose | Ideal traits |
-|------|---------|--------------|
-| **Primary** | Main walkthrough | High gap score, medium/high confidence, clear evidence |
-| **Contrast** | Show confidence badge | High gap but low confidence — honest uncertainty |
-| **Positive** | Balanced district | Lower gap, good amenity coverage — "no intervention needed" |
+Recommended districts for the 2–3 minute hackathon demo video.
 
 ---
 
-## Candidates (to be filled by script)
+## 1. High urgency (main walkthrough)
 
-### Primary demo district
+**District:** Al Ghadeer
+**Gap score:** 74
+**Gap level:** Medium
+**Confidence level:** High
+**Recommended intervention:** Education capacity
 
-_TBD_
+**Top evidence bullets:**
+- Service demand is above the city median (78 vs 60).
+- Mobility score is below the city median (45 vs 76).
+- Resident experience is weaker than the city median (69 vs 90).
+- Education amenity coverage is below the city median (0 OSM amenities vs median 10).
 
-**Talking points:**
-- Service demand vs city median
-- Weakest OSM amenity category
-- Recommended intervention
-- Confidence explanation
+**Why it is useful in the demo:**
+Use Al Ghadeer as the main walkthrough: gap score 74 with High confidence, clear OSM-backed evidence, and a concrete recommendation (Education capacity). Shows the full need → shortage → evidence → confidence story.
 
-### Contrast district (low confidence)
+## 2. Mixed evidence (confidence / uncertainty)
 
-_TBD_
+**District:** Al Raha Beach
+**Gap score:** 57
+**Gap level:** Medium
+**Confidence level:** Medium
+**Recommended intervention:** Mobility improvement
 
-**Talking points:**
-- Why evidence is mixed
-- What a decision-maker should do before acting
+**Top evidence bullets:**
+- Mobility score is below the city median (75 vs 76).
+- Education amenity coverage is below the city median (0 OSM amenities vs median 10).
+- Healthcare amenity coverage is below the city median (5 OSM amenities vs median 10).
+- Mobility-related amenities are limited compared with other districts (10 OSM vs median 19).
 
-### Positive reference district
+**Why it is useful in the demo:**
+Use Al Raha Beach to demonstrate honest uncertainty: gap score 57 with Medium confidence and mixed amenity signals. Explains why the confidence badge matters and when decision-makers should validate before acting.
 
-_TBD_
+## 3. Low urgency (monitor / balanced reference)
 
-**Talking points:**
-- Adequate amenity coverage relative to need
-- Lower intervention priority
+**District:** Al Khalidiyah
+**Gap score:** 30
+**Gap level:** Low
+**Confidence level:** Low
+**Recommended intervention:** Monitor / no urgent intervention
+
+**Top evidence bullets:**
+- Service demand is above the city median (61 vs 60).
+- Parcel/infrastructure context suggests the intervention may be feasible (18 vacant or developable parcels).
+- Amenity coverage is mixed, so the recommendation should be treated cautiously.
+- District has 275 mapped OSM amenities across six categories.
+
+**Why it is useful in the demo:**
+Use Al Khalidiyah as the balanced reference: low gap score 30 (Low confidence). Shows the copilot does not over-flag every district and when to monitor rather than intervene.
 
 ---
 
-## How this file is generated
+## Regenerate
 
 ```bash
 python scripts/build_community_gap_data.py
 python scripts/find_demo_districts.py
 ```
 
-The script writes selections and talking-point hints into this document.
-
----
-
 ## Manual override
 
-If the auto-selected districts are not demo-friendly, edit this file and use these districts in `docs/demo-script.md`.
+Edit this file directly if auto-selected districts are not demo-friendly.
