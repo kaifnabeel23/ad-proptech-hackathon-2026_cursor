@@ -6,21 +6,55 @@ node_modules/
 out/
 next-env.d.ts
 
-# Production
+# Production / build artifacts
 build/
 dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+ENV/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.python-version
 
 # Environment — never commit keys
 .env
 .env.local
 .env*.local
+.env.development
+.env.test
+.env.production
 
 # Editors & OS
 .vscode/
 .idea/
 .DS_Store
+Thumbs.db
 
-# Misc
+# Logs & deploy
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 .vercel
 *.tsbuildinfo
+
+# Legacy pipeline output (canonical outputs live in processed/)
+output/*
+!output/.gitkeep
+
+# Optional local frontend copy of pipeline JSON (regenerate from processed/)
+public/data/community_gap_outputs.json

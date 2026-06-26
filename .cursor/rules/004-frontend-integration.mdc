@@ -1,0 +1,59 @@
+---
+description: "Rules for frontend dashboard and data display"
+globs:
+  - "app/**/*.tsx"
+  - "components/**/*.tsx"
+  - "lib/**/*.ts"
+  - "styles/**/*.css"
+alwaysApply: false
+---
+
+# Frontend Rules
+
+Build a polished one-screen demo dashboard.
+
+Main screen sections:
+- district selector
+- summary cards
+- community gap score
+- confidence badge
+- evidence bullets
+- amenity category breakdown
+- AI recommendation panel
+- optional supporting context panel
+
+Frontend should consume:
+processed/community_gap_outputs.json
+
+Important fields:
+- district
+- community_metrics
+- amenity_counts
+- supporting_context
+- scores
+- classification
+- evidence_bullets
+- top_gap_drivers
+
+Always show evidence beside recommendations.
+Do not show an AI recommendation without the evidence bullets and confidence badge.
+
+Confidence badge styling:
+- High = strong evidence agreement
+- Medium = mixed but useful evidence
+- Low = limited or uncertain evidence
+
+Dashboard should be readable in a 2–3 minute demo.
+Avoid clutter.
+Use clear labels.
+Prefer simple cards, badges, and small charts over complex maps.
+
+Do not add:
+- login
+- database
+- unnecessary routing
+- complex filters
+- unfinished map features
+- features that are not useful in the final demo
+
+If something breaks the main flow, remove it.

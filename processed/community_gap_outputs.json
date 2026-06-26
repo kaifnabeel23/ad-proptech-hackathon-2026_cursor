@@ -1,0 +1,1489 @@
+{
+  "project": "Community Gap & Confidence Copilot",
+  "track": "Future Communities",
+  "generated_at": "2026-06-26T10:40:59.855893+00:00",
+  "methodology_version": "1.0.0",
+  "scoring_weights": {
+    "community_need": 0.55,
+    "amenity_shortage": 0.35,
+    "market_pressure": 0.1
+  },
+  "district_count": 20,
+  "districts": [
+    {
+      "district": "Al Ghadeer",
+      "area_type": "border",
+      "profile": "affordable",
+      "location": {
+        "latitude": 24.3,
+        "longitude": 54.78
+      },
+      "community_metrics": {
+        "population_estimate": 247087,
+        "occupancy_rate": 0.86,
+        "service_demand_index": 79.58,
+        "mobility_score": 56.33,
+        "resident_experience_score": 74.67
+      },
+      "amenity_counts": {
+        "education": 0,
+        "healthcare": 1,
+        "retail": 14,
+        "services": 0,
+        "community": 10,
+        "mobility": 1,
+        "total_amenities": 26,
+        "amenity_diversity_count": 4
+      },
+      "supporting_context": {
+        "listing_count": 315,
+        "available_listing_count": 211,
+        "rent_listing_count": 203,
+        "sale_listing_count": 112,
+        "transaction_count": 281,
+        "parcel_count": 27,
+        "vacant_or_available_parcel_count": 13
+      },
+      "scores": {
+        "community_need_score": 54,
+        "amenity_adequacy_score": 10,
+        "amenity_shortage_score": 90,
+        "market_pressure_score": 91,
+        "intervention_feasibility_score": 52,
+        "community_gap_score": 70,
+        "confidence_score": 100,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Medium",
+        "confidence_level": "High",
+        "confidence_reason": "High confidence for Al Ghadeer: 8/8 signals agree, including elevated service demand, below-median mobility, below-median resident experience (+5 more).",
+        "recommended_intervention_category": "Education capacity",
+        "recommendation_priority": "Medium"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (80 vs 63).",
+        "Mobility score is below the city median (56 vs 72).",
+        "Resident experience is weaker than the city median (75 vs 87).",
+        "Education amenity coverage is below the city median (0 OSM amenities vs median 10).",
+        "Healthcare amenity coverage is below the city median (1 OSM amenities vs median 10).",
+        "Mobility-related amenities are limited compared with other districts (1 OSM vs median 19).",
+        "Community need (54) and amenity shortage (90) both exceed city medians, reinforcing the gap story."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Mobility weakness",
+        "Resident experience",
+        "Education shortage",
+        "Healthcare shortage",
+        "Mobility amenity shortage",
+        "Market pressure"
+      ],
+      "rank": 1
+    },
+    {
+      "district": "Al Raha Beach",
+      "area_type": "waterfront",
+      "profile": "high",
+      "location": {
+        "latitude": 24.46,
+        "longitude": 54.61
+      },
+      "community_metrics": {
+        "population_estimate": 257039,
+        "occupancy_rate": 0.87,
+        "service_demand_index": 52.82,
+        "mobility_score": 80.2,
+        "resident_experience_score": 90
+      },
+      "amenity_counts": {
+        "education": 0,
+        "healthcare": 5,
+        "retail": 5,
+        "services": 0,
+        "community": 7,
+        "mobility": 10,
+        "total_amenities": 27,
+        "amenity_diversity_count": 4
+      },
+      "supporting_context": {
+        "listing_count": 265,
+        "available_listing_count": 166,
+        "rent_listing_count": 162,
+        "sale_listing_count": 103,
+        "transaction_count": 282,
+        "parcel_count": 20,
+        "vacant_or_available_parcel_count": 15
+      },
+      "scores": {
+        "community_need_score": 37,
+        "amenity_adequacy_score": 18,
+        "amenity_shortage_score": 82,
+        "market_pressure_score": 44,
+        "intervention_feasibility_score": 71,
+        "community_gap_score": 53,
+        "confidence_score": 38,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Medium",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Al Raha Beach: community need and amenity shortage do not fully align (3/8 signals agree).",
+        "recommended_intervention_category": "Mobility improvement",
+        "recommendation_priority": "Medium"
+      },
+      "evidence_bullets": [
+        "Education amenity coverage is below the city median (0 OSM amenities vs median 10).",
+        "Healthcare amenity coverage is below the city median (5 OSM amenities vs median 10).",
+        "Mobility-related amenities are limited compared with other districts (10 OSM vs median 19).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (15 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Education shortage",
+        "Healthcare shortage",
+        "Mobility amenity shortage",
+        "Mixed evidence"
+      ],
+      "rank": 2
+    },
+    {
+      "district": "Khalifa City",
+      "area_type": "mainland",
+      "profile": "mid",
+      "location": {
+        "latitude": 24.42,
+        "longitude": 54.58
+      },
+      "community_metrics": {
+        "population_estimate": 233922,
+        "occupancy_rate": 0.9,
+        "service_demand_index": 72.92,
+        "mobility_score": 65.5,
+        "resident_experience_score": 79
+      },
+      "amenity_counts": {
+        "education": 23,
+        "healthcare": 9,
+        "retail": 15,
+        "services": 7,
+        "community": 36,
+        "mobility": 4,
+        "total_amenities": 94,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 323,
+        "available_listing_count": 197,
+        "rent_listing_count": 205,
+        "sale_listing_count": 118,
+        "transaction_count": 226,
+        "parcel_count": 29,
+        "vacant_or_available_parcel_count": 15
+      },
+      "scores": {
+        "community_need_score": 51,
+        "amenity_adequacy_score": 59,
+        "amenity_shortage_score": 41,
+        "market_pressure_score": 66,
+        "intervention_feasibility_score": 64,
+        "community_gap_score": 49,
+        "confidence_score": 88,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "High",
+        "confidence_reason": "High confidence for Khalifa City: 7/8 signals agree, including elevated service demand, below-median mobility, below-median resident experience (+4 more).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (73 vs 63).",
+        "Mobility score is below the city median (66 vs 72).",
+        "Resident experience is weaker than the city median (79 vs 87).",
+        "Healthcare amenity coverage is below the city median (9 OSM amenities vs median 10).",
+        "Mobility-related amenities are limited compared with other districts (4 OSM vs median 19).",
+        "Community need (51) and amenity shortage (41) both exceed city medians, reinforcing the gap story.",
+        "Residential listing activity suggests added community pressure (323 listings in district)."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Mobility weakness",
+        "Resident experience",
+        "Healthcare shortage",
+        "Mobility amenity shortage",
+        "Market pressure"
+      ],
+      "rank": 3
+    },
+    {
+      "district": "Yas Island",
+      "area_type": "island",
+      "profile": "leisure",
+      "location": {
+        "latitude": 24.49,
+        "longitude": 54.6
+      },
+      "community_metrics": {
+        "population_estimate": 321425,
+        "occupancy_rate": 0.85,
+        "service_demand_index": 58.83,
+        "mobility_score": 83.5,
+        "resident_experience_score": 86.17
+      },
+      "amenity_counts": {
+        "education": 2,
+        "healthcare": 5,
+        "retail": 4,
+        "services": 7,
+        "community": 23,
+        "mobility": 16,
+        "total_amenities": 57,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 283,
+        "available_listing_count": 176,
+        "rent_listing_count": 165,
+        "sale_listing_count": 118,
+        "transaction_count": 259,
+        "parcel_count": 22,
+        "vacant_or_available_parcel_count": 12
+      },
+      "scores": {
+        "community_need_score": 39,
+        "amenity_adequacy_score": 35,
+        "amenity_shortage_score": 65,
+        "market_pressure_score": 50,
+        "intervention_feasibility_score": 61,
+        "community_gap_score": 49,
+        "confidence_score": 50,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Yas Island: community need and amenity shortage do not fully align (4/8 signals agree).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Resident experience is weaker than the city median (86 vs 87).",
+        "Education amenity coverage is below the city median (2 OSM amenities vs median 10).",
+        "Healthcare amenity coverage is below the city median (5 OSM amenities vs median 10).",
+        "Mobility-related amenities are limited compared with other districts (16 OSM vs median 19).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (12 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Resident experience",
+        "Education shortage",
+        "Healthcare shortage",
+        "Mobility amenity shortage",
+        "Mixed evidence"
+      ],
+      "rank": 4
+    },
+    {
+      "district": "Al Reem Island",
+      "area_type": "island",
+      "profile": "mid_high",
+      "location": {
+        "latitude": 24.49,
+        "longitude": 54.41
+      },
+      "community_metrics": {
+        "population_estimate": 287319,
+        "occupancy_rate": 0.92,
+        "service_demand_index": 62.51,
+        "mobility_score": 80,
+        "resident_experience_score": 87.33
+      },
+      "amenity_counts": {
+        "education": 5,
+        "healthcare": 4,
+        "retail": 13,
+        "services": 3,
+        "community": 40,
+        "mobility": 24,
+        "total_amenities": 89,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 299,
+        "available_listing_count": 176,
+        "rent_listing_count": 189,
+        "sale_listing_count": 110,
+        "transaction_count": 243,
+        "parcel_count": 22,
+        "vacant_or_available_parcel_count": 10
+      },
+      "scores": {
+        "community_need_score": 46,
+        "amenity_adequacy_score": 48,
+        "amenity_shortage_score": 52,
+        "market_pressure_score": 43,
+        "intervention_feasibility_score": 58,
+        "community_gap_score": 48,
+        "confidence_score": 50,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Al Reem Island: several indicators suggest a gap, but not all categories align (elevated service demand, education amenity shortage, healthcare amenity shortage; 4/8 signals).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (63 vs 63).",
+        "Education amenity coverage is below the city median (5 OSM amenities vs median 10).",
+        "Healthcare amenity coverage is below the city median (4 OSM amenities vs median 10).",
+        "Community need (46) and amenity shortage (52) both exceed city medians, reinforcing the gap story."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Education shortage",
+        "Healthcare shortage"
+      ],
+      "rank": 5
+    },
+    {
+      "district": "Mussafah",
+      "area_type": "mainland",
+      "profile": "industrial",
+      "location": {
+        "latitude": 24.35,
+        "longitude": 54.5
+      },
+      "community_metrics": {
+        "population_estimate": 283078,
+        "occupancy_rate": 0.89,
+        "service_demand_index": 82.57,
+        "mobility_score": 63.8,
+        "resident_experience_score": 65.4
+      },
+      "amenity_counts": {
+        "education": 1,
+        "healthcare": 31,
+        "retail": 54,
+        "services": 19,
+        "community": 33,
+        "mobility": 20,
+        "total_amenities": 158,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 281,
+        "available_listing_count": 157,
+        "rent_listing_count": 168,
+        "sale_listing_count": 113,
+        "transaction_count": 263,
+        "parcel_count": 24,
+        "vacant_or_available_parcel_count": 17
+      },
+      "scores": {
+        "community_need_score": 58,
+        "amenity_adequacy_score": 66,
+        "amenity_shortage_score": 34,
+        "market_pressure_score": 32,
+        "intervention_feasibility_score": 64,
+        "community_gap_score": 47,
+        "confidence_score": 50,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Mussafah: community need and amenity shortage do not fully align (4/8 signals agree).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (83 vs 63).",
+        "Mobility score is below the city median (64 vs 72).",
+        "Resident experience is weaker than the city median (65 vs 87).",
+        "Education amenity coverage is below the city median (1 OSM amenities vs median 10).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (17 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Mobility weakness",
+        "Resident experience",
+        "Education shortage",
+        "Mixed evidence"
+      ],
+      "rank": 6
+    },
+    {
+      "district": "Al Reef",
+      "area_type": "mainland",
+      "profile": "affordable",
+      "location": {
+        "latitude": 24.43,
+        "longitude": 54.7
+      },
+      "community_metrics": {
+        "population_estimate": 24101,
+        "occupancy_rate": 0.86,
+        "service_demand_index": 72,
+        "mobility_score": 57,
+        "resident_experience_score": 78
+      },
+      "amenity_counts": {
+        "education": 12,
+        "healthcare": 5,
+        "retail": 25,
+        "services": 7,
+        "community": 71,
+        "mobility": 10,
+        "total_amenities": 130,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 320,
+        "available_listing_count": 198,
+        "rent_listing_count": 195,
+        "sale_listing_count": 125,
+        "transaction_count": 242,
+        "parcel_count": 40,
+        "vacant_or_available_parcel_count": 20
+      },
+      "scores": {
+        "community_need_score": 46,
+        "amenity_adequacy_score": 62,
+        "amenity_shortage_score": 38,
+        "market_pressure_score": 71,
+        "intervention_feasibility_score": 70,
+        "community_gap_score": 46,
+        "confidence_score": 88,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "High",
+        "confidence_reason": "High confidence for Al Reef: 7/8 signals agree, including elevated service demand, below-median mobility, below-median resident experience (+4 more).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (72 vs 63).",
+        "Mobility score is below the city median (57 vs 72).",
+        "Resident experience is weaker than the city median (78 vs 87).",
+        "Healthcare amenity coverage is below the city median (5 OSM amenities vs median 10).",
+        "Mobility-related amenities are limited compared with other districts (10 OSM vs median 19).",
+        "Community need (46) and amenity shortage (38) both exceed city medians, reinforcing the gap story.",
+        "Residential listing activity suggests added community pressure (320 listings in district)."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Mobility weakness",
+        "Resident experience",
+        "Healthcare shortage",
+        "Mobility amenity shortage",
+        "Market pressure"
+      ],
+      "rank": 7
+    },
+    {
+      "district": "Al Bateen",
+      "area_type": "waterfront",
+      "profile": "premium",
+      "location": {
+        "latitude": 24.45,
+        "longitude": 54.33
+      },
+      "community_metrics": {
+        "population_estimate": 378835,
+        "occupancy_rate": 0.88,
+        "service_demand_index": 53.44,
+        "mobility_score": 85,
+        "resident_experience_score": 90.71
+      },
+      "amenity_counts": {
+        "education": 1,
+        "healthcare": 3,
+        "retail": 2,
+        "services": 4,
+        "community": 48,
+        "mobility": 20,
+        "total_amenities": 78,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 276,
+        "available_listing_count": 163,
+        "rent_listing_count": 170,
+        "sale_listing_count": 106,
+        "transaction_count": 219,
+        "parcel_count": 24,
+        "vacant_or_available_parcel_count": 14
+      },
+      "scores": {
+        "community_need_score": 39,
+        "amenity_adequacy_score": 37,
+        "amenity_shortage_score": 63,
+        "market_pressure_score": 16,
+        "intervention_feasibility_score": 68,
+        "community_gap_score": 45,
+        "confidence_score": 25,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Low",
+        "confidence_reason": "Low confidence for Al Bateen: only 2/8 signals agree (education amenity shortage, healthcare amenity shortage).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Education amenity coverage is below the city median (1 OSM amenities vs median 10).",
+        "Healthcare amenity coverage is below the city median (3 OSM amenities vs median 10).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (14 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Education shortage",
+        "Healthcare shortage",
+        "Mixed evidence"
+      ],
+      "rank": 8
+    },
+    {
+      "district": "Masdar City",
+      "area_type": "mainland",
+      "profile": "innovation",
+      "location": {
+        "latitude": 24.43,
+        "longitude": 54.61
+      },
+      "community_metrics": {
+        "population_estimate": 479286,
+        "occupancy_rate": 0.91,
+        "service_demand_index": 42.69,
+        "mobility_score": 85.29,
+        "resident_experience_score": 92
+      },
+      "amenity_counts": {
+        "education": 11,
+        "healthcare": 7,
+        "retail": 15,
+        "services": 8,
+        "community": 19,
+        "mobility": 11,
+        "total_amenities": 71,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 308,
+        "available_listing_count": 185,
+        "rent_listing_count": 198,
+        "sale_listing_count": 110,
+        "transaction_count": 265,
+        "parcel_count": 24,
+        "vacant_or_available_parcel_count": 15
+      },
+      "scores": {
+        "community_need_score": 38,
+        "amenity_adequacy_score": 51,
+        "amenity_shortage_score": 49,
+        "market_pressure_score": 72,
+        "intervention_feasibility_score": 71,
+        "community_gap_score": 45,
+        "confidence_score": 38,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Masdar City: community need and amenity shortage do not fully align (3/8 signals agree).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Healthcare amenity coverage is below the city median (7 OSM amenities vs median 10).",
+        "Mobility-related amenities are limited compared with other districts (11 OSM vs median 19).",
+        "Residential listing activity suggests added community pressure (308 listings in district).",
+        "Transaction activity indicates active market movement in this district (265 transactions).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (15 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Healthcare shortage",
+        "Mobility amenity shortage",
+        "Market pressure",
+        "Mixed evidence"
+      ],
+      "rank": 9
+    },
+    {
+      "district": "Al Shamkha",
+      "area_type": "mainland",
+      "profile": "affordable",
+      "location": {
+        "latitude": 24.34,
+        "longitude": 54.72
+      },
+      "community_metrics": {
+        "population_estimate": 85710,
+        "occupancy_rate": 0.81,
+        "service_demand_index": 84,
+        "mobility_score": 54,
+        "resident_experience_score": 71
+      },
+      "amenity_counts": {
+        "education": 22,
+        "healthcare": 12,
+        "retail": 20,
+        "services": 8,
+        "community": 52,
+        "mobility": 6,
+        "total_amenities": 120,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 304,
+        "available_listing_count": 190,
+        "rent_listing_count": 158,
+        "sale_listing_count": 146,
+        "transaction_count": 244,
+        "parcel_count": 27,
+        "vacant_or_available_parcel_count": 14
+      },
+      "scores": {
+        "community_need_score": 51,
+        "amenity_adequacy_score": 72,
+        "amenity_shortage_score": 28,
+        "market_pressure_score": 63,
+        "intervention_feasibility_score": 56,
+        "community_gap_score": 44,
+        "confidence_score": 62,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Al Shamkha: community need and amenity shortage do not fully align (5/8 signals agree).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (84 vs 63).",
+        "Mobility score is below the city median (54 vs 72).",
+        "Resident experience is weaker than the city median (71 vs 87).",
+        "Mobility-related amenities are limited compared with other districts (6 OSM vs median 19).",
+        "Residential listing activity suggests added community pressure (304 listings in district).",
+        "Transaction activity indicates active market movement in this district (244 transactions).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Mobility weakness",
+        "Resident experience",
+        "Mobility amenity shortage",
+        "Market pressure",
+        "Mixed evidence"
+      ],
+      "rank": 10
+    },
+    {
+      "district": "Mohammed Bin Zayed City",
+      "area_type": "mainland",
+      "profile": "mid_affordable",
+      "location": {
+        "latitude": 24.32,
+        "longitude": 54.54
+      },
+      "community_metrics": {
+        "population_estimate": 222101,
+        "occupancy_rate": 0.84,
+        "service_demand_index": 72.92,
+        "mobility_score": 60,
+        "resident_experience_score": 68.5
+      },
+      "amenity_counts": {
+        "education": 10,
+        "healthcare": 29,
+        "retail": 25,
+        "services": 16,
+        "community": 16,
+        "mobility": 6,
+        "total_amenities": 102,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 268,
+        "available_listing_count": 174,
+        "rent_listing_count": 156,
+        "sale_listing_count": 112,
+        "transaction_count": 255,
+        "parcel_count": 41,
+        "vacant_or_available_parcel_count": 22
+      },
+      "scores": {
+        "community_need_score": 47,
+        "amenity_adequacy_score": 64,
+        "amenity_shortage_score": 36,
+        "market_pressure_score": 42,
+        "intervention_feasibility_score": 73,
+        "community_gap_score": 43,
+        "confidence_score": 62,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Mohammed Bin Zayed City: community need and amenity shortage do not fully align (5/8 signals agree).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (73 vs 63).",
+        "Mobility score is below the city median (60 vs 72).",
+        "Resident experience is weaker than the city median (68 vs 87).",
+        "Education amenity coverage is below the city median (10 OSM amenities vs median 10).",
+        "Mobility-related amenities are limited compared with other districts (6 OSM vs median 19).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (22 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Mobility weakness",
+        "Resident experience",
+        "Education shortage",
+        "Mobility amenity shortage",
+        "Mixed evidence"
+      ],
+      "rank": 11
+    },
+    {
+      "district": "Al Bahia",
+      "area_type": "coastal",
+      "profile": "mid",
+      "location": {
+        "latitude": 24.55,
+        "longitude": 54.66
+      },
+      "community_metrics": {
+        "population_estimate": 210334,
+        "occupancy_rate": 0.9,
+        "service_demand_index": 62.5,
+        "mobility_score": 61.5,
+        "resident_experience_score": 88.25
+      },
+      "amenity_counts": {
+        "education": 14,
+        "healthcare": 10,
+        "retail": 9,
+        "services": 11,
+        "community": 38,
+        "mobility": 18,
+        "total_amenities": 100,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 353,
+        "available_listing_count": 204,
+        "rent_listing_count": 191,
+        "sale_listing_count": 162,
+        "transaction_count": 250,
+        "parcel_count": 33,
+        "vacant_or_available_parcel_count": 23
+      },
+      "scores": {
+        "community_need_score": 44,
+        "amenity_adequacy_score": 70,
+        "amenity_shortage_score": 30,
+        "market_pressure_score": 76,
+        "intervention_feasibility_score": 75,
+        "community_gap_score": 42,
+        "confidence_score": 38,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Al Bahia: community need and amenity shortage do not fully align (3/8 signals agree).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Mobility score is below the city median (62 vs 72).",
+        "Mobility-related amenities are limited compared with other districts (18 OSM vs median 19).",
+        "Residential listing activity suggests added community pressure (353 listings in district).",
+        "Transaction activity indicates active market movement in this district (250 transactions).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (23 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Mobility weakness",
+        "Mobility amenity shortage",
+        "Market pressure",
+        "Mixed evidence"
+      ],
+      "rank": 12
+    },
+    {
+      "district": "Corniche",
+      "area_type": "central",
+      "profile": "established",
+      "location": {
+        "latitude": 24.47,
+        "longitude": 54.34
+      },
+      "community_metrics": {
+        "population_estimate": 509261,
+        "occupancy_rate": 0.92,
+        "service_demand_index": 56.22,
+        "mobility_score": 85.71,
+        "resident_experience_score": 90
+      },
+      "amenity_counts": {
+        "education": 1,
+        "healthcare": 21,
+        "retail": 15,
+        "services": 19,
+        "community": 43,
+        "mobility": 34,
+        "total_amenities": 133,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 310,
+        "available_listing_count": 181,
+        "rent_listing_count": 189,
+        "sale_listing_count": 121,
+        "transaction_count": 251,
+        "parcel_count": 28,
+        "vacant_or_available_parcel_count": 22
+      },
+      "scores": {
+        "community_need_score": 46,
+        "amenity_adequacy_score": 71,
+        "amenity_shortage_score": 29,
+        "market_pressure_score": 61,
+        "intervention_feasibility_score": 84,
+        "community_gap_score": 42,
+        "confidence_score": 25,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Low",
+        "confidence_reason": "Low confidence for Corniche: only 2/8 signals agree (education amenity shortage, elevated market pressure).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Education amenity coverage is below the city median (1 OSM amenities vs median 10).",
+        "Residential listing activity suggests added community pressure (310 listings in district).",
+        "Transaction activity indicates active market movement in this district (251 transactions).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (22 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Education shortage",
+        "Market pressure",
+        "Mixed evidence"
+      ],
+      "rank": 13
+    },
+    {
+      "district": "Saadiyat Island",
+      "area_type": "island",
+      "profile": "premium",
+      "location": {
+        "latitude": 24.55,
+        "longitude": 54.43
+      },
+      "community_metrics": {
+        "population_estimate": 313795,
+        "occupancy_rate": 0.85,
+        "service_demand_index": 45.33,
+        "mobility_score": 85.33,
+        "resident_experience_score": 92
+      },
+      "amenity_counts": {
+        "education": 8,
+        "healthcare": 2,
+        "retail": 5,
+        "services": 2,
+        "community": 28,
+        "mobility": 23,
+        "total_amenities": 68,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 290,
+        "available_listing_count": 169,
+        "rent_listing_count": 152,
+        "sale_listing_count": 138,
+        "transaction_count": 243,
+        "parcel_count": 34,
+        "vacant_or_available_parcel_count": 21
+      },
+      "scores": {
+        "community_need_score": 31,
+        "amenity_adequacy_score": 41,
+        "amenity_shortage_score": 59,
+        "market_pressure_score": 32,
+        "intervention_feasibility_score": 80,
+        "community_gap_score": 41,
+        "confidence_score": 25,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Low",
+        "confidence_reason": "Low confidence for Saadiyat Island: only 2/8 signals agree (education amenity shortage, healthcare amenity shortage).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Education amenity coverage is below the city median (8 OSM amenities vs median 10).",
+        "Healthcare amenity coverage is below the city median (2 OSM amenities vs median 10).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (21 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Education shortage",
+        "Healthcare shortage",
+        "Mixed evidence"
+      ],
+      "rank": 14
+    },
+    {
+      "district": "Zayed City",
+      "area_type": "mainland",
+      "profile": "emerging",
+      "location": {
+        "latitude": 24.33,
+        "longitude": 54.55
+      },
+      "community_metrics": {
+        "population_estimate": 76755,
+        "occupancy_rate": 0.93,
+        "service_demand_index": 76.57,
+        "mobility_score": 67,
+        "resident_experience_score": 71
+      },
+      "amenity_counts": {
+        "education": 27,
+        "healthcare": 23,
+        "retail": 25,
+        "services": 18,
+        "community": 52,
+        "mobility": 13,
+        "total_amenities": 158,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 287,
+        "available_listing_count": 176,
+        "rent_listing_count": 176,
+        "sale_listing_count": 111,
+        "transaction_count": 250,
+        "parcel_count": 36,
+        "vacant_or_available_parcel_count": 19
+      },
+      "scores": {
+        "community_need_score": 54,
+        "amenity_adequacy_score": 87,
+        "amenity_shortage_score": 13,
+        "market_pressure_score": 44,
+        "intervention_feasibility_score": 69,
+        "community_gap_score": 39,
+        "confidence_score": 50,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Zayed City: community need and amenity shortage do not fully align (4/8 signals agree).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (77 vs 63).",
+        "Mobility score is below the city median (67 vs 72).",
+        "Resident experience is weaker than the city median (71 vs 87).",
+        "Mobility-related amenities are limited compared with other districts (13 OSM vs median 19).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (19 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Mobility weakness",
+        "Resident experience",
+        "Mobility amenity shortage",
+        "Mixed evidence"
+      ],
+      "rank": 15
+    },
+    {
+      "district": "Al Maryah Island",
+      "area_type": "island",
+      "profile": "premium",
+      "location": {
+        "latitude": 24.5,
+        "longitude": 54.39
+      },
+      "community_metrics": {
+        "population_estimate": 445889,
+        "occupancy_rate": 0.85,
+        "service_demand_index": 47.54,
+        "mobility_score": 88.71,
+        "resident_experience_score": 90.86
+      },
+      "amenity_counts": {
+        "education": 1,
+        "healthcare": 10,
+        "retail": 24,
+        "services": 5,
+        "community": 19,
+        "mobility": 36,
+        "total_amenities": 95,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 297,
+        "available_listing_count": 163,
+        "rent_listing_count": 167,
+        "sale_listing_count": 130,
+        "transaction_count": 245,
+        "parcel_count": 26,
+        "vacant_or_available_parcel_count": 11
+      },
+      "scores": {
+        "community_need_score": 33,
+        "amenity_adequacy_score": 55,
+        "amenity_shortage_score": 45,
+        "market_pressure_score": 32,
+        "intervention_feasibility_score": 62,
+        "community_gap_score": 37,
+        "confidence_score": 12,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Low",
+        "confidence_reason": "Low confidence for Al Maryah Island: only 1/8 signals agree (education amenity shortage).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Education amenity coverage is below the city median (1 OSM amenities vs median 10).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (11 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously.",
+        "District has 95 mapped OSM amenities across six categories.",
+        "Community need score is 33 and amenity shortage score is 45.",
+        "Estimated district population: 445,889."
+      ],
+      "top_gap_drivers": [
+        "Education shortage",
+        "Mixed evidence"
+      ],
+      "rank": 16
+    },
+    {
+      "district": "Al Maqta",
+      "area_type": "mainland",
+      "profile": "mid",
+      "location": {
+        "latitude": 24.4,
+        "longitude": 54.51
+      },
+      "community_metrics": {
+        "population_estimate": 207187,
+        "occupancy_rate": 0.91,
+        "service_demand_index": 69.65,
+        "mobility_score": 68,
+        "resident_experience_score": 87
+      },
+      "amenity_counts": {
+        "education": 12,
+        "healthcare": 42,
+        "retail": 23,
+        "services": 23,
+        "community": 106,
+        "mobility": 46,
+        "total_amenities": 252,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 293,
+        "available_listing_count": 182,
+        "rent_listing_count": 175,
+        "sale_listing_count": 118,
+        "transaction_count": 256,
+        "parcel_count": 42,
+        "vacant_or_available_parcel_count": 32
+      },
+      "scores": {
+        "community_need_score": 47,
+        "amenity_adequacy_score": 94,
+        "amenity_shortage_score": 6,
+        "market_pressure_score": 57,
+        "intervention_feasibility_score": 80,
+        "community_gap_score": 34,
+        "confidence_score": 25,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Low",
+        "confidence_reason": "Low confidence for Al Maqta: only 2/8 signals agree (elevated service demand, below-median mobility).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (70 vs 63).",
+        "Mobility score is below the city median (68 vs 72).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (32 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Mobility weakness",
+        "Mixed evidence"
+      ],
+      "rank": 17
+    },
+    {
+      "district": "Al Zahiyah",
+      "area_type": "central",
+      "profile": "mid",
+      "location": {
+        "latitude": 24.49,
+        "longitude": 54.37
+      },
+      "community_metrics": {
+        "population_estimate": 308342,
+        "occupancy_rate": 0.86,
+        "service_demand_index": 68.56,
+        "mobility_score": 69,
+        "resident_experience_score": 80.75
+      },
+      "amenity_counts": {
+        "education": 28,
+        "healthcare": 184,
+        "retail": 119,
+        "services": 98,
+        "community": 112,
+        "mobility": 138,
+        "total_amenities": 679,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 317,
+        "available_listing_count": 183,
+        "rent_listing_count": 168,
+        "sale_listing_count": 149,
+        "transaction_count": 262,
+        "parcel_count": 28,
+        "vacant_or_available_parcel_count": 14
+      },
+      "scores": {
+        "community_need_score": 47,
+        "amenity_adequacy_score": 100,
+        "amenity_shortage_score": 0,
+        "market_pressure_score": 70,
+        "intervention_feasibility_score": 61,
+        "community_gap_score": 33,
+        "confidence_score": 50,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Medium",
+        "confidence_reason": "Medium confidence for Al Zahiyah: community need and amenity shortage do not fully align (4/8 signals agree).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Service demand is above the city median (69 vs 63).",
+        "Mobility score is below the city median (69 vs 72).",
+        "Resident experience is weaker than the city median (81 vs 87).",
+        "Residential listing activity suggests added community pressure (317 listings in district).",
+        "Transaction activity indicates active market movement in this district (262 transactions).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (14 vacant or developable parcels).",
+        "Core need and amenity signals disagree, so the recommendation should be treated cautiously."
+      ],
+      "top_gap_drivers": [
+        "Service demand",
+        "Mobility weakness",
+        "Resident experience",
+        "Market pressure",
+        "Mixed evidence"
+      ],
+      "rank": 18
+    },
+    {
+      "district": "Danet Abu Dhabi",
+      "area_type": "central",
+      "profile": "mid_high",
+      "location": {
+        "latitude": 24.43,
+        "longitude": 54.39
+      },
+      "community_metrics": {
+        "population_estimate": 562345,
+        "occupancy_rate": 0.85,
+        "service_demand_index": 59.92,
+        "mobility_score": 75.56,
+        "resident_experience_score": 85.89
+      },
+      "amenity_counts": {
+        "education": 50,
+        "healthcare": 64,
+        "retail": 25,
+        "services": 34,
+        "community": 151,
+        "mobility": 119,
+        "total_amenities": 443,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 309,
+        "available_listing_count": 183,
+        "rent_listing_count": 184,
+        "sale_listing_count": 125,
+        "transaction_count": 230,
+        "parcel_count": 41,
+        "vacant_or_available_parcel_count": 28
+      },
+      "scores": {
+        "community_need_score": 44,
+        "amenity_adequacy_score": 100,
+        "amenity_shortage_score": 0,
+        "market_pressure_score": 53,
+        "intervention_feasibility_score": 83,
+        "community_gap_score": 30,
+        "confidence_score": 12,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Low",
+        "confidence_reason": "Low confidence for Danet Abu Dhabi: only 1/8 signals agree (below-median resident experience).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Resident experience is weaker than the city median (86 vs 87).",
+        "Parcel/infrastructure context suggests the intervention may be feasible (28 vacant or developable parcels).",
+        "District has 443 mapped OSM amenities across six categories.",
+        "Community need score is 44 and amenity shortage score is 0.",
+        "Estimated district population: 562,345."
+      ],
+      "top_gap_drivers": [
+        "Resident experience"
+      ],
+      "rank": 19
+    },
+    {
+      "district": "Al Khalidiyah",
+      "area_type": "central",
+      "profile": "established",
+      "location": {
+        "latitude": 24.47,
+        "longitude": 54.35
+      },
+      "community_metrics": {
+        "population_estimate": 487073,
+        "occupancy_rate": 0.91,
+        "service_demand_index": 55.49,
+        "mobility_score": 82,
+        "resident_experience_score": 91.29
+      },
+      "amenity_counts": {
+        "education": 23,
+        "healthcare": 60,
+        "retail": 21,
+        "services": 27,
+        "community": 81,
+        "mobility": 63,
+        "total_amenities": 275,
+        "amenity_diversity_count": 6
+      },
+      "supporting_context": {
+        "listing_count": 302,
+        "available_listing_count": 173,
+        "rent_listing_count": 187,
+        "sale_listing_count": 115,
+        "transaction_count": 234,
+        "parcel_count": 32,
+        "vacant_or_available_parcel_count": 18
+      },
+      "scores": {
+        "community_need_score": 45,
+        "amenity_adequacy_score": 98,
+        "amenity_shortage_score": 2,
+        "market_pressure_score": 35,
+        "intervention_feasibility_score": 75,
+        "community_gap_score": 29,
+        "confidence_score": 0,
+        "data_completeness_score": 100
+      },
+      "classification": {
+        "gap_level": "Low",
+        "confidence_level": "Low",
+        "confidence_reason": "Low confidence for Al Khalidiyah: limited signal agreement (0/8 signals support a strong intervention claim).",
+        "recommended_intervention_category": "Monitor / no urgent intervention",
+        "recommendation_priority": "Low"
+      },
+      "evidence_bullets": [
+        "Parcel/infrastructure context suggests the intervention may be feasible (18 vacant or developable parcels).",
+        "District has 275 mapped OSM amenities across six categories.",
+        "Community need score is 45 and amenity shortage score is 2.",
+        "Estimated district population: 487,073."
+      ],
+      "top_gap_drivers": [],
+      "rank": 20
+    }
+  ],
+  "ranked_summary": [
+    {
+      "district": "Al Ghadeer",
+      "rank": 1,
+      "community_gap_score": 70,
+      "confidence_level": "High",
+      "recommended_intervention": "Education capacity"
+    },
+    {
+      "district": "Al Raha Beach",
+      "rank": 2,
+      "community_gap_score": 53,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Mobility improvement"
+    },
+    {
+      "district": "Khalifa City",
+      "rank": 3,
+      "community_gap_score": 49,
+      "confidence_level": "High",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Yas Island",
+      "rank": 4,
+      "community_gap_score": 49,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Al Reem Island",
+      "rank": 5,
+      "community_gap_score": 48,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Mussafah",
+      "rank": 6,
+      "community_gap_score": 47,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Al Reef",
+      "rank": 7,
+      "community_gap_score": 46,
+      "confidence_level": "High",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Al Bateen",
+      "rank": 8,
+      "community_gap_score": 45,
+      "confidence_level": "Low",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Masdar City",
+      "rank": 9,
+      "community_gap_score": 45,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Al Shamkha",
+      "rank": 10,
+      "community_gap_score": 44,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Mohammed Bin Zayed City",
+      "rank": 11,
+      "community_gap_score": 43,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Al Bahia",
+      "rank": 12,
+      "community_gap_score": 42,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Corniche",
+      "rank": 13,
+      "community_gap_score": 42,
+      "confidence_level": "Low",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Saadiyat Island",
+      "rank": 14,
+      "community_gap_score": 41,
+      "confidence_level": "Low",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Zayed City",
+      "rank": 15,
+      "community_gap_score": 39,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Al Maryah Island",
+      "rank": 16,
+      "community_gap_score": 37,
+      "confidence_level": "Low",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Al Maqta",
+      "rank": 17,
+      "community_gap_score": 34,
+      "confidence_level": "Low",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Al Zahiyah",
+      "rank": 18,
+      "community_gap_score": 33,
+      "confidence_level": "Medium",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Danet Abu Dhabi",
+      "rank": 19,
+      "community_gap_score": 30,
+      "confidence_level": "Low",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    },
+    {
+      "district": "Al Khalidiyah",
+      "rank": 20,
+      "community_gap_score": 29,
+      "confidence_level": "Low",
+      "recommended_intervention": "Monitor / no urgent intervention"
+    }
+  ]
+}

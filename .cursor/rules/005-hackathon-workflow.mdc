@@ -1,0 +1,58 @@
+---
+description: "Team workflow, Cursor usage, and hackathon delivery rules"
+alwaysApply: true
+---
+
+# Hackathon Workflow Rules
+
+The goal is to win with a working, polished, explainable prototype.
+
+Priority order:
+1. Working demo
+2. Clear evidence and confidence
+3. Clean UI
+4. Strong README
+5. Optional enhancements
+
+Branch workflow:
+- main must stay stable
+- data work goes on data-scoring
+- frontend work goes on frontend-dashboard
+- AI/README work goes on ai-recommendation
+- do not merge broken code into main
+
+Before committing data work, run:
+python scripts/build_community_gap_data.py
+python scripts/check_community_gap_data.py
+
+Before committing frontend work, run:
+npm run dev
+
+Cursor usage:
+When Cursor makes a meaningful contribution, update:
+docs/cursor-build-log.md
+
+Log:
+- prompt used
+- output created
+- issue solved
+- how it helped the team move faster
+
+This supports the Best Use of Cursor award.
+
+Development style:
+- make small working changes
+- test after every important change
+- prefer simple reliable code
+- avoid clever abstractions
+- avoid large rewrites close to demo time
+- keep documentation updated
+
+If time is limited:
+Cut optional features first.
+Never cut:
+- district selector
+- gap score
+- evidence bullets
+- recommendation
+- confidence badge

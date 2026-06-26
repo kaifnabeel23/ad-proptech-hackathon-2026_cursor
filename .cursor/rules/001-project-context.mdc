@@ -1,0 +1,51 @@
+---
+description: "Core project context for Community Gap & Confidence Copilot"
+alwaysApply: true
+---
+
+# Project Context
+
+We are building a hackathon prototype for the Abu Dhabi AI PropTech Challenge.
+
+Project name:
+Community Gap & Confidence Copilot
+
+Track:
+Future Communities
+
+Main user:
+Community planner, real estate developer, community operator, or city decision-maker.
+
+Core question:
+Which Abu Dhabi district needs intervention, what is missing, why do we believe that, and how much should the user trust the recommendation?
+
+Main product idea:
+Compare community demand signals with real amenity coverage, then generate an evidence-backed intervention recommendation with a confidence badge.
+
+Core differentiator:
+Do not just produce smart-sounding AI text.
+Always show:
+- the evidence
+- the calculated scores
+- the recommended intervention
+- the confidence level
+- the uncertainty explanation
+
+MVP flow:
+1. User selects a district
+2. App loads district metrics
+3. App shows community demand, mobility, resident experience, and population
+4. App shows real OSM amenity counts
+5. App calculates community gap score
+6. App shows evidence bullets
+7. App shows AI recommendation
+8. App shows confidence badge
+
+Do not overbuild.
+No login.
+No database unless absolutely necessary.
+No complex backend.
+No multi-agent architecture.
+No speculative features that hurt demo stability.
+
+The winning version is a simple, polished, explainable one-screen prototype.

@@ -1,0 +1,65 @@
+---
+description: "Rules for data loading, feature engineering, scoring, evidence, and exports"
+globs:
+  - "community_gap/**/*.py"
+  - "scripts/**/*.py"
+  - "processed/**/*.json"
+  - "processed/**/*.csv"
+alwaysApply: false
+---
+
+# Data Layer Rules
+
+The data layer is the source of truth.
+
+The LLM must never invent scores, evidence, district metrics, amenity counts, or confidence levels.
+
+Use these files as core scoring inputs:
+- data/sample_communities.csv
+- data/districts.csv
+- data/osm_amenities.csv
+
+Use these files as supporting context only:
+- data/sample_listings.csv
+- data/sample_parcels.csv
+- data/sample_transactions.csv
+
+Keep sample_investors.csv optional unless it clearly strengthens the Future Communities story.
+
+Core scoring logic:
+- community_need_score comes from service demand, mobility weakness, resident experience weakness, population, and occupancy.
+- amenity_adequacy_score comes from real OSM amenity counts by district/category.
+- amenity_shortage_score = 100 - amenity_adequacy_score.
+- market_pressure_score can use listings and transactions, but should not dominate the main score.
+- intervention_feasibility_score can use parcels and infrastructure, but should not be included inside the community gap score.
+- community_gap_score should mainly represent community need vs amenity shortage.
+
+Confidence logic:
+Confidence is not an ML probability.
+Confidence reflects how many independent evidence signals agree.
+
+Always:
+- validate required columns
+- clean district names by trimming whitespace
+- raise clear errors for missing required columns
+- handle missing optional files safely
+- keep output JSON stable
+- convert pandas/numpy types into normal Python JSON-safe types
+- replace NaN with None
+- keep calculations deterministic and explainable
+
+Never:
+- call external APIs from the data layer
+- add a database
+- hide scoring logic inside unclear code
+- use the LLM to calculate data values
+- change the final JSON shape without updating docs/data_handoff.md
+
+Expected outputs:
+- processed/community_gap_outputs.json
+- processed/community_gap_scores.csv
+
+Scripts should work from repo root:
+python scripts/build_community_gap_data.py
+python scripts/check_community_gap_data.py
+python scripts/find_demo_districts.py

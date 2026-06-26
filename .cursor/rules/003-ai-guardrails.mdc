@@ -1,0 +1,53 @@
+---
+description: "Rules for LLM recommendation and explanation layer"
+globs:
+  - "ai/**/*.py"
+  - "ai/**/*.ts"
+  - "lib/**/*ai*"
+  - "app/**/*.tsx"
+  - "components/**/*.tsx"
+alwaysApply: false
+---
+
+# AI Guardrails
+
+The AI layer is only allowed to interpret structured evidence from the data pipeline.
+
+The AI must not:
+- invent district metrics
+- invent amenity counts
+- invent confidence levels
+- invent scores
+- claim live data unless live data is actually connected
+- make unsupported claims about Abu Dhabi districts
+
+The AI input should come from processed/community_gap_outputs.json and include:
+- district
+- community_metrics
+- amenity_counts
+- supporting_context
+- scores
+- classification
+- evidence_bullets
+- top_gap_drivers
+
+The AI output should be concise and demo-friendly:
+1. District summary
+2. Main gap
+3. Recommended intervention
+4. Why this recommendation is supported
+5. Confidence/uncertainty note
+
+Recommended tone:
+Professional, direct, useful for planners/developers.
+
+Example instruction to model:
+"Use only the structured evidence provided. Do not invent facts. If the evidence is mixed, say so clearly."
+
+Always include uncertainty when:
+- confidence_level is Medium or Low
+- evidence bullets mention mixed signals
+- data_completeness_score is below 80
+
+The deterministic data layer produces the truth.
+The LLM produces the explanation.

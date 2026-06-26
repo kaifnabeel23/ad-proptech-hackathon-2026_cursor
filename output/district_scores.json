@@ -1,0 +1,1775 @@
+{
+  "project": "Community Gap & Confidence Copilot",
+  "track": "Future Communities",
+  "generated_at": "2026-06-26T09:42:16.658432+00:00",
+  "methodology_version": "1.0.0",
+  "scoring_weights": {
+    "community_need": 0.55,
+    "amenity_shortage": 0.35,
+    "market_pressure": 0.05,
+    "intervention_feasibility": 0.05
+  },
+  "city_medians": {
+    "service_demand_index": 62.504999999999995,
+    "mobility_score": 72.27777777777777,
+    "resident_experience_score": 86.58333333333334,
+    "community_gap_score": 41.065
+  },
+  "district_count": 20,
+  "districts": [
+    {
+      "district": "Al Ghadeer",
+      "rank": 1,
+      "area_type": "border",
+      "profile": "affordable",
+      "coordinates": {
+        "latitude": 24.3,
+        "longitude": 54.78
+      },
+      "scores": {
+        "community_need_score": 54.46,
+        "amenity_adequacy_score": 24.2,
+        "amenity_shortage_score": 75.8,
+        "market_pressure_score": 57.0,
+        "intervention_feasibility_score": 56.11,
+        "community_gap_score": 62.14,
+        "confidence_level": "medium"
+      },
+      "community_metrics": {
+        "population_estimate": 247087,
+        "community_count": 3,
+        "occupancy_rate": 0.86,
+        "service_demand_index": 79.58,
+        "mobility_score": 56.333333333333336,
+        "resident_experience_score": 74.66666666666667,
+        "top_optimization_opportunity": "add_grocery_retail"
+      },
+      "amenity_counts": {
+        "education": 0,
+        "healthcare": 1,
+        "mobility": 1,
+        "retail": 14,
+        "community": 10,
+        "services": 0
+      },
+      "amenity_total": 26,
+      "amenity_per_10k": {
+        "education": 0.0,
+        "healthcare": 0.0405,
+        "mobility": 0.0405,
+        "retail": 0.5666,
+        "community": 0.4047,
+        "services": 0.0
+      },
+      "category_shortages": {
+        "education": 100.0,
+        "healthcare": 90.88,
+        "mobility": 94.37,
+        "retail": 0.0,
+        "community": 69.56,
+        "services": 100.0
+      },
+      "supporting_context": {
+        "listing_count": 315,
+        "active_listing_count": 211,
+        "listings_per_10k_residents": 12.75,
+        "transaction_count": 281,
+        "transactions_per_10k_residents": 11.37,
+        "avg_price_per_sqm_aed": 2855.06,
+        "vacant_parcel_count": 13,
+        "avg_development_potential": 74.96,
+        "infrastructure_score": 60.0
+      },
+      "recommended_intervention": {
+        "category": "mobility_infrastructure",
+        "primary_amenity_category": "mobility",
+        "label": "Accelerate transit and mobility links",
+        "rationale": "Mobility shows the largest population-adjusted shortage (weighted gap 141.6) given current service demand (79.6) and mobility (56.3)."
+      },
+      "evidence": [
+        "Service demand index is 79.6 (city median 62.5).",
+        "Mobility score is 56.3 vs city median 72.3.",
+        "Resident experience score is 74.7 (city median 86.6).",
+        "Estimated district population: 247,087 across 3 community record(s).",
+        "Education coverage is weak: 0 OSM amenities (0.00 per 10k residents; shortage 100.0).",
+        "Services coverage is weak: 0 OSM amenities (0.00 per 10k residents; shortage 100.0).",
+        "Mobility coverage is weak: 1 OSM amenities (0.04 per 10k residents; shortage 94.4).",
+        "Community need score 54.5 and amenity shortage score 75.8 combine to gap score 62.1.",
+        "Market context: 315 listings (12.75 per 10k residents); 281 recorded transactions.",
+        "Feasibility context: 13 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Medium confidence: need and amenity signals partially align; some categories show gaps while others are mixed."
+    },
+    {
+      "district": "Al Raha Beach",
+      "rank": 2,
+      "area_type": "waterfront",
+      "profile": "high",
+      "coordinates": {
+        "latitude": 24.46,
+        "longitude": 54.61
+      },
+      "scores": {
+        "community_need_score": 38.27,
+        "amenity_adequacy_score": 26.27,
+        "amenity_shortage_score": 73.73,
+        "market_pressure_score": 64.5,
+        "intervention_feasibility_score": 61.36,
+        "community_gap_score": 53.15,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 257039,
+        "community_count": 5,
+        "occupancy_rate": 0.872,
+        "service_demand_index": 52.82,
+        "mobility_score": 80.2,
+        "resident_experience_score": 90.0,
+        "top_optimization_opportunity": "add_clinic_capacity"
+      },
+      "amenity_counts": {
+        "education": 0,
+        "healthcare": 5,
+        "mobility": 10,
+        "retail": 5,
+        "community": 7,
+        "services": 0
+      },
+      "amenity_total": 27,
+      "amenity_per_10k": {
+        "education": 0.0,
+        "healthcare": 0.1945,
+        "mobility": 0.389,
+        "retail": 0.1945,
+        "community": 0.2723,
+        "services": 0.0
+      },
+      "category_shortages": {
+        "education": 100.0,
+        "healthcare": 56.18,
+        "mobility": 45.95,
+        "retail": 60.74,
+        "community": 79.52,
+        "services": 100.0
+      },
+      "supporting_context": {
+        "listing_count": 265,
+        "active_listing_count": 166,
+        "listings_per_10k_residents": 10.31,
+        "transaction_count": 282,
+        "transactions_per_10k_residents": 10.97,
+        "avg_price_per_sqm_aed": 6804.05,
+        "vacant_parcel_count": 15,
+        "avg_development_potential": 76.55,
+        "infrastructure_score": 87.0
+      },
+      "recommended_intervention": {
+        "category": "education_capacity",
+        "primary_amenity_category": "education",
+        "label": "Expand education and nursery capacity",
+        "rationale": "Education shows the largest population-adjusted shortage (weighted gap 100.0) given current service demand (52.8) and mobility (80.2)."
+      },
+      "evidence": [
+        "Service demand index is 52.8, below the city median \u2014 need pressure is moderate.",
+        "Estimated district population: 257,039 across 5 community record(s).",
+        "Education coverage is weak: 0 OSM amenities (0.00 per 10k residents; shortage 100.0).",
+        "Services coverage is weak: 0 OSM amenities (0.00 per 10k residents; shortage 100.0).",
+        "Community coverage is weak: 7 OSM amenities (0.27 per 10k residents; shortage 79.5).",
+        "Community need score 38.3 and amenity shortage score 73.7 combine to gap score 53.1.",
+        "Market context: 265 listings (10.31 per 10k residents); 282 recorded transactions.",
+        "Feasibility context: 15 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Al Bateen",
+      "rank": 3,
+      "area_type": "waterfront",
+      "profile": "premium",
+      "coordinates": {
+        "latitude": 24.452,
+        "longitude": 54.332
+      },
+      "scores": {
+        "community_need_score": 41.69,
+        "amenity_adequacy_score": 38.03,
+        "amenity_shortage_score": 61.97,
+        "market_pressure_score": 42.0,
+        "intervention_feasibility_score": 52.21,
+        "community_gap_score": 49.33,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 378835,
+        "community_count": 7,
+        "occupancy_rate": 0.88,
+        "service_demand_index": 53.44,
+        "mobility_score": 85.0,
+        "resident_experience_score": 90.71428571428571,
+        "top_optimization_opportunity": "improve_cycle_paths"
+      },
+      "amenity_counts": {
+        "education": 1,
+        "healthcare": 3,
+        "mobility": 20,
+        "retail": 2,
+        "community": 48,
+        "services": 4
+      },
+      "amenity_total": 78,
+      "amenity_per_10k": {
+        "education": 0.0264,
+        "healthcare": 0.0792,
+        "mobility": 0.5279,
+        "retail": 0.0528,
+        "community": 1.267,
+        "services": 0.1056
+      },
+      "category_shortages": {
+        "education": 92.51,
+        "healthcare": 82.16,
+        "mobility": 26.66,
+        "retail": 89.34,
+        "community": 4.71,
+        "services": 76.43
+      },
+      "supporting_context": {
+        "listing_count": 276,
+        "active_listing_count": 163,
+        "listings_per_10k_residents": 7.29,
+        "transaction_count": 219,
+        "transactions_per_10k_residents": 5.78,
+        "avg_price_per_sqm_aed": 7128.67,
+        "vacant_parcel_count": 14,
+        "avg_development_potential": 76.54,
+        "infrastructure_score": 90.0
+      },
+      "recommended_intervention": {
+        "category": "education_capacity",
+        "primary_amenity_category": "education",
+        "label": "Expand education and nursery capacity",
+        "rationale": "Education shows the largest population-adjusted shortage (weighted gap 92.5) given current service demand (53.4) and mobility (85.0)."
+      },
+      "evidence": [
+        "Service demand index is 53.4, below the city median \u2014 need pressure is moderate.",
+        "Estimated district population: 378,835 across 7 community record(s).",
+        "Education coverage is weak: 1 OSM amenities (0.03 per 10k residents; shortage 92.5).",
+        "Retail coverage is weak: 2 OSM amenities (0.05 per 10k residents; shortage 89.3).",
+        "Healthcare coverage is weak: 3 OSM amenities (0.08 per 10k residents; shortage 82.2).",
+        "Community need score 41.7 and amenity shortage score 62.0 combine to gap score 49.3.",
+        "Market context: 276 listings (7.29 per 10k residents); 219 recorded transactions.",
+        "Feasibility context: 14 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Yas Island",
+      "rank": 4,
+      "area_type": "island",
+      "profile": "leisure",
+      "coordinates": {
+        "latitude": 24.49,
+        "longitude": 54.603
+      },
+      "scores": {
+        "community_need_score": 43.56,
+        "amenity_adequacy_score": 41.56,
+        "amenity_shortage_score": 58.44,
+        "market_pressure_score": 44.75,
+        "intervention_feasibility_score": 46.75,
+        "community_gap_score": 48.99,
+        "confidence_level": "medium"
+      },
+      "community_metrics": {
+        "population_estimate": 321425,
+        "community_count": 6,
+        "occupancy_rate": 0.8517,
+        "service_demand_index": 58.83,
+        "mobility_score": 83.5,
+        "resident_experience_score": 86.16666666666667,
+        "top_optimization_opportunity": "expand_retail_offering"
+      },
+      "amenity_counts": {
+        "education": 2,
+        "healthcare": 5,
+        "mobility": 16,
+        "retail": 4,
+        "community": 23,
+        "services": 7
+      },
+      "amenity_total": 57,
+      "amenity_per_10k": {
+        "education": 0.0622,
+        "healthcare": 0.1556,
+        "mobility": 0.4978,
+        "retail": 0.1244,
+        "community": 0.7156,
+        "services": 0.2178
+      },
+      "category_shortages": {
+        "education": 82.36,
+        "healthcare": 64.95,
+        "mobility": 30.84,
+        "retail": 74.89,
+        "community": 46.18,
+        "services": 51.39
+      },
+      "supporting_context": {
+        "listing_count": 283,
+        "active_listing_count": 176,
+        "listings_per_10k_residents": 8.8,
+        "transaction_count": 259,
+        "transactions_per_10k_residents": 8.06,
+        "avg_price_per_sqm_aed": 6750.81,
+        "vacant_parcel_count": 12,
+        "avg_development_potential": 72.18,
+        "infrastructure_score": 88.0
+      },
+      "recommended_intervention": {
+        "category": "retail_expansion",
+        "primary_amenity_category": "retail",
+        "label": "Expand retail and grocery offering",
+        "rationale": "Retail shows the largest population-adjusted shortage (weighted gap 74.9) given current service demand (58.8) and mobility (83.5)."
+      },
+      "evidence": [
+        "Service demand index is 58.8, below the city median \u2014 need pressure is moderate.",
+        "Resident experience score is 86.2 (city median 86.6).",
+        "Estimated district population: 321,425 across 6 community record(s).",
+        "Education coverage is weak: 2 OSM amenities (0.06 per 10k residents; shortage 82.4).",
+        "Retail coverage is weak: 4 OSM amenities (0.12 per 10k residents; shortage 74.9).",
+        "Healthcare coverage is weak: 5 OSM amenities (0.16 per 10k residents; shortage 65.0).",
+        "Community need score 43.6 and amenity shortage score 58.4 combine to gap score 49.0.",
+        "Market context: 283 listings (8.80 per 10k residents); 259 recorded transactions.",
+        "Feasibility context: 12 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Medium confidence: need and amenity signals partially align; some categories show gaps while others are mixed."
+    },
+    {
+      "district": "Masdar City",
+      "rank": 5,
+      "area_type": "mainland",
+      "profile": "innovation",
+      "coordinates": {
+        "latitude": 24.43,
+        "longitude": 54.614
+      },
+      "scores": {
+        "community_need_score": 39.91,
+        "amenity_adequacy_score": 43.36,
+        "amenity_shortage_score": 56.64,
+        "market_pressure_score": 27.75,
+        "intervention_feasibility_score": 63.25,
+        "community_gap_score": 46.32,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 479286,
+        "community_count": 7,
+        "occupancy_rate": 0.9071,
+        "service_demand_index": 42.69,
+        "mobility_score": 85.28571428571429,
+        "resident_experience_score": 92.0,
+        "top_optimization_opportunity": "accelerate_transit_link"
+      },
+      "amenity_counts": {
+        "education": 11,
+        "healthcare": 7,
+        "mobility": 11,
+        "retail": 15,
+        "community": 19,
+        "services": 8
+      },
+      "amenity_total": 71,
+      "amenity_per_10k": {
+        "education": 0.2295,
+        "healthcare": 0.1461,
+        "mobility": 0.2295,
+        "retail": 0.313,
+        "community": 0.3964,
+        "services": 0.1669
+      },
+      "category_shortages": {
+        "education": 34.9,
+        "healthcare": 67.09,
+        "mobility": 68.11,
+        "retail": 36.82,
+        "community": 70.19,
+        "services": 62.75
+      },
+      "supporting_context": {
+        "listing_count": 308,
+        "active_listing_count": 185,
+        "listings_per_10k_residents": 6.43,
+        "transaction_count": 265,
+        "transactions_per_10k_residents": 5.53,
+        "avg_price_per_sqm_aed": 5202.9,
+        "vacant_parcel_count": 15,
+        "avg_development_potential": 70.83,
+        "infrastructure_score": 90.0
+      },
+      "recommended_intervention": {
+        "category": "mobility_infrastructure",
+        "primary_amenity_category": "mobility",
+        "label": "Accelerate transit and mobility links",
+        "rationale": "Mobility shows the largest population-adjusted shortage (weighted gap 68.1) given current service demand (42.7) and mobility (85.3)."
+      },
+      "evidence": [
+        "Service demand index is 42.7, below the city median \u2014 need pressure is moderate.",
+        "Estimated district population: 479,286 across 7 community record(s).",
+        "Community coverage is weak: 19 OSM amenities (0.40 per 10k residents; shortage 70.2).",
+        "Mobility coverage is weak: 11 OSM amenities (0.23 per 10k residents; shortage 68.1).",
+        "Healthcare coverage is weak: 7 OSM amenities (0.15 per 10k residents; shortage 67.1).",
+        "Community need score 39.9 and amenity shortage score 56.6 combine to gap score 46.3.",
+        "Market context: 308 listings (6.43 per 10k residents); 265 recorded transactions.",
+        "Feasibility context: 15 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Saadiyat Island",
+      "rank": 6,
+      "area_type": "island",
+      "profile": "premium",
+      "coordinates": {
+        "latitude": 24.545,
+        "longitude": 54.431
+      },
+      "scores": {
+        "community_need_score": 37.15,
+        "amenity_adequacy_score": 50.02,
+        "amenity_shortage_score": 49.98,
+        "market_pressure_score": 49.25,
+        "intervention_feasibility_score": 78.51,
+        "community_gap_score": 44.31,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 313795,
+        "community_count": 3,
+        "occupancy_rate": 0.8533,
+        "service_demand_index": 45.33,
+        "mobility_score": 85.33333333333333,
+        "resident_experience_score": 92.0,
+        "top_optimization_opportunity": "expand_retail_offering"
+      },
+      "amenity_counts": {
+        "education": 8,
+        "healthcare": 2,
+        "mobility": 23,
+        "retail": 5,
+        "community": 28,
+        "services": 2
+      },
+      "amenity_total": 68,
+      "amenity_per_10k": {
+        "education": 0.2549,
+        "healthcare": 0.0637,
+        "mobility": 0.733,
+        "retail": 0.1593,
+        "community": 0.8923,
+        "services": 0.0637
+      },
+      "category_shortages": {
+        "education": 27.7,
+        "healthcare": 85.65,
+        "mobility": 0.0,
+        "retail": 67.84,
+        "community": 32.89,
+        "services": 85.78
+      },
+      "supporting_context": {
+        "listing_count": 290,
+        "active_listing_count": 169,
+        "listings_per_10k_residents": 9.24,
+        "transaction_count": 243,
+        "transactions_per_10k_residents": 7.74,
+        "avg_price_per_sqm_aed": 10132.16,
+        "vacant_parcel_count": 21,
+        "avg_development_potential": 70.35,
+        "infrastructure_score": 92.0
+      },
+      "recommended_intervention": {
+        "category": "essential_services",
+        "primary_amenity_category": "services",
+        "label": "Strengthen essential neighbourhood services",
+        "rationale": "Services shows the largest population-adjusted shortage (weighted gap 85.8) given current service demand (45.3) and mobility (85.3)."
+      },
+      "evidence": [
+        "Service demand index is 45.3, below the city median \u2014 need pressure is moderate.",
+        "Estimated district population: 313,795 across 3 community record(s).",
+        "Services coverage is weak: 2 OSM amenities (0.06 per 10k residents; shortage 85.8).",
+        "Healthcare coverage is weak: 2 OSM amenities (0.06 per 10k residents; shortage 85.7).",
+        "Retail coverage is weak: 5 OSM amenities (0.16 per 10k residents; shortage 67.8).",
+        "Community need score 37.1 and amenity shortage score 50.0 combine to gap score 44.3.",
+        "Market context: 290 listings (9.24 per 10k residents); 243 recorded transactions.",
+        "Feasibility context: 21 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Al Maryah Island",
+      "rank": 7,
+      "area_type": "island",
+      "profile": "premium",
+      "coordinates": {
+        "latitude": 24.5,
+        "longitude": 54.39
+      },
+      "scores": {
+        "community_need_score": 39.4,
+        "amenity_adequacy_score": 52.32,
+        "amenity_shortage_score": 47.68,
+        "market_pressure_score": 38.25,
+        "intervention_feasibility_score": 48.64,
+        "community_gap_score": 42.7,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 445889,
+        "community_count": 7,
+        "occupancy_rate": 0.8486,
+        "service_demand_index": 47.54,
+        "mobility_score": 88.71428571428571,
+        "resident_experience_score": 90.85714285714286,
+        "top_optimization_opportunity": "improve_bus_coverage"
+      },
+      "amenity_counts": {
+        "education": 1,
+        "healthcare": 10,
+        "mobility": 36,
+        "retail": 24,
+        "community": 19,
+        "services": 5
+      },
+      "amenity_total": 95,
+      "amenity_per_10k": {
+        "education": 0.0224,
+        "healthcare": 0.2243,
+        "mobility": 0.8074,
+        "retail": 0.5383,
+        "community": 0.4261,
+        "services": 0.1121
+      },
+      "category_shortages": {
+        "education": 93.65,
+        "healthcare": 49.47,
+        "mobility": 0.0,
+        "retail": 0.0,
+        "community": 67.95,
+        "services": 74.98
+      },
+      "supporting_context": {
+        "listing_count": 297,
+        "active_listing_count": 163,
+        "listings_per_10k_residents": 6.66,
+        "transaction_count": 245,
+        "transactions_per_10k_residents": 5.49,
+        "avg_price_per_sqm_aed": 11272.79,
+        "vacant_parcel_count": 11,
+        "avg_development_potential": 68.96,
+        "infrastructure_score": 96.0
+      },
+      "recommended_intervention": {
+        "category": "education_capacity",
+        "primary_amenity_category": "education",
+        "label": "Expand education and nursery capacity",
+        "rationale": "Education shows the largest population-adjusted shortage (weighted gap 93.7) given current service demand (47.5) and mobility (88.7)."
+      },
+      "evidence": [
+        "Service demand index is 47.5, below the city median \u2014 need pressure is moderate.",
+        "Estimated district population: 445,889 across 7 community record(s).",
+        "Education coverage is weak: 1 OSM amenities (0.02 per 10k residents; shortage 93.7).",
+        "Services coverage is weak: 5 OSM amenities (0.11 per 10k residents; shortage 75.0).",
+        "Community coverage is weak: 19 OSM amenities (0.43 per 10k residents; shortage 68.0).",
+        "Community need score 39.4 and amenity shortage score 47.7 combine to gap score 42.7.",
+        "Market context: 297 listings (6.66 per 10k residents); 245 recorded transactions.",
+        "Feasibility context: 11 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Corniche",
+      "rank": 8,
+      "area_type": "central",
+      "profile": "established",
+      "coordinates": {
+        "latitude": 24.472,
+        "longitude": 54.338
+      },
+      "scores": {
+        "community_need_score": 45.92,
+        "amenity_adequacy_score": 66.24,
+        "amenity_shortage_score": 33.76,
+        "market_pressure_score": 25.75,
+        "intervention_feasibility_score": 80.38,
+        "community_gap_score": 42.38,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 509261,
+        "community_count": 7,
+        "occupancy_rate": 0.9229,
+        "service_demand_index": 56.22,
+        "mobility_score": 85.71428571428571,
+        "resident_experience_score": 90.0,
+        "top_optimization_opportunity": "add_community_events"
+      },
+      "amenity_counts": {
+        "education": 1,
+        "healthcare": 21,
+        "mobility": 34,
+        "retail": 15,
+        "community": 43,
+        "services": 19
+      },
+      "amenity_total": 133,
+      "amenity_per_10k": {
+        "education": 0.0196,
+        "healthcare": 0.4124,
+        "mobility": 0.6676,
+        "retail": 0.2945,
+        "community": 0.8444,
+        "services": 0.3731
+      },
+      "category_shortages": {
+        "education": 94.44,
+        "healthcare": 7.1,
+        "mobility": 7.25,
+        "retail": 40.55,
+        "community": 36.49,
+        "services": 16.73
+      },
+      "supporting_context": {
+        "listing_count": 310,
+        "active_listing_count": 181,
+        "listings_per_10k_residents": 6.09,
+        "transaction_count": 251,
+        "transactions_per_10k_residents": 4.93,
+        "avg_price_per_sqm_aed": 6781.85,
+        "vacant_parcel_count": 22,
+        "avg_development_potential": 74.68,
+        "infrastructure_score": 93.0
+      },
+      "recommended_intervention": {
+        "category": "education_capacity",
+        "primary_amenity_category": "education",
+        "label": "Expand education and nursery capacity",
+        "rationale": "Education shows the largest population-adjusted shortage (weighted gap 94.4) given current service demand (56.2) and mobility (85.7)."
+      },
+      "evidence": [
+        "Service demand index is 56.2, below the city median \u2014 need pressure is moderate.",
+        "Estimated district population: 509,261 across 7 community record(s).",
+        "Education coverage is weak: 1 OSM amenities (0.02 per 10k residents; shortage 94.4).",
+        "Retail coverage is weak: 15 OSM amenities (0.29 per 10k residents; shortage 40.5).",
+        "Community coverage is weak: 43 OSM amenities (0.84 per 10k residents; shortage 36.5).",
+        "Community need score 45.9 and amenity shortage score 33.8 combine to gap score 42.4.",
+        "Market context: 310 listings (6.09 per 10k residents); 251 recorded transactions.",
+        "Feasibility context: 22 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Mussafah",
+      "rank": 9,
+      "area_type": "mainland",
+      "profile": "industrial",
+      "coordinates": {
+        "latitude": 24.35,
+        "longitude": 54.5
+      },
+      "scores": {
+        "community_need_score": 57.12,
+        "amenity_adequacy_score": 82.64,
+        "amenity_shortage_score": 17.36,
+        "market_pressure_score": 41.5,
+        "intervention_feasibility_score": 55.56,
+        "community_gap_score": 42.34,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 283078,
+        "community_count": 5,
+        "occupancy_rate": 0.888,
+        "service_demand_index": 82.57,
+        "mobility_score": 63.8,
+        "resident_experience_score": 65.4,
+        "top_optimization_opportunity": "add_community_events"
+      },
+      "amenity_counts": {
+        "education": 1,
+        "healthcare": 31,
+        "mobility": 20,
+        "retail": 54,
+        "community": 33,
+        "services": 19
+      },
+      "amenity_total": 158,
+      "amenity_per_10k": {
+        "education": 0.0353,
+        "healthcare": 1.0951,
+        "mobility": 0.7065,
+        "retail": 1.9076,
+        "community": 1.1658,
+        "services": 0.6712
+      },
+      "category_shortages": {
+        "education": 89.99,
+        "healthcare": 0.0,
+        "mobility": 1.84,
+        "retail": 0.0,
+        "community": 12.32,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 281,
+        "active_listing_count": 157,
+        "listings_per_10k_residents": 9.93,
+        "transaction_count": 263,
+        "transactions_per_10k_residents": 9.29,
+        "avg_price_per_sqm_aed": 2915.76,
+        "vacant_parcel_count": 17,
+        "avg_development_potential": 69.54,
+        "infrastructure_score": 66.0
+      },
+      "recommended_intervention": {
+        "category": "education_capacity",
+        "primary_amenity_category": "education",
+        "label": "Expand education and nursery capacity",
+        "rationale": "Education shows the largest population-adjusted shortage (weighted gap 117.0) given current service demand (82.6) and mobility (63.8)."
+      },
+      "evidence": [
+        "Service demand index is 82.6 (city median 62.5).",
+        "Mobility score is 63.8 vs city median 72.3.",
+        "Resident experience score is 65.4 (city median 86.6).",
+        "Estimated district population: 283,078 across 5 community record(s).",
+        "Education coverage is weak: 1 OSM amenities (0.04 per 10k residents; shortage 90.0).",
+        "Community need score 57.1 and amenity shortage score 17.4 combine to gap score 42.3.",
+        "Market context: 281 listings (9.93 per 10k residents); 263 recorded transactions.",
+        "Feasibility context: 17 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Mohammed Bin Zayed City",
+      "rank": 10,
+      "area_type": "mainland",
+      "profile": "mid_affordable",
+      "coordinates": {
+        "latitude": 24.32,
+        "longitude": 54.54
+      },
+      "scores": {
+        "community_need_score": 51.1,
+        "amenity_adequacy_score": 81.95,
+        "amenity_shortage_score": 18.05,
+        "market_pressure_score": 59.5,
+        "intervention_feasibility_score": 76.68,
+        "community_gap_score": 41.23,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 222101,
+        "community_count": 4,
+        "occupancy_rate": 0.8425,
+        "service_demand_index": 72.92,
+        "mobility_score": 60.0,
+        "resident_experience_score": 68.5,
+        "top_optimization_opportunity": "accelerate_transit_link"
+      },
+      "amenity_counts": {
+        "education": 10,
+        "healthcare": 29,
+        "mobility": 6,
+        "retail": 25,
+        "community": 16,
+        "services": 16
+      },
+      "amenity_total": 102,
+      "amenity_per_10k": {
+        "education": 0.4502,
+        "healthcare": 1.3057,
+        "mobility": 0.2701,
+        "retail": 1.1256,
+        "community": 0.7204,
+        "services": 0.7204
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 0.0,
+        "mobility": 62.47,
+        "retail": 0.0,
+        "community": 45.82,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 268,
+        "active_listing_count": 174,
+        "listings_per_10k_residents": 12.07,
+        "transaction_count": 255,
+        "transactions_per_10k_residents": 11.48,
+        "avg_price_per_sqm_aed": 4187.58,
+        "vacant_parcel_count": 22,
+        "avg_development_potential": 71.51,
+        "infrastructure_score": 68.0
+      },
+      "recommended_intervention": {
+        "category": "mobility_infrastructure",
+        "primary_amenity_category": "mobility",
+        "label": "Accelerate transit and mobility links",
+        "rationale": "Mobility shows the largest population-adjusted shortage (weighted gap 93.7) given current service demand (72.9) and mobility (60.0)."
+      },
+      "evidence": [
+        "Service demand index is 72.9 (city median 62.5).",
+        "Mobility score is 60.0 vs city median 72.3.",
+        "Resident experience score is 68.5 (city median 86.6).",
+        "Estimated district population: 222,101 across 4 community record(s).",
+        "Mobility coverage is weak: 6 OSM amenities (0.27 per 10k residents; shortage 62.5).",
+        "Community coverage is weak: 16 OSM amenities (0.72 per 10k residents; shortage 45.8).",
+        "Community need score 51.1 and amenity shortage score 18.1 combine to gap score 41.2.",
+        "Market context: 268 listings (12.07 per 10k residents); 255 recorded transactions.",
+        "Feasibility context: 22 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Al Reem Island",
+      "rank": 11,
+      "area_type": "island",
+      "profile": "mid_high",
+      "coordinates": {
+        "latitude": 24.493,
+        "longitude": 54.406
+      },
+      "scores": {
+        "community_need_score": 43.77,
+        "amenity_adequacy_score": 65.89,
+        "amenity_shortage_score": 34.11,
+        "market_pressure_score": 54.75,
+        "intervention_feasibility_score": 42.98,
+        "community_gap_score": 40.9,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 287319,
+        "community_count": 3,
+        "occupancy_rate": 0.9233,
+        "service_demand_index": 62.51,
+        "mobility_score": 80.0,
+        "resident_experience_score": 87.33333333333333,
+        "top_optimization_opportunity": "add_community_events"
+      },
+      "amenity_counts": {
+        "education": 5,
+        "healthcare": 4,
+        "mobility": 24,
+        "retail": 13,
+        "community": 40,
+        "services": 3
+      },
+      "amenity_total": 89,
+      "amenity_per_10k": {
+        "education": 0.174,
+        "healthcare": 0.1392,
+        "mobility": 0.8353,
+        "retail": 0.4525,
+        "community": 1.3922,
+        "services": 0.1044
+      },
+      "category_shortages": {
+        "education": 50.65,
+        "healthcare": 68.64,
+        "mobility": 0.0,
+        "retail": 8.66,
+        "community": 0.0,
+        "services": 76.7
+      },
+      "supporting_context": {
+        "listing_count": 299,
+        "active_listing_count": 176,
+        "listings_per_10k_residents": 10.41,
+        "transaction_count": 243,
+        "transactions_per_10k_residents": 8.46,
+        "avg_price_per_sqm_aed": 5808.28,
+        "vacant_parcel_count": 10,
+        "avg_development_potential": 72.59,
+        "infrastructure_score": 86.0
+      },
+      "recommended_intervention": {
+        "category": "essential_services",
+        "primary_amenity_category": "services",
+        "label": "Strengthen essential neighbourhood services",
+        "rationale": "Services shows the largest population-adjusted shortage (weighted gap 76.7) given current service demand (62.5) and mobility (80.0)."
+      },
+      "evidence": [
+        "Service demand index is 62.5 (city median 62.5).",
+        "Estimated district population: 287,319 across 3 community record(s).",
+        "Services coverage is weak: 3 OSM amenities (0.10 per 10k residents; shortage 76.7).",
+        "Healthcare coverage is weak: 4 OSM amenities (0.14 per 10k residents; shortage 68.6).",
+        "Education coverage is weak: 5 OSM amenities (0.17 per 10k residents; shortage 50.6).",
+        "Community need score 43.8 and amenity shortage score 34.1 combine to gap score 40.9.",
+        "Market context: 299 listings (10.41 per 10k residents); 243 recorded transactions.",
+        "Feasibility context: 10 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Khalifa City",
+      "rank": 12,
+      "area_type": "mainland",
+      "profile": "mid",
+      "coordinates": {
+        "latitude": 24.42,
+        "longitude": 54.58
+      },
+      "scores": {
+        "community_need_score": 49.0,
+        "amenity_adequacy_score": 79.53,
+        "amenity_shortage_score": 20.47,
+        "market_pressure_score": 60.75,
+        "intervention_feasibility_score": 57.07,
+        "community_gap_score": 40.01,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 233922,
+        "community_count": 2,
+        "occupancy_rate": 0.905,
+        "service_demand_index": 72.92,
+        "mobility_score": 65.5,
+        "resident_experience_score": 79.0,
+        "top_optimization_opportunity": "accelerate_transit_link"
+      },
+      "amenity_counts": {
+        "education": 23,
+        "healthcare": 9,
+        "mobility": 4,
+        "retail": 15,
+        "community": 36,
+        "services": 7
+      },
+      "amenity_total": 94,
+      "amenity_per_10k": {
+        "education": 0.9832,
+        "healthcare": 0.3847,
+        "mobility": 0.171,
+        "retail": 0.6412,
+        "community": 1.539,
+        "services": 0.2992
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 13.34,
+        "mobility": 76.24,
+        "retail": 0.0,
+        "community": 0.0,
+        "services": 33.22
+      },
+      "supporting_context": {
+        "listing_count": 323,
+        "active_listing_count": 197,
+        "listings_per_10k_residents": 13.81,
+        "transaction_count": 226,
+        "transactions_per_10k_residents": 9.66,
+        "avg_price_per_sqm_aed": 4241.56,
+        "vacant_parcel_count": 15,
+        "avg_development_potential": 72.24,
+        "infrastructure_score": 72.0
+      },
+      "recommended_intervention": {
+        "category": "mobility_infrastructure",
+        "primary_amenity_category": "mobility",
+        "label": "Accelerate transit and mobility links",
+        "rationale": "Mobility shows the largest population-adjusted shortage (weighted gap 76.2) given current service demand (72.9) and mobility (65.5)."
+      },
+      "evidence": [
+        "Service demand index is 72.9 (city median 62.5).",
+        "Mobility score is 65.5 vs city median 72.3.",
+        "Resident experience score is 79.0 (city median 86.6).",
+        "Estimated district population: 233,922 across 2 community record(s).",
+        "Mobility coverage is weak: 4 OSM amenities (0.17 per 10k residents; shortage 76.2).",
+        "Services coverage is weak: 7 OSM amenities (0.30 per 10k residents; shortage 33.2).",
+        "Community need score 49.0 and amenity shortage score 20.5 combine to gap score 40.0.",
+        "Market context: 323 listings (13.81 per 10k residents); 226 recorded transactions.",
+        "Feasibility context: 15 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Al Shamkha",
+      "rank": 13,
+      "area_type": "mainland",
+      "profile": "affordable",
+      "coordinates": {
+        "latitude": 24.34,
+        "longitude": 54.72
+      },
+      "scores": {
+        "community_need_score": 52.85,
+        "amenity_adequacy_score": 99.54,
+        "amenity_shortage_score": 0.46,
+        "market_pressure_score": 79.0,
+        "intervention_feasibility_score": 53.63,
+        "community_gap_score": 35.86,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 85710,
+        "community_count": 1,
+        "occupancy_rate": 0.81,
+        "service_demand_index": 84.0,
+        "mobility_score": 54.0,
+        "resident_experience_score": 71.0,
+        "top_optimization_opportunity": "accelerate_transit_link"
+      },
+      "amenity_counts": {
+        "education": 22,
+        "healthcare": 12,
+        "mobility": 6,
+        "retail": 20,
+        "community": 52,
+        "services": 8
+      },
+      "amenity_total": 120,
+      "amenity_per_10k": {
+        "education": 2.5668,
+        "healthcare": 1.4001,
+        "mobility": 0.7,
+        "retail": 2.3335,
+        "community": 6.067,
+        "services": 0.9334
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 0.0,
+        "mobility": 2.74,
+        "retail": 0.0,
+        "community": 0.0,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 304,
+        "active_listing_count": 190,
+        "listings_per_10k_residents": 35.47,
+        "transaction_count": 244,
+        "transactions_per_10k_residents": 28.47,
+        "avg_price_per_sqm_aed": 4243.97,
+        "vacant_parcel_count": 14,
+        "avg_development_potential": 74.26,
+        "infrastructure_score": 63.0
+      },
+      "recommended_intervention": {
+        "category": "mobility_infrastructure",
+        "primary_amenity_category": "mobility",
+        "label": "Accelerate transit and mobility links",
+        "rationale": "Mobility shows the largest population-adjusted shortage (weighted gap 4.1) given current service demand (84.0) and mobility (54.0)."
+      },
+      "evidence": [
+        "Service demand index is 84.0 (city median 62.5).",
+        "Mobility score is 54.0 vs city median 72.3.",
+        "Resident experience score is 71.0 (city median 86.6).",
+        "Estimated district population: 85,710 across 1 community record(s).",
+        "Community need score 52.9 and amenity shortage score 0.5 combine to gap score 35.9.",
+        "Market context: 304 listings (35.47 per 10k residents); 244 recorded transactions.",
+        "Feasibility context: 14 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Zayed City",
+      "rank": 14,
+      "area_type": "mainland",
+      "profile": "emerging",
+      "coordinates": {
+        "latitude": 24.33,
+        "longitude": 54.55
+      },
+      "scores": {
+        "community_need_score": 47.82,
+        "amenity_adequacy_score": 100.0,
+        "amenity_shortage_score": 0.0,
+        "market_pressure_score": 81.0,
+        "intervention_feasibility_score": 66.54,
+        "community_gap_score": 33.68,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 76755,
+        "community_count": 2,
+        "occupancy_rate": 0.93,
+        "service_demand_index": 76.57,
+        "mobility_score": 67.0,
+        "resident_experience_score": 71.0,
+        "top_optimization_opportunity": "expand_retail_offering"
+      },
+      "amenity_counts": {
+        "education": 27,
+        "healthcare": 23,
+        "mobility": 13,
+        "retail": 25,
+        "community": 52,
+        "services": 18
+      },
+      "amenity_total": 158,
+      "amenity_per_10k": {
+        "education": 3.5177,
+        "healthcare": 2.9965,
+        "mobility": 1.6937,
+        "retail": 3.2571,
+        "community": 6.7748,
+        "services": 2.3451
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 0.0,
+        "mobility": 0.0,
+        "retail": 0.0,
+        "community": 0.0,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 287,
+        "active_listing_count": 176,
+        "listings_per_10k_residents": 37.39,
+        "transaction_count": 250,
+        "transactions_per_10k_residents": 32.57,
+        "avg_price_per_sqm_aed": 4240.18,
+        "vacant_parcel_count": 19,
+        "avg_development_potential": 71.81,
+        "infrastructure_score": 70.0
+      },
+      "recommended_intervention": {
+        "category": "retail_expansion",
+        "primary_amenity_category": "retail",
+        "label": "Expand retail and grocery offering",
+        "rationale": "Retail shows the largest population-adjusted shortage (weighted gap 0.0) given current service demand (76.6) and mobility (67.0)."
+      },
+      "evidence": [
+        "Service demand index is 76.6 (city median 62.5).",
+        "Mobility score is 67.0 vs city median 72.3.",
+        "Resident experience score is 71.0 (city median 86.6).",
+        "Estimated district population: 76,755 across 2 community record(s).",
+        "Community need score 47.8 and amenity shortage score 0.0 combine to gap score 33.7.",
+        "Market context: 287 listings (37.39 per 10k residents); 250 recorded transactions.",
+        "Feasibility context: 19 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Danet Abu Dhabi",
+      "rank": 15,
+      "area_type": "central",
+      "profile": "mid_high",
+      "coordinates": {
+        "latitude": 24.431,
+        "longitude": 54.39
+      },
+      "scores": {
+        "community_need_score": 50.42,
+        "amenity_adequacy_score": 98.29,
+        "amenity_shortage_score": 1.71,
+        "market_pressure_score": 15.0,
+        "intervention_feasibility_score": 81.55,
+        "community_gap_score": 33.16,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 562345,
+        "community_count": 9,
+        "occupancy_rate": 0.8511,
+        "service_demand_index": 59.92,
+        "mobility_score": 75.55555555555556,
+        "resident_experience_score": 85.88888888888889,
+        "top_optimization_opportunity": "improve_bus_coverage"
+      },
+      "amenity_counts": {
+        "education": 50,
+        "healthcare": 64,
+        "mobility": 119,
+        "retail": 25,
+        "community": 151,
+        "services": 34
+      },
+      "amenity_total": 443,
+      "amenity_per_10k": {
+        "education": 0.8891,
+        "healthcare": 1.1381,
+        "mobility": 2.1161,
+        "retail": 0.4446,
+        "community": 2.6852,
+        "services": 0.6046
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 0.0,
+        "mobility": 0.0,
+        "retail": 10.25,
+        "community": 0.0,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 309,
+        "active_listing_count": 183,
+        "listings_per_10k_residents": 5.49,
+        "transaction_count": 230,
+        "transactions_per_10k_residents": 4.09,
+        "avg_price_per_sqm_aed": 5725.38,
+        "vacant_parcel_count": 28,
+        "avg_development_potential": 71.34,
+        "infrastructure_score": 82.0
+      },
+      "recommended_intervention": {
+        "category": "retail_expansion",
+        "primary_amenity_category": "retail",
+        "label": "Expand retail and grocery offering",
+        "rationale": "Retail shows the largest population-adjusted shortage (weighted gap 10.2) given current service demand (59.9) and mobility (75.6)."
+      },
+      "evidence": [
+        "Service demand index is 59.9, below the city median \u2014 need pressure is moderate.",
+        "Resident experience score is 85.9 (city median 86.6).",
+        "Estimated district population: 562,345 across 9 community record(s).",
+        "Community need score 50.4 and amenity shortage score 1.7 combine to gap score 33.2.",
+        "Market context: 309 listings (5.49 per 10k residents); 230 recorded transactions.",
+        "Feasibility context: 28 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Al Reef",
+      "rank": 16,
+      "area_type": "mainland",
+      "profile": "affordable",
+      "coordinates": {
+        "latitude": 24.43,
+        "longitude": 54.7
+      },
+      "scores": {
+        "community_need_score": 46.1,
+        "amenity_adequacy_score": 100.0,
+        "amenity_shortage_score": 0.0,
+        "market_pressure_score": 83.0,
+        "intervention_feasibility_score": 72.95,
+        "community_gap_score": 33.15,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 24101,
+        "community_count": 1,
+        "occupancy_rate": 0.86,
+        "service_demand_index": 72.0,
+        "mobility_score": 57.0,
+        "resident_experience_score": 78.0,
+        "top_optimization_opportunity": "add_community_events"
+      },
+      "amenity_counts": {
+        "education": 12,
+        "healthcare": 5,
+        "mobility": 10,
+        "retail": 25,
+        "community": 71,
+        "services": 7
+      },
+      "amenity_total": 130,
+      "amenity_per_10k": {
+        "education": 4.979,
+        "healthcare": 2.0746,
+        "mobility": 4.1492,
+        "retail": 10.373,
+        "community": 29.4594,
+        "services": 2.9044
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 0.0,
+        "mobility": 0.0,
+        "retail": 0.0,
+        "community": 0.0,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 320,
+        "active_listing_count": 198,
+        "listings_per_10k_residents": 132.77,
+        "transaction_count": 242,
+        "transactions_per_10k_residents": 100.41,
+        "avg_price_per_sqm_aed": 3356.31,
+        "vacant_parcel_count": 20,
+        "avg_development_potential": 75.67,
+        "infrastructure_score": 65.0
+      },
+      "recommended_intervention": {
+        "category": "community_spaces",
+        "primary_amenity_category": "community",
+        "label": "Invest in parks, events, and community spaces",
+        "rationale": "Community shows the largest population-adjusted shortage (weighted gap 0.0) given current service demand (72.0) and mobility (57.0)."
+      },
+      "evidence": [
+        "Service demand index is 72.0 (city median 62.5).",
+        "Mobility score is 57.0 vs city median 72.3.",
+        "Resident experience score is 78.0 (city median 86.6).",
+        "Estimated district population: 24,101 across 1 community record(s).",
+        "Community need score 46.1 and amenity shortage score 0.0 combine to gap score 33.1.",
+        "Market context: 320 listings (132.77 per 10k residents); 242 recorded transactions.",
+        "Feasibility context: 20 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Al Zahiyah",
+      "rank": 17,
+      "area_type": "central",
+      "profile": "mid",
+      "coordinates": {
+        "latitude": 24.49,
+        "longitude": 54.372
+      },
+      "scores": {
+        "community_need_score": 49.79,
+        "amenity_adequacy_score": 100.0,
+        "amenity_shortage_score": 0.0,
+        "market_pressure_score": 53.0,
+        "intervention_feasibility_score": 57.46,
+        "community_gap_score": 32.91,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 308342,
+        "community_count": 4,
+        "occupancy_rate": 0.8625,
+        "service_demand_index": 68.56,
+        "mobility_score": 69.0,
+        "resident_experience_score": 80.75,
+        "top_optimization_opportunity": "improve_last_mile_transit"
+      },
+      "amenity_counts": {
+        "education": 28,
+        "healthcare": 184,
+        "mobility": 138,
+        "retail": 119,
+        "community": 112,
+        "services": 98
+      },
+      "amenity_total": 679,
+      "amenity_per_10k": {
+        "education": 0.9081,
+        "healthcare": 5.9674,
+        "mobility": 4.4755,
+        "retail": 3.8594,
+        "community": 3.6323,
+        "services": 3.1783
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 0.0,
+        "mobility": 0.0,
+        "retail": 0.0,
+        "community": 0.0,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 317,
+        "active_listing_count": 183,
+        "listings_per_10k_residents": 10.28,
+        "transaction_count": 262,
+        "transactions_per_10k_residents": 8.5,
+        "avg_price_per_sqm_aed": 6099.92,
+        "vacant_parcel_count": 14,
+        "avg_development_potential": 68.21,
+        "infrastructure_score": 80.0
+      },
+      "recommended_intervention": {
+        "category": "mobility_infrastructure",
+        "primary_amenity_category": "mobility",
+        "label": "Accelerate transit and mobility links",
+        "rationale": "Mobility shows the largest population-adjusted shortage (weighted gap 0.0) given current service demand (68.6) and mobility (69.0)."
+      },
+      "evidence": [
+        "Service demand index is 68.6 (city median 62.5).",
+        "Mobility score is 69.0 vs city median 72.3.",
+        "Resident experience score is 80.8 (city median 86.6).",
+        "Estimated district population: 308,342 across 4 community record(s).",
+        "Community need score 49.8 and amenity shortage score 0.0 combine to gap score 32.9.",
+        "Market context: 317 listings (10.28 per 10k residents); 262 recorded transactions.",
+        "Feasibility context: 14 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Al Bahia",
+      "rank": 18,
+      "area_type": "coastal",
+      "profile": "mid",
+      "coordinates": {
+        "latitude": 24.55,
+        "longitude": 54.66
+      },
+      "scores": {
+        "community_need_score": 43.45,
+        "amenity_adequacy_score": 97.73,
+        "amenity_shortage_score": 2.27,
+        "market_pressure_score": 74.25,
+        "intervention_feasibility_score": 81.12,
+        "community_gap_score": 32.46,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 210334,
+        "community_count": 4,
+        "occupancy_rate": 0.8975,
+        "service_demand_index": 62.5,
+        "mobility_score": 61.5,
+        "resident_experience_score": 88.25,
+        "top_optimization_opportunity": "add_clinic_capacity"
+      },
+      "amenity_counts": {
+        "education": 14,
+        "healthcare": 10,
+        "mobility": 18,
+        "retail": 9,
+        "community": 38,
+        "services": 11
+      },
+      "amenity_total": 100,
+      "amenity_per_10k": {
+        "education": 0.6656,
+        "healthcare": 0.4754,
+        "mobility": 0.8558,
+        "retail": 0.4279,
+        "community": 1.8067,
+        "services": 0.523
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 0.0,
+        "mobility": 0.0,
+        "retail": 13.63,
+        "community": 0.0,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 353,
+        "active_listing_count": 204,
+        "listings_per_10k_residents": 16.78,
+        "transaction_count": 250,
+        "transactions_per_10k_residents": 11.89,
+        "avg_price_per_sqm_aed": 4283.47,
+        "vacant_parcel_count": 23,
+        "avg_development_potential": 71.97,
+        "infrastructure_score": 67.0
+      },
+      "recommended_intervention": {
+        "category": "retail_expansion",
+        "primary_amenity_category": "retail",
+        "label": "Expand retail and grocery offering",
+        "rationale": "Retail shows the largest population-adjusted shortage (weighted gap 13.6) given current service demand (62.5) and mobility (61.5)."
+      },
+      "evidence": [
+        "Service demand index is 62.5, below the city median \u2014 need pressure is moderate.",
+        "Mobility score is 61.5 vs city median 72.3.",
+        "Estimated district population: 210,334 across 4 community record(s).",
+        "Community need score 43.5 and amenity shortage score 2.3 combine to gap score 32.5.",
+        "Market context: 353 listings (16.78 per 10k residents); 250 recorded transactions.",
+        "Feasibility context: 23 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Al Maqta",
+      "rank": 19,
+      "area_type": "mainland",
+      "profile": "mid",
+      "coordinates": {
+        "latitude": 24.4,
+        "longitude": 54.51
+      },
+      "scores": {
+        "community_need_score": 43.6,
+        "amenity_adequacy_score": 100.0,
+        "amenity_shortage_score": 0.0,
+        "market_pressure_score": 74.75,
+        "intervention_feasibility_score": 75.84,
+        "community_gap_score": 31.51,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 207187,
+        "community_count": 3,
+        "occupancy_rate": 0.91,
+        "service_demand_index": 69.65,
+        "mobility_score": 68.0,
+        "resident_experience_score": 87.0,
+        "top_optimization_opportunity": "add_community_events"
+      },
+      "amenity_counts": {
+        "education": 12,
+        "healthcare": 42,
+        "mobility": 46,
+        "retail": 23,
+        "community": 106,
+        "services": 23
+      },
+      "amenity_total": 252,
+      "amenity_per_10k": {
+        "education": 0.5792,
+        "healthcare": 2.0272,
+        "mobility": 2.2202,
+        "retail": 1.1101,
+        "community": 5.1162,
+        "services": 1.1101
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 0.0,
+        "mobility": 0.0,
+        "retail": 0.0,
+        "community": 0.0,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 293,
+        "active_listing_count": 182,
+        "listings_per_10k_residents": 14.14,
+        "transaction_count": 256,
+        "transactions_per_10k_residents": 12.36,
+        "avg_price_per_sqm_aed": 4324.15,
+        "vacant_parcel_count": 32,
+        "avg_development_potential": 69.31,
+        "infrastructure_score": 74.0
+      },
+      "recommended_intervention": {
+        "category": "community_spaces",
+        "primary_amenity_category": "community",
+        "label": "Invest in parks, events, and community spaces",
+        "rationale": "Community shows the largest population-adjusted shortage (weighted gap 0.0) given current service demand (69.7) and mobility (68.0)."
+      },
+      "evidence": [
+        "Service demand index is 69.7 (city median 62.5).",
+        "Mobility score is 68.0 vs city median 72.3.",
+        "Estimated district population: 207,187 across 3 community record(s).",
+        "Community need score 43.6 and amenity shortage score 0.0 combine to gap score 31.5.",
+        "Market context: 293 listings (14.14 per 10k residents); 256 recorded transactions.",
+        "Feasibility context: 32 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    },
+    {
+      "district": "Al Khalidiyah",
+      "rank": 20,
+      "area_type": "central",
+      "profile": "established",
+      "coordinates": {
+        "latitude": 24.466,
+        "longitude": 54.349
+      },
+      "scores": {
+        "community_need_score": 45.52,
+        "amenity_adequacy_score": 97.84,
+        "amenity_shortage_score": 2.16,
+        "market_pressure_score": 24.25,
+        "intervention_feasibility_score": 65.6,
+        "community_gap_score": 30.28,
+        "confidence_level": "low"
+      },
+      "community_metrics": {
+        "population_estimate": 487073,
+        "community_count": 7,
+        "occupancy_rate": 0.9129,
+        "service_demand_index": 55.49,
+        "mobility_score": 82.0,
+        "resident_experience_score": 91.28571428571429,
+        "top_optimization_opportunity": "expand_retail_offering"
+      },
+      "amenity_counts": {
+        "education": 23,
+        "healthcare": 60,
+        "mobility": 63,
+        "retail": 21,
+        "community": 81,
+        "services": 27
+      },
+      "amenity_total": 275,
+      "amenity_per_10k": {
+        "education": 0.4722,
+        "healthcare": 1.2318,
+        "mobility": 1.2934,
+        "retail": 0.4311,
+        "community": 1.663,
+        "services": 0.5543
+      },
+      "category_shortages": {
+        "education": 0.0,
+        "healthcare": 0.0,
+        "mobility": 0.0,
+        "retail": 12.98,
+        "community": 0.0,
+        "services": 0.0
+      },
+      "supporting_context": {
+        "listing_count": 302,
+        "active_listing_count": 173,
+        "listings_per_10k_residents": 6.2,
+        "transaction_count": 234,
+        "transactions_per_10k_residents": 4.8,
+        "avg_price_per_sqm_aed": 6301.8,
+        "vacant_parcel_count": 18,
+        "avg_development_potential": 71.84,
+        "infrastructure_score": 89.0
+      },
+      "recommended_intervention": {
+        "category": "retail_expansion",
+        "primary_amenity_category": "retail",
+        "label": "Expand retail and grocery offering",
+        "rationale": "Retail shows the largest population-adjusted shortage (weighted gap 13.0) given current service demand (55.5) and mobility (82.0)."
+      },
+      "evidence": [
+        "Service demand index is 55.5, below the city median \u2014 need pressure is moderate.",
+        "Estimated district population: 487,073 across 7 community record(s).",
+        "Community need score 45.5 and amenity shortage score 2.2 combine to gap score 30.3.",
+        "Market context: 302 listings (6.20 per 10k residents); 234 recorded transactions.",
+        "Feasibility context: 18 vacant or under-development parcels available for intervention."
+      ],
+      "confidence_explanation": "Low confidence: limited or mixed evidence \u2014 rely on additional field validation before major intervention decisions."
+    }
+  ],
+  "ranked_summary": [
+    {
+      "district": "Al Ghadeer",
+      "rank": 1,
+      "community_gap_score": 62.14,
+      "confidence_level": "medium",
+      "recommended_intervention": "Accelerate transit and mobility links"
+    },
+    {
+      "district": "Al Raha Beach",
+      "rank": 2,
+      "community_gap_score": 53.15,
+      "confidence_level": "low",
+      "recommended_intervention": "Expand education and nursery capacity"
+    },
+    {
+      "district": "Al Bateen",
+      "rank": 3,
+      "community_gap_score": 49.33,
+      "confidence_level": "low",
+      "recommended_intervention": "Expand education and nursery capacity"
+    },
+    {
+      "district": "Yas Island",
+      "rank": 4,
+      "community_gap_score": 48.99,
+      "confidence_level": "medium",
+      "recommended_intervention": "Expand retail and grocery offering"
+    },
+    {
+      "district": "Masdar City",
+      "rank": 5,
+      "community_gap_score": 46.32,
+      "confidence_level": "low",
+      "recommended_intervention": "Accelerate transit and mobility links"
+    },
+    {
+      "district": "Saadiyat Island",
+      "rank": 6,
+      "community_gap_score": 44.31,
+      "confidence_level": "low",
+      "recommended_intervention": "Strengthen essential neighbourhood services"
+    },
+    {
+      "district": "Al Maryah Island",
+      "rank": 7,
+      "community_gap_score": 42.7,
+      "confidence_level": "low",
+      "recommended_intervention": "Expand education and nursery capacity"
+    },
+    {
+      "district": "Corniche",
+      "rank": 8,
+      "community_gap_score": 42.38,
+      "confidence_level": "low",
+      "recommended_intervention": "Expand education and nursery capacity"
+    },
+    {
+      "district": "Mussafah",
+      "rank": 9,
+      "community_gap_score": 42.34,
+      "confidence_level": "low",
+      "recommended_intervention": "Expand education and nursery capacity"
+    },
+    {
+      "district": "Mohammed Bin Zayed City",
+      "rank": 10,
+      "community_gap_score": 41.23,
+      "confidence_level": "low",
+      "recommended_intervention": "Accelerate transit and mobility links"
+    },
+    {
+      "district": "Al Reem Island",
+      "rank": 11,
+      "community_gap_score": 40.9,
+      "confidence_level": "low",
+      "recommended_intervention": "Strengthen essential neighbourhood services"
+    },
+    {
+      "district": "Khalifa City",
+      "rank": 12,
+      "community_gap_score": 40.01,
+      "confidence_level": "low",
+      "recommended_intervention": "Accelerate transit and mobility links"
+    },
+    {
+      "district": "Al Shamkha",
+      "rank": 13,
+      "community_gap_score": 35.86,
+      "confidence_level": "low",
+      "recommended_intervention": "Accelerate transit and mobility links"
+    },
+    {
+      "district": "Zayed City",
+      "rank": 14,
+      "community_gap_score": 33.68,
+      "confidence_level": "low",
+      "recommended_intervention": "Expand retail and grocery offering"
+    },
+    {
+      "district": "Danet Abu Dhabi",
+      "rank": 15,
+      "community_gap_score": 33.16,
+      "confidence_level": "low",
+      "recommended_intervention": "Expand retail and grocery offering"
+    },
+    {
+      "district": "Al Reef",
+      "rank": 16,
+      "community_gap_score": 33.15,
+      "confidence_level": "low",
+      "recommended_intervention": "Invest in parks, events, and community spaces"
+    },
+    {
+      "district": "Al Zahiyah",
+      "rank": 17,
+      "community_gap_score": 32.91,
+      "confidence_level": "low",
+      "recommended_intervention": "Accelerate transit and mobility links"
+    },
+    {
+      "district": "Al Bahia",
+      "rank": 18,
+      "community_gap_score": 32.46,
+      "confidence_level": "low",
+      "recommended_intervention": "Expand retail and grocery offering"
+    },
+    {
+      "district": "Al Maqta",
+      "rank": 19,
+      "community_gap_score": 31.51,
+      "confidence_level": "low",
+      "recommended_intervention": "Invest in parks, events, and community spaces"
+    },
+    {
+      "district": "Al Khalidiyah",
+      "rank": 20,
+      "community_gap_score": 30.28,
+      "confidence_level": "low",
+      "recommended_intervention": "Expand retail and grocery offering"
+    }
+  ]
+}
