@@ -1,94 +1,174 @@
-# Abu Dhabi AI PropTech Challenge — Project Template
+# Community Gap & Confidence Copilot
 
-**Building the Intelligence Layer for Land, Investment and Communities**
+**Abu Dhabi AI PropTech Challenge — Future Communities track**
 
-A clean Next.js + TypeScript + Tailwind starter for challenge teams: a generic AI prototype dashboard with a hero, track badge, sample data display, and a demo panel wired for AI output. Replace the mock engine with your model and you have a demo.
+A hackathon prototype that identifies underserved Abu Dhabi districts by comparing **community need signals** with **real OpenStreetMap amenity coverage** — then explains the result with **evidence** and **confidence**, not just an AI guess.
 
-**No paid APIs are used by default** — the "Run Prototype" button calls a local mock so the template works the moment you clone it.
+> Which district needs intervention, what is missing, why do we believe that, and how much should the decision-maker trust the recommendation?
 
-**Cursor-ready:** the template ships with event rules in `.cursor/rules/event.mdc` — open it in [Cursor](https://cursor.com) and the AI already knows the event, the tracks and the data. There's a ⚡ *Best Use of Cursor* award.
+---
+
+## What this repo contains
+
+| Layer | Purpose |
+|-------|---------|
+| **`community_gap/`** | Deterministic Python pipeline — load, aggregate, score, evidence, export |
+| **`processed/`** | Frontend-ready JSON + debug CSV (regenerate with build script) |
+| **`app/` + `components/`** | Next.js dashboard (template UI — wire to `processed/`) |
+| **`docs/`** | Methodology, handoff, demo districts, Cursor build log |
+
+**Design rule:** scores and evidence come from the data pipeline. The UI and LLM only display and explain them.
+
+---
 
 ## Quick start
 
-```bash
-# 1. Get the code (pick one)
-#    a) Click "Use this template" on GitHub, then clone your new repo
-#    b) Or clone directly:
-git clone https://github.com/abu-dhabi-ai-proptech-challenge/project-template.git my-project
-cd my-project
+### Frontend (dashboard)
 
-# 2. Install and run
+```bash
 npm install
 npm run dev
 ```
 
-Open <http://localhost:3000>. You should see the dashboard with sample parcel data and a working (mocked) Run Prototype flow.
+Open <http://localhost:3000>.
 
-## Customize it
+### Data pipeline (Python)
 
-1. **Set your track** — edit the `track` value in `app/page.tsx` (`land` | `investment` | `communities` | `decision`). The badge and accent color follow.
-2. **Name your project** — title and description in `components/Hero.tsx` and `app/layout.tsx`.
-3. **Bring your data** — `lib/sampleData.ts` ships with parcel rows from the starter kit. Replace with whatever your prototype consumes.
-4. **Connect your AI** — `components/DemoPanel.tsx` contains `runPrototype()`, a mock engine with clearly marked hooks for:
-   - OpenAI
-   - Anthropic (Claude)
-   - Hugging Face Inference
-   - Local models (Ollama / llama.cpp)
-   - Your own API
-5. **Keep keys out of git** — copy `.env.example` to `.env.local` and put keys there. For real key security, move model calls into a [route handler](https://nextjs.org/docs/app/building-your-application/routing/route-handlers) (`app/api/run/route.ts`) so keys stay server-side.
+```bash
+pip install -r requirements.txt
+python scripts/build_community_gap_data.py
+python scripts/check_community_gap_data.py
+python scripts/find_demo_districts.py
+```
+
+**Outputs:**
+
+- `processed/community_gap_outputs.json` — main handoff for frontend + AI
+- `processed/community_gap_scores.csv` — flat table for judges / debugging
+
+Optional smoke tests:
+
+```bash
+python -m community_gap.data_loader
+python -m community_gap.features
+```
+
+---
+
+## Data pipeline overview
+
+```
+data/*.csv  →  data_loader  →  features  →  scoring  →  evidence  →  export
+                     │              │
+                     │              └── communities aggregated to district level
+                     └── core CSVs required; listings/parcels/transactions optional
+```
+
+**Core inputs:** `sample_communities.csv`, `districts.csv`, `osm_amenities.csv`  
+**Supporting context:** listings, parcels, transactions (market pressure & feasibility only)
+
+**Main score:** `community_gap_score` = 55% community need + 35% amenity shortage + 10% market pressure
+
+See **`docs/data_methodology.md`** for judges and **`docs/data_handoff.md`** for frontend/AI integration.
+
+---
 
 ## Project structure
 
 ```
-app/
-  layout.tsx        Root layout + metadata
-  page.tsx          The dashboard page — set your track here
-  globals.css       Tailwind + base styles
-components/
-  Hero.tsx          Event-branded header — put your project name here
-  TrackBadge.tsx    Colored badge for your chosen track
-  DemoPanel.tsx     Input → "Run Prototype" → AI output. Connect your model here.
-lib/
-  sampleData.ts     Typed sample data + the mock inference engine
+community_gap/          Python package (scoring layer)
+  data_loader.py        Load + validate CSVs
+  features.py           District aggregation + OSM amenity counts
+  scoring.py            Deterministic scores + confidence
+  evidence.py           Evidence bullets + interventions
+  export.py             JSON/CSV export contract
+  pipeline.py           End-to-end orchestration
+
+scripts/
+  build_community_gap_data.py
+  check_community_gap_data.py
+  find_demo_districts.py
+
+processed/
+  community_gap_outputs.json
+  community_gap_scores.csv
+
+data/                   Challenge CSVs (from starter kit)
+
 docs/
-  architecture.md   How the pieces fit, and patterns for adding an API layer
-  demo-script.md    A 3-minute demo script skeleton to fill in
+  data_handoff.md       Teammate contract (fields, guardrails, example JSON)
+  data_methodology.md   Judge-facing scoring methodology
+  data_inventory.md     CSV inventory + join quality
+  demo_districts.md     Suggested demo walkthrough districts
+  cursor-build-log.md   How Cursor was used (Best Use of Cursor award)
+
+app/                    Next.js app
+components/             Dashboard UI
 ```
 
-## Suggested structure as you grow
+---
 
+## Teammate integration
+
+### Frontend
+
+1. Use `processed/community_gap_outputs.json` (or copy to `public/data/`)
+2. District dropdown from `payload.districts` or `payload.ranked_summary`
+3. Show `scores`, `classification`, `evidence_bullets`, `top_gap_drivers`, confidence badge
+
+### AI / copilot
+
+Pass one district object to the LLM (`district`, `community_metrics`, `amenity_counts`, `scores`, `classification`, `evidence_bullets`, `top_gap_drivers`).
+
+**Guardrail:** the LLM must not invent metrics or recalculate scores — only explain structured pipeline output.
+
+Details: **`docs/data_handoff.md`**
+
+---
+
+## Demo districts
+
+Run `python scripts/find_demo_districts.py` to refresh **`docs/demo_districts.md`**.
+
+| Slot | District (current build) |
+|------|--------------------------|
+| High urgency | Al Ghadeer |
+| Mixed evidence | Al Raha Beach |
+| Low urgency | Al Khalidiyah |
+
+---
+
+## Branch workflow
+
+- `main` — stable demo
+- `data-scoring` — pipeline work
+- `frontend-dashboard` — UI work
+- `ai-recommendation` — copilot / README
+
+Before committing data changes:
+
+```bash
+python scripts/build_community_gap_data.py
+python scripts/check_community_gap_data.py
 ```
-app/api/run/route.ts    Server-side model calls (keeps keys off the client)
-lib/engine.ts           Your actual scoring/matching/reasoning logic
-lib/types.ts            Shared types as data outgrows sampleData.ts
-components/...          One component per panel — keep page.tsx thin
-```
 
-## Example ideas per track
+---
 
-| Track | Ideas |
-|---|---|
-| 🗺️ **Land Intelligence** | Parcel scoring with explained rankings · natural-language land search · "what should be built here" recommender |
-| 💼 **Investment Intelligence** | Investor–asset matching with fit scores · deal memo generator · district momentum analyzer |
-| 🏙️ **Future Communities** | Service demand forecaster · resident experience explainer · community-fit matching |
-| 🧭 **Decision Intelligence** | Cross-dataset Q&A copilot with sources · automated morning briefing · scenario simulator |
+## OSM attribution
 
-Sample datasets for all four live in the [starter kit](https://github.com/abu-dhabi-ai-proptech-challenge/starter-kit/tree/main/data).
+Amenity data uses [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors (ODbL). Include attribution in any public demo that shows amenity coverage.
 
-## How to submit
+---
 
-1. Push your project to your own GitHub repo (this template's "Use this template" flow does that for you).
-2. Deploy if you can (`vercel deploy` works out of the box) or record a 2–3 minute walkthrough.
-3. Before the deadline, open an Issue in the [`submissions`](https://github.com/abu-dhabi-ai-proptech-challenge/submissions) repo using the **Project Submission** form.
+## Event links
 
-Full guide: [submissions repo](https://github.com/abu-dhabi-ai-proptech-challenge/submissions).
+- Website: https://challenge.evoost.ai
+- Discord: https://discord.gg/jy3QDxQ3jK
+- GitHub Org: https://github.com/abu-dhabi-ai-proptech-challenge
+- Starter kit: https://github.com/abu-dhabi-ai-proptech-challenge/starter-kit
+- Submissions: https://github.com/abu-dhabi-ai-proptech-challenge/submissions
 
-## Links
-
-- 🌐 Website: https://challenge.evoost.ai
-- 💬 Discord: https://discord.gg/jy3QDxQ3jK
-- 🐙 GitHub Org: https://github.com/abu-dhabi-ai-proptech-challenge
-- 📦 Starter kit: https://github.com/abu-dhabi-ai-proptech-challenge/starter-kit
+**Cursor:** project rules live in `.cursor/rules/` — see `docs/cursor-build-log.md` for the data-layer build story.
 
 ---
 
