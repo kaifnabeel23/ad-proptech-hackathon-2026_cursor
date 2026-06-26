@@ -137,7 +137,7 @@ export default function CommunityHero() {
 
       <div className="mt-8">
         <a
-          href="#demo"
+          href="#dashboard"
           className="inline-flex items-center rounded-lg bg-sand-50 px-5 py-2.5 text-sm font-semibold text-night-900 transition hover:bg-sand-100"
         >
           Explore districts

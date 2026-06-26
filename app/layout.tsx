@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 
-// Update this with your project's name and pitch — it sets the browser tab
-// title and social previews.
 export const metadata: Metadata = {
   title: "Community Gap & Confidence Copilot",
   description:

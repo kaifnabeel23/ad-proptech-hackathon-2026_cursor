@@ -82,10 +82,7 @@ export default function CommunityDashboard({
 
       <div id="dashboard" className="mt-12 space-y-8">
         {/* District controls */}
-        <section
-          id="demo"
-          className="rounded-xl border border-white/[0.08] bg-night-800/30 p-5"
-        >
+        <section className="rounded-xl border border-white/[0.08] bg-night-800/30 p-5">
           <h2 className="text-sm font-semibold tracking-tight text-sand-50">
             District selection
           </h2>

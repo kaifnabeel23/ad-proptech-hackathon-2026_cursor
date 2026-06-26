@@ -1,8 +1,8 @@
 {
-  "name": "ai-proptech-challenge-project",
+  "name": "community-gap-confidence-copilot",
   "version": "0.1.0",
   "private": true,
-  "description": "Abu Dhabi AI PropTech Challenge project — built from the official project template",
+  "description": "Community Gap & Confidence Copilot — Future Communities track, Abu Dhabi AI PropTech Challenge",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
