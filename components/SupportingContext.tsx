@@ -6,7 +6,10 @@ const CONTEXT_FIELDS = [
   { key: "available_listing_count", label: "Available listings" },
   { key: "transaction_count", label: "Transactions" },
   { key: "parcel_count", label: "Parcels" },
-  { key: "vacant_or_available_parcel_count", label: "Vacant / available parcels" },
+  {
+    key: "vacant_or_available_parcel_count",
+    label: "Vacant / available parcels",
+  },
 ] as const satisfies ReadonlyArray<{
   key: keyof SupportingContextData;
   label: string;
@@ -40,22 +43,28 @@ export default function SupportingContext({
 
   return (
     <section
-      className={`rounded-xl border border-white/[0.06] bg-night-800/25 px-5 py-4 ${className}`}
+      className={`rounded-2xl border border-slate-200 bg-white/60 px-5 py-5 ${className}`}
     >
-      <div>
-        <h2 className="text-sm font-semibold tracking-tight text-sand-50/90">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-400">
           Supporting context
         </h2>
-        <p className="mt-1 text-xs leading-relaxed text-sand-50/45">
-          These signals support the story but do not replace the core gap score.
+        <p className="text-xs text-slate-400">
+          Supporting signals only — core score remains community need vs amenity
+          shortage.
         </p>
       </div>
 
-      <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-3">
+      <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
         {items.map((item) => (
-          <div key={item.label} className="min-w-[7.5rem]">
-            <dt className="text-xs text-sand-50/45">{item.label}</dt>
-            <dd className="mt-0.5 text-sm font-medium tabular-nums text-sand-50/80">
+          <div
+            key={item.label}
+            className="rounded-xl border border-slate-200 bg-white px-3.5 py-3 transition hover:border-slate-300 hover:shadow-sm"
+          >
+            <dt className="text-[11px] leading-tight text-slate-400">
+              {item.label}
+            </dt>
+            <dd className="mt-1.5 text-base font-bold tabular-nums text-slate-700">
               {item.value}
             </dd>
           </div>
