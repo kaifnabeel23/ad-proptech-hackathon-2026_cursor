@@ -6,10 +6,10 @@ import ConfidenceBadge from "@/components/ConfidenceBadge";
 import AmenityBreakdown from "@/components/AmenityBreakdown";
 import EvidencePanel from "@/components/EvidencePanel";
 import MetricCard from "@/components/MetricCard";
+import SupportingContext from "@/components/SupportingContext";
 import ScoreCard from "@/components/ScoreCard";
 import {
   communityMeta,
-  formatNumber,
 } from "@/lib/communityData";
 import type { District } from "@/lib/communityTypes";
 import type { DistrictRecord } from "@/lib/communityGapTypes";
@@ -51,17 +51,6 @@ function Panel({
       ) : null}
       <div className="mt-4">{children}</div>
     </section>
-  );
-}
-
-function MetricRow({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="flex items-center justify-between gap-4 border-b border-white/[0.05] py-2.5 last:border-0">
-      <span className="text-sm text-sand-50/60">{label}</span>
-      <span className="text-sm font-medium tabular-nums text-sand-50">
-        {value}
-      </span>
-    </div>
   );
 }
 
@@ -254,7 +243,7 @@ export default function CommunityDashboard({
           title="Gap & confidence scores"
           description="All values from the deterministic pipeline — not recalculated in the browser."
         >
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <ScoreCard
               label="Community gap score"
               value={scores.community_gap_score}
@@ -267,10 +256,6 @@ export default function CommunityDashboard({
             <ScoreCard
               label="Amenity shortage"
               value={scores.amenity_shortage_score}
-            />
-            <ScoreCard
-              label="Intervention feasibility"
-              value={scores.intervention_feasibility_score}
             />
             <ScoreCard
               label="Confidence score"
@@ -351,48 +336,10 @@ export default function CommunityDashboard({
           confidence_reason={classification.confidence_reason}
         />
 
-        {/* Supporting context */}
-        <Panel
-          title="Supporting context"
-          description="Listings, transactions, and parcel counts — supporting signals only."
-        >
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <MetricRow
-              label="Listing count"
-              value={formatNumber(supporting_context.listing_count)}
-            />
-            <MetricRow
-              label="Available listings"
-              value={formatNumber(supporting_context.available_listing_count)}
-            />
-            <MetricRow
-              label="Rent listings"
-              value={formatNumber(supporting_context.rent_listing_count)}
-            />
-            <MetricRow
-              label="Sale listings"
-              value={formatNumber(supporting_context.sale_listing_count)}
-            />
-            <MetricRow
-              label="Transactions"
-              value={formatNumber(supporting_context.transaction_count)}
-            />
-            <MetricRow
-              label="Parcels"
-              value={formatNumber(supporting_context.parcel_count)}
-            />
-            <MetricRow
-              label="Vacant / available parcels"
-              value={formatNumber(
-                supporting_context.vacant_or_available_parcel_count
-              )}
-            />
-            <MetricRow
-              label="Location"
-              value={`${selectedDistrict.location.latitude}, ${selectedDistrict.location.longitude}`}
-            />
-          </div>
-        </Panel>
+        <SupportingContext
+          supporting_context={supporting_context}
+          intervention_feasibility_score={scores.intervention_feasibility_score}
+        />
       </div>
 
       <footer className="mt-16 border-t border-white/10 pt-6 text-xs text-sand-50/40">
