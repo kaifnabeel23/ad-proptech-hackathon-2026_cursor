@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react
 import CommunityHero from "@/components/CommunityHero";
 import ConfidenceBadge from "@/components/ConfidenceBadge";
 import AmenityBreakdown from "@/components/AmenityBreakdown";
+import EvidencePanel from "@/components/EvidencePanel";
 import MetricCard from "@/components/MetricCard";
 import ScoreCard from "@/components/ScoreCard";
 import {
@@ -344,53 +345,11 @@ export default function CommunityDashboard({
           )}
         </Panel>
 
-        {/* Evidence */}
-        <div className="grid gap-4 lg:grid-cols-2">
-          <Panel title="Evidence bullets">
-            {selectedDistrict.evidence_bullets.length > 0 ? (
-              <ul className="space-y-2">
-                {selectedDistrict.evidence_bullets.map((bullet) => (
-                  <li
-                    key={bullet}
-                    className="flex gap-2 text-sm leading-relaxed text-sand-50/80"
-                  >
-                    <span
-                      aria-hidden
-                      className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400/70"
-                    />
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-sm text-sand-50/55">
-                No evidence bullets for this district.
-              </p>
-            )}
-          </Panel>
-
-          <Panel title="Gap drivers & confidence">
-            {selectedDistrict.top_gap_drivers.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {selectedDistrict.top_gap_drivers.map((driver) => (
-                  <span
-                    key={driver}
-                    className="rounded-full border border-white/10 bg-night-900/60 px-3 py-1 text-xs font-medium text-sand-50/75"
-                  >
-                    {driver}
-                  </span>
-                ))}
-              </div>
-            ) : (
-              <p className="text-sm text-sand-50/55">
-                No gap drivers flagged for this district.
-              </p>
-            )}
-            <p className="mt-4 text-sm leading-relaxed text-sand-50/70">
-              {classification.confidence_reason}
-            </p>
-          </Panel>
-        </div>
+        <EvidencePanel
+          evidence_bullets={selectedDistrict.evidence_bullets}
+          top_gap_drivers={selectedDistrict.top_gap_drivers}
+          confidence_reason={classification.confidence_reason}
+        />
 
         {/* Supporting context */}
         <Panel
