@@ -28,6 +28,7 @@ export interface EvidencePanelProps {
   evidence_bullets: string[];
   top_gap_drivers: string[];
   confidence_reason?: string;
+  id?: string;
   className?: string;
 }
 
@@ -35,12 +36,14 @@ export default function EvidencePanel({
   evidence_bullets,
   top_gap_drivers,
   confidence_reason,
+  id,
   className = "",
 }: EvidencePanelProps) {
   const mixedEvidence = hasMixedEvidence(evidence_bullets, top_gap_drivers);
 
   return (
     <SectionCard
+      id={id}
       title="Why this district is flagged"
       description="Generated from deterministic scoring before AI interpretation."
       className={className}

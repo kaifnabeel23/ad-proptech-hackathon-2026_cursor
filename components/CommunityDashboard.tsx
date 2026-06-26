@@ -23,6 +23,13 @@ const DEMO_PICKS = [
   { step: "3", name: "Al Khalidiyah", hint: "Low urgency" },
 ] as const;
 
+const SECTION_LINKS = [
+  { href: "#overview", label: "Overview" },
+  { href: "#evidence", label: "Evidence" },
+  { href: "#copilot", label: "Copilot" },
+  { href: "#details", label: "Details" },
+] as const;
+
 interface DashboardMeta {
   project: string;
   track: string;
@@ -196,7 +203,10 @@ export default function CommunityDashboard({
         </SectionCard>
 
         <div className="grid gap-4 lg:grid-cols-[1fr_340px] lg:gap-6">
-          <div className="rounded-2xl border border-white/[0.08] bg-night-800/30 px-6 py-5">
+          <div
+            id="overview"
+            className="scroll-mt-24 rounded-2xl border border-white/[0.08] bg-night-800/30 px-6 py-5"
+          >
             <p className="text-xs font-semibold uppercase tracking-wider text-sand-50/45">
               Selected district
             </p>
@@ -213,9 +223,25 @@ export default function CommunityDashboard({
           <ConfidenceBadge district={selectedDistrict} />
         </div>
 
+        <nav
+          aria-label="Dashboard sections"
+          className="sticky top-0 z-10 -mx-1 flex gap-1 overflow-x-auto rounded-xl border border-white/[0.08] bg-night-900/95 px-2 py-2 backdrop-blur"
+        >
+          {SECTION_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className="shrink-0 rounded-lg px-3 py-1.5 text-xs font-semibold text-sand-50/60 transition hover:bg-white/5 hover:text-sand-50 aria-[current]:bg-amber-400/15 aria-[current]:text-amber-200"
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
         <SectionCard
           title="Pipeline scores"
           description="Deterministic 0–100 scores from the data layer — not recalculated here."
+          className="scroll-mt-24"
         >
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <ScoreCard
@@ -238,51 +264,63 @@ export default function CommunityDashboard({
           </div>
         </SectionCard>
 
-        <EvidencePanel
-          evidence_bullets={selectedDistrict.evidence_bullets}
-          top_gap_drivers={selectedDistrict.top_gap_drivers}
-          confidence_reason={classification.confidence_reason}
-        />
+        <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
+          <EvidencePanel
+            id="evidence"
+            className="order-2 scroll-mt-24 lg:order-1"
+            evidence_bullets={selectedDistrict.evidence_bullets}
+            top_gap_drivers={selectedDistrict.top_gap_drivers}
+            confidence_reason={classification.confidence_reason}
+          />
 
-        <RecommendationPanel
-          key={selectedDistrict.district}
-          district={selectedDistrict}
-          confidenceLevel={classification.confidence_level}
-        />
-
-        <div className="grid gap-6 lg:grid-cols-2">
-          <SectionCard
-            title="Community metrics"
-            description="Demand, mobility, and resident experience."
+          <div
+            id="copilot"
+            className="order-1 scroll-mt-24 lg:sticky lg:top-16 lg:order-2"
           >
-            <div className="grid gap-3 sm:grid-cols-2">
-              <MetricCard
-                label="Population estimate"
-                value={community_metrics.population_estimate}
-                format="count"
-              />
-              <MetricCard
-                label="Service demand index"
-                value={community_metrics.service_demand_index}
-              />
-              <MetricCard
-                label="Mobility score"
-                value={community_metrics.mobility_score}
-              />
-              <MetricCard
-                label="Resident experience"
-                value={community_metrics.resident_experience_score}
-              />
-            </div>
-          </SectionCard>
-
-          <AmenityBreakdown amenity_counts={amenity_counts} />
+            <RecommendationPanel
+              key={selectedDistrict.district}
+              id="copilot-panel"
+              district={selectedDistrict}
+              confidenceLevel={classification.confidence_level}
+            />
+          </div>
         </div>
 
-        <SupportingContext
-          supporting_context={supporting_context}
-          intervention_feasibility_score={scores.intervention_feasibility_score}
-        />
+        <div id="details" className="scroll-mt-24 space-y-6">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <SectionCard
+              title="Community metrics"
+              description="Demand, mobility, and resident experience."
+            >
+              <div className="grid gap-3 sm:grid-cols-2">
+                <MetricCard
+                  label="Population estimate"
+                  value={community_metrics.population_estimate}
+                  format="count"
+                />
+                <MetricCard
+                  label="Service demand index"
+                  value={community_metrics.service_demand_index}
+                />
+                <MetricCard
+                  label="Mobility score"
+                  value={community_metrics.mobility_score}
+                />
+                <MetricCard
+                  label="Resident experience"
+                  value={community_metrics.resident_experience_score}
+                />
+              </div>
+            </SectionCard>
+
+            <AmenityBreakdown amenity_counts={amenity_counts} />
+          </div>
+
+          <SupportingContext
+            supporting_context={supporting_context}
+            intervention_feasibility_score={scores.intervention_feasibility_score}
+          />
+        </div>
       </div>
 
       <footer className="mt-14 border-t border-white/[0.06] pt-6 text-xs text-sand-50/40">

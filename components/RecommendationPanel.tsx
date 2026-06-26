@@ -7,12 +7,13 @@ import type { DistrictRecord, DistrictRecommendation } from "@/lib/communityGapT
 import { frontendFallbackRecommendation } from "@/lib/frontendFallbackRecommendation";
 import { fetchRecommendationFromApi } from "@/lib/recommendationClient";
 
-type DisplayStatus = "loading" | "local" | "ai" | "ready";
+type DisplayStatus = "loading" | "local" | "ai" | "fallback";
 
-const STATUS_LABELS: Record<Exclude<DisplayStatus, "ready">, string> = {
+const STATUS_LABELS: Record<DisplayStatus, string> = {
   loading: "Generating recommendation from structured evidence...",
-  local: "Generated from local evidence",
+  local: "Offline — generated from local evidence",
   ai: "AI recommendation",
+  fallback: "Evidence-based fallback",
 };
 
 function RecommendationField({
@@ -47,14 +48,14 @@ function RecommendationField({
 }
 
 function StatusBanner({ status }: { status: DisplayStatus }) {
-  if (status === "ready") return null;
-
   const tone =
     status === "loading"
       ? "border-white/10 bg-night-900/50 text-sand-50/70"
       : status === "ai"
         ? "border-emerald-400/25 bg-emerald-400/[0.07] text-emerald-200"
-        : "border-white/10 bg-night-900/50 text-sand-50/55";
+        : status === "fallback"
+          ? "border-amber-400/25 bg-amber-400/[0.07] text-amber-200"
+          : "border-white/10 bg-night-900/50 text-sand-50/55";
 
   return (
     <p
@@ -70,12 +71,14 @@ function StatusBanner({ status }: { status: DisplayStatus }) {
 export interface RecommendationPanelProps {
   district: District;
   confidenceLevel: ConfidenceLevel;
+  id?: string;
   className?: string;
 }
 
 export default function RecommendationPanel({
   district,
   confidenceLevel,
+  id,
   className = "",
 }: RecommendationPanelProps) {
   const [recommendation, setRecommendation] = useState<DistrictRecommendation>(
@@ -97,7 +100,7 @@ export default function RecommendationPanel({
         if (signal?.aborted) return;
 
         setRecommendation(result.recommendation);
-        setDisplayStatus(result.source === "llm" ? "ai" : "ready");
+        setDisplayStatus(result.source === "llm" ? "ai" : "fallback");
       } catch (err) {
         if (signal?.aborted) return;
         if (err instanceof DOMException && err.name === "AbortError") return;
@@ -127,9 +130,10 @@ export default function RecommendationPanel({
 
   return (
     <SectionCard
+      id={id}
       featured
       title="Copilot recommendation"
-      description="Planner-style next step from pipeline evidence — always shown beside deterministic scores."
+      description="Planner-style next step from pipeline evidence — generated via OpenRouter when configured, otherwise from structured evidence."
       className={className}
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
