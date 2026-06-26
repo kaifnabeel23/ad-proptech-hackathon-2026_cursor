@@ -91,6 +91,28 @@ _STATUS_COLUMNS = ("current_status", "status", "parcel_status")
 _LAND_USE_COLUMNS = ("land_use", "zoning", "zone_use")
 _ID_COLUMNS = ("parcel_id",)
 
+# Transaction column fallbacks.
+_TRANSACTION_ID_COLUMNS = ("transaction_id",)
+_TRANSACTION_VALUE_COLUMNS = ("transaction_value_aed", "transaction_value", "value_aed")
+_TRANSACTION_PRICE_COLUMNS = ("price_per_sqm", "price_per_sqm_aed", "transaction_price_per_sqm")
+_TRANSACTION_DATE_COLUMNS = ("date", "transaction_date", "txn_date")
+
+# Supporting context — market activity / growth pressure, not a pricing dashboard.
+TRANSACTION_COUNT_COLUMNS = [
+    "transaction_count",
+    "transaction_count_2026",
+]
+
+TRANSACTION_CONTEXT_COLUMNS = TRANSACTION_COUNT_COLUMNS + [
+    "total_transaction_value_aed",
+    "avg_transaction_value_aed",
+    "avg_transaction_price_per_sqm",
+    "latest_transaction_date",
+    "recent_transaction_share",
+]
+
+RECENT_TRANSACTION_YEAR = 2026
+
 def build_amenity_counts(osm_amenities: pd.DataFrame) -> pd.DataFrame:
     """
     Count OSM amenities per district and pivot to one row per district.
@@ -327,6 +349,112 @@ def add_parcel_context(core_df: pd.DataFrame, parcels_df: pd.DataFrame) -> pd.Da
     merged = core_df.merge(parcel_context, on="district", how="left")
 
     for col in PARCEL_COUNT_COLUMNS:
+        if col in merged.columns:
+            merged[col] = merged[col].fillna(0).astype(int)
+
+    return merged
+
+
+def build_transaction_context(transactions: pd.DataFrame) -> pd.DataFrame:
+    """
+    Build district-level market activity features from transactions.
+
+    Uses whichever expected columns are present; missing columns are skipped.
+    When a date column exists it is parsed with :func:`pandas.to_datetime`.
+
+    Known starter-kit schema::
+
+        transaction_id, date, district, asset_type, transaction_value_aed,
+        size_sqm, price_per_sqm, buyer_type
+
+    ``recent_transaction_share`` = share of district transactions in
+    :data:`RECENT_TRANSACTION_YEAR` (2026 in the starter kit).
+
+    Returns one row per district. Supporting context only.
+    """
+    id_col = _first_present_column(transactions, _TRANSACTION_ID_COLUMNS)
+    value_col = _first_present_column(transactions, _TRANSACTION_VALUE_COLUMNS)
+    price_col = _first_present_column(transactions, _TRANSACTION_PRICE_COLUMNS)
+    date_col = _first_present_column(transactions, _TRANSACTION_DATE_COLUMNS)
+
+    grouped = transactions.groupby("district", observed=True)
+
+    if id_col:
+        context = grouped[id_col].count().to_frame("transaction_count")
+    else:
+        context = grouped.size().to_frame("transaction_count")
+
+    if value_col:
+        context = context.join(
+            grouped[value_col].sum().rename("total_transaction_value_aed"), how="left"
+        )
+        context = context.join(
+            grouped[value_col].mean().rename("avg_transaction_value_aed"), how="left"
+        )
+
+    if price_col:
+        context = context.join(
+            grouped[price_col].mean().rename("avg_transaction_price_per_sqm"), how="left"
+        )
+
+    if date_col:
+        working = transactions.copy()
+        working["_transaction_date"] = pd.to_datetime(working[date_col], errors="coerce")
+        date_grouped = working.groupby("district", observed=True)
+
+        context = context.join(
+            date_grouped["_transaction_date"].max().rename("latest_transaction_date"),
+            how="left",
+        )
+
+        count_recent = (
+            working.loc[working["_transaction_date"].dt.year == RECENT_TRANSACTION_YEAR]
+            .groupby("district", observed=True)
+            .size()
+            .rename("transaction_count_2026")
+        )
+        context = context.join(count_recent, how="left")
+
+        context["recent_transaction_share"] = (
+            context["transaction_count_2026"].fillna(0)
+            / context["transaction_count"].replace(0, pd.NA)
+        ).fillna(0.0)
+
+    context = context.reset_index()
+
+    for col in TRANSACTION_COUNT_COLUMNS:
+        if col in context.columns:
+            context[col] = context[col].fillna(0).astype(int)
+
+    if "avg_transaction_value_aed" in context.columns:
+        context["avg_transaction_value_aed"] = context["avg_transaction_value_aed"].round(2)
+    if "avg_transaction_price_per_sqm" in context.columns:
+        context["avg_transaction_price_per_sqm"] = context[
+            "avg_transaction_price_per_sqm"
+        ].round(2)
+    if "recent_transaction_share" in context.columns:
+        context["recent_transaction_share"] = context["recent_transaction_share"].round(4)
+    if "latest_transaction_date" in context.columns:
+        context["latest_transaction_date"] = context["latest_transaction_date"].dt.strftime(
+            "%Y-%m-%d"
+        )
+
+    return context
+
+
+def add_transaction_context(
+    core_df: pd.DataFrame, transactions_df: pd.DataFrame
+) -> pd.DataFrame:
+    """
+    Merge district transaction context into the core community dataset.
+
+    Transaction count columns are filled with 0 when a district has no rows.
+    Value averages and dates are left as NA when unavailable.
+    """
+    transaction_context = build_transaction_context(transactions_df)
+    merged = core_df.merge(transaction_context, on="district", how="left")
+
+    for col in TRANSACTION_COUNT_COLUMNS:
         if col in merged.columns:
             merged[col] = merged[col].fillna(0).astype(int)
 
