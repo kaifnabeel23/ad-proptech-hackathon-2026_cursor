@@ -4,6 +4,7 @@ const REQUIRED_DISTRICT_FIELDS = [
   "district",
   "community_metrics",
   "amenity_counts",
+  "supporting_context",
   "scores",
   "classification",
   "evidence_bullets",
@@ -57,6 +58,7 @@ export function validateDistrictRecord(
         break;
       case "community_metrics":
       case "amenity_counts":
+      case "supporting_context":
       case "scores":
       case "classification":
         if (!isNonNullObject(fieldValue)) {

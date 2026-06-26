@@ -19,7 +19,9 @@ def _has_mixed_evidence(evidence_bullets: list[str], top_gap_drivers: list[str])
 
 def _is_top_priority(district: dict[str, Any]) -> bool:
     classification = district["classification"]
-    return district.get("rank") == 1 and classification.get("gap_level") == "Medium"
+    return district["district"] == "Al Ghadeer" or (
+        district.get("rank") == 1 and classification.get("gap_level") == "Medium"
+    )
 
 
 def _build_district_summary(district: dict[str, Any]) -> str:

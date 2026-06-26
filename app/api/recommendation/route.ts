@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { generateRecommendation } from "@/lib/aiRecommendation";
+import {
+  generateRecommendation,
+  generateRecommendationSync,
+} from "@/lib/aiRecommendation";
+import { loadServerEnv } from "@/lib/loadServerEnv";
 import type { DistrictRecommendation } from "@/lib/communityGapTypes";
 import {
   parseRecommendationRequestBody,
@@ -26,6 +30,8 @@ export interface RecommendationApiResponse {
  * On OpenRouter failure or missing key, returns deterministic fallback.
  */
 export async function POST(req: Request) {
+  loadServerEnv();
+
   let body: unknown;
 
   try {
@@ -69,11 +75,15 @@ export async function POST(req: Request) {
     };
 
     return NextResponse.json(response);
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    return NextResponse.json(
-      { error: "Failed to generate recommendation.", detail: message },
-      { status: 500 }
+  } catch {
+    const { recommendation, source } = generateRecommendationSync(
+      validated.district
     );
+
+    return NextResponse.json({
+      recommendation,
+      source,
+      district: validated.district.district,
+    });
   }
 }

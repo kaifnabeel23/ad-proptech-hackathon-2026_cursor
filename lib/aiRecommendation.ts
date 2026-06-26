@@ -1,10 +1,14 @@
+/** Prevent accidental client-side import of OpenRouter logic. */
+if (typeof window !== "undefined") {
+  throw new Error("@/lib/aiRecommendation must only be used on the server");
+}
+
 import type {
-  DistrictEvidencePayload,
   DistrictRecommendation,
   DistrictRecord,
 } from "./communityGapTypes";
-import { toEvidencePayload } from "./communityGapTypes";
 import { fallbackRecommendation } from "./fallbackRecommendation";
+import { loadServerEnv } from "./loadServerEnv";
 import {
   SYSTEM_PROMPT,
   buildUserPrompt,
@@ -44,11 +48,45 @@ export interface GenerateRecommendationResult {
   source: "llm" | "fallback";
 }
 
-/** Build the LLM-safe evidence payload from a full district record. */
-export function buildEvidencePayload(
+function isTopPriorityDistrict(district: DistrictRecord): boolean {
+  return (
+    district.district === "Al Ghadeer" ||
+    (district.rank === 1 && district.classification.gap_level === "Medium")
+  );
+}
+
+function enforceWhyThisMatters(
+  why: string,
+  evidenceBullets: string[]
+): string {
+  const topBullets = evidenceBullets.slice(0, 3);
+  if (topBullets.length === 0) {
+    return why;
+  }
+
+  const anchored = topBullets.some((bullet) => why.includes(bullet));
+  return anchored ? why : topBullets.join(" ");
+}
+
+function enforceMainGap(
+  mainGap: string,
   district: DistrictRecord
-): DistrictEvidencePayload {
-  return toEvidencePayload(district);
+): string {
+  const { top_gap_drivers, classification } = district;
+  if (top_gap_drivers.length === 0) {
+    return mainGap;
+  }
+
+  const drivers = top_gap_drivers.slice(0, 3);
+  const anchored = drivers.some((driver) =>
+    mainGap.toLowerCase().includes(driver.toLowerCase())
+  );
+
+  if (anchored) {
+    return mainGap;
+  }
+
+  return `The main gap drivers are: ${drivers.join(", ")}. Pipeline gap level: ${classification.gap_level}.`;
 }
 
 /** Parse and validate raw LLM JSON text into the six required fields. */
@@ -98,7 +136,6 @@ export function validateAndEnforceOutput(
   recommendation: DistrictRecommendation,
   district: DistrictRecord
 ): DistrictRecommendation {
-  const evidence = toEvidencePayload(district);
   const { classification, scores, evidence_bullets, top_gap_drivers } =
     district;
   const enforced = { ...recommendation };
@@ -123,8 +160,7 @@ export function validateAndEnforceOutput(
   }
 
   if (
-    district.district === "Al Ghadeer" ||
-    (district.rank === 1 && gapLevel === "Medium")
+    isTopPriorityDistrict(district)
   ) {
     enforced.district_summary = enforced.district_summary.replace(
       /\bhigh gap\b/gi,
@@ -175,6 +211,12 @@ export function validateAndEnforceOutput(
     }
   }
 
+  enforced.why_this_matters = enforceWhyThisMatters(
+    enforced.why_this_matters,
+    evidence_bullets
+  );
+  enforced.main_gap = enforceMainGap(enforced.main_gap, district);
+
   if (
     !enforced.uncertainty_note.toLowerCase().includes("pre-processed") &&
     !enforced.uncertainty_note.toLowerCase().includes("static")
@@ -189,9 +231,6 @@ export function validateAndEnforceOutput(
       throw new Error(`Validation failed after enforcement: ${key}`);
     }
   }
-
-  // Silence unused variable — evidence used implicitly via district
-  void evidence;
 
   return enforced;
 }
@@ -222,8 +261,7 @@ export async function callOpenRouter(
   });
 
   if (!response.ok) {
-    const detail = await response.text();
-    throw new Error(`OpenRouter request failed (${response.status}): ${detail}`);
+    throw new Error(`OpenRouter request failed (${response.status})`);
   }
 
   const data = (await response.json()) as {
@@ -255,21 +293,26 @@ export async function generateRecommendation(
   districtObject: DistrictRecord,
   options: GenerateRecommendationOptions = {}
 ): Promise<GenerateRecommendationResult> {
-  const evidence = buildEvidencePayload(districtObject);
+  loadServerEnv();
+
   const apiKey = options.apiKey ?? process.env.OPENROUTER_API_KEY?.trim();
   const model = options.model ?? resolveModel();
 
   if (!options.forceFallback && apiKey) {
     try {
       const raw = await callOpenRouter(districtObject, apiKey, model);
-      const recommendation = validateAndEnforceOutput(raw, districtObject);
-      return { recommendation, source: "llm" };
+      try {
+        const recommendation = validateAndEnforceOutput(raw, districtObject);
+        return { recommendation, source: "llm" };
+      } catch {
+        console.warn(
+          "[recommendation] LLM output failed validation, using fallback"
+        );
+      }
     } catch {
-      // Fall through to deterministic fallback
+      console.warn("[recommendation] OpenRouter unavailable, using fallback");
     }
   }
-
-  void evidence;
 
   return {
     recommendation: fallbackRecommendation(districtObject),

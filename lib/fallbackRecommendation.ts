@@ -19,7 +19,8 @@ function hasMixedEvidence(
 
 function isTopPriority(district: DistrictRecord): boolean {
   return (
-    district.rank === 1 && district.classification.gap_level === "Medium"
+    district.district === "Al Ghadeer" ||
+    (district.rank === 1 && district.classification.gap_level === "Medium")
   );
 }
 
