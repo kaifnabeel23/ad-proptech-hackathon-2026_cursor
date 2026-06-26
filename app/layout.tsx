@@ -4,9 +4,9 @@ import "./globals.css";
 // Update this with your project's name and pitch — it sets the browser tab
 // title and social previews.
 export const metadata: Metadata = {
-  title: "AI PropTech Prototype — Abu Dhabi AI PropTech Challenge",
+  title: "Community Gap & Confidence Copilot",
   description:
-    "Building the Intelligence Layer for Land, Investment and Communities.",
+    "Identify underserved Abu Dhabi districts, explain the evidence, and recommend the next community intervention with a confidence badge.",
 };
 
 export default function RootLayout({

@@ -1,19 +1,14 @@
-import Hero from "@/components/Hero";
+import CommunityHero from "@/components/CommunityHero";
 import DemoPanel from "@/components/DemoPanel";
 import { sampleParcels } from "@/lib/sampleData";
-
-// ── Set your track here ─────────────────────────────────────────────
-// One of: "land" | "investment" | "communities" | "decision"
-// The track badge and accent color follow automatically.
-const TRACK = "land";
 
 export default function Home() {
   return (
     <main className="mx-auto max-w-5xl px-6 pb-24">
-      <Hero track={TRACK} />
+      <CommunityHero />
 
       {/* The interactive demo: input → Run Prototype → AI output */}
-      <DemoPanel track={TRACK} />
+      <DemoPanel track="communities" />
 
       {/* Sample data display — replace with whatever your prototype consumes.
           Data lives in lib/sampleData.ts; swap in your own rows or fetch
