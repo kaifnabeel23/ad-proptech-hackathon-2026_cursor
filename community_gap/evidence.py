@@ -23,6 +23,31 @@ _DRIVER_ORDER: list[tuple[str, str]] = [
 _MIN_BULLETS = 4
 _MAX_BULLETS = 7
 
+INTERVENTION_MONITOR = "Monitor / no urgent intervention"
+INTERVENTION_EDUCATION = "Education capacity"
+INTERVENTION_HEALTHCARE = "Healthcare access"
+INTERVENTION_MOBILITY = "Mobility improvement"
+INTERVENTION_COMMUNITY = "Community services"
+INTERVENTION_RETAIL = "Retail/services access"
+INTERVENTION_MIXED_USE = "Mixed-use community hub"
+
+_OPTIMIZATION_LABELS: dict[str, str] = {
+    "expand_school_capacity": INTERVENTION_EDUCATION,
+    "add_nursery_capacity": INTERVENTION_EDUCATION,
+    "add_clinic_capacity": INTERVENTION_HEALTHCARE,
+    "accelerate_transit_link": INTERVENTION_MOBILITY,
+    "improve_bus_coverage": INTERVENTION_MOBILITY,
+    "improve_last_mile_transit": INTERVENTION_MOBILITY,
+    "improve_cycle_paths": INTERVENTION_MOBILITY,
+    "reduce_parking_pressure": INTERVENTION_MOBILITY,
+    "add_community_events": INTERVENTION_COMMUNITY,
+    "improve_park_access": INTERVENTION_COMMUNITY,
+    "expand_retail_offering": INTERVENTION_RETAIL,
+    "add_grocery_retail": INTERVENTION_RETAIL,
+}
+
+_FEASIBILITY_DECENT_THRESHOLD = 60
+
 
 def _is_true(row: pd.Series, key: str) -> bool:
     """Safely read a boolean signal from a row."""
@@ -65,6 +90,138 @@ def _should_flag_mixed_evidence(row: pd.Series, drivers: list[str]) -> bool:
     if not pd.isna(agreement) and 3 <= int(agreement) <= 5:
         return True
     return False
+
+
+def _below_median(row: pd.Series, value_col: str, median_col: str) -> bool:
+    """True when value is strictly below the city median on the row."""
+    if value_col not in row.index or median_col not in row.index:
+        return False
+    value = row[value_col]
+    median = row[median_col]
+    if pd.isna(value) or pd.isna(median):
+        return False
+    return float(value) < float(median)
+
+
+def _above_median(row: pd.Series, value_col: str, median_col: str) -> bool:
+    """True when value is strictly above the city median on the row."""
+    if value_col not in row.index or median_col not in row.index:
+        return False
+    value = row[value_col]
+    median = row[median_col]
+    if pd.isna(value) or pd.isna(median):
+        return False
+    return float(value) > float(median)
+
+
+def _count_amenity_shortages(row: pd.Series) -> int:
+    """Count amenity categories below city median."""
+    checks = [
+        _below_median(row, "education", "city_median_education"),
+        _below_median(row, "healthcare", "city_median_healthcare"),
+        _below_median(row, "mobility", "city_median_mobility_amenities"),
+        _below_median(row, "community", "city_median_community"),
+        _below_median(row, "retail", "city_median_retail"),
+        _below_median(row, "services", "city_median_services"),
+    ]
+    return sum(checks)
+
+
+def _parcel_context_decent(row: pd.Series) -> bool:
+    """True when parcel/infrastructure context supports intervention."""
+    feasibility = row.get("intervention_feasibility_score")
+    infrastructure = row.get("infrastructure_score")
+    vacant = row.get("vacant_or_available_parcel_count")
+
+    if not pd.isna(feasibility) and float(feasibility) >= _FEASIBILITY_DECENT_THRESHOLD:
+        return True
+    if not pd.isna(infrastructure) and float(infrastructure) >= _FEASIBILITY_DECENT_THRESHOLD:
+        return True
+    if not pd.isna(vacant) and int(vacant) > 0:
+        return True
+    return False
+
+
+def _humanize_optimization(value: object) -> str:
+    """Convert optimization_opportunity slug to a readable intervention label."""
+    if pd.isna(value) or not str(value).strip():
+        return INTERVENTION_MONITOR
+
+    key = str(value).strip()
+    if key in _OPTIMIZATION_LABELS:
+        return _OPTIMIZATION_LABELS[key]
+
+    return key.replace("_", " ").strip().capitalize()
+
+
+def recommend_intervention_category(row: pd.Series) -> str:
+    """
+    Recommend one intervention category from row evidence and scores.
+
+    Rules are evaluated in priority order; the first match wins.
+    """
+    gap_level = str(row.get("gap_level", ""))
+    if gap_level == "Low":
+        return INTERVENTION_MONITOR
+
+    high_demand = _is_true(row, "signal_high_service_demand") or _above_median(
+        row, "service_demand_index", "city_median_service_demand"
+    )
+
+    if _below_median(row, "education", "city_median_education") and high_demand:
+        return INTERVENTION_EDUCATION
+
+    if _below_median(row, "healthcare", "city_median_healthcare") and high_demand:
+        return INTERVENTION_HEALTHCARE
+
+    mobility_weak = _below_median(row, "mobility_score", "city_median_mobility_score")
+    mobility_amenities_low = _below_median(
+        row, "mobility", "city_median_mobility_amenities"
+    )
+    if mobility_weak or mobility_amenities_low:
+        return INTERVENTION_MOBILITY
+
+    if _below_median(row, "community", "city_median_community"):
+        return INTERVENTION_COMMUNITY
+
+    retail_low = _below_median(row, "retail", "city_median_retail")
+    services_low = _below_median(row, "services", "city_median_services")
+    if retail_low or services_low:
+        return INTERVENTION_RETAIL
+
+    if _count_amenity_shortages(row) >= 2 and _parcel_context_decent(row):
+        return INTERVENTION_MIXED_USE
+
+    if "optimization_opportunity" in row.index:
+        return _humanize_optimization(row.get("optimization_opportunity"))
+
+    return INTERVENTION_MONITOR
+
+
+def recommend_recommendation_priority(row: pd.Series) -> str:
+    """
+    Map gap level and confidence to recommendation priority.
+
+    High — gap_level High and confidence High/Medium
+    Medium — gap_level Medium
+    Low — otherwise
+    """
+    gap_level = str(row.get("gap_level", ""))
+    confidence = str(row.get("confidence_level", ""))
+
+    if gap_level == "High" and confidence in ("High", "Medium"):
+        return "High"
+    if gap_level == "Medium":
+        return "Medium"
+    return "Low"
+
+
+def add_recommendations(df: pd.DataFrame) -> pd.DataFrame:
+    """Add intervention category and priority columns to a scored dataframe."""
+    out = df.copy()
+    out["recommended_intervention_category"] = out.apply(recommend_intervention_category, axis=1)
+    out["recommendation_priority"] = out.apply(recommend_recommendation_priority, axis=1)
+    return out
 
 
 def _build_bullet_candidates(row: pd.Series) -> list[tuple[int, str]]:
@@ -294,5 +451,16 @@ def build_city_medians(scored: pd.DataFrame) -> dict[str, float]:
 
 
 def enrich_with_evidence(scored: pd.DataFrame) -> pd.DataFrame:
-    """Add evidence columns to a scored table (alias for :func:`add_evidence`)."""
-    return add_evidence(scored)
+    """Add evidence and recommendation columns to a scored table."""
+    return add_recommendations(add_evidence(scored))
+
+
+def recommend_intervention(row: pd.Series) -> dict[str, str]:
+    """Backward-compatible wrapper returning category label and rationale stub."""
+    category = recommend_intervention_category(row)
+    return {
+        "category": category,
+        "label": category,
+        "rationale": f"Recommended based on gap signals and amenity coverage for {row.get('district', 'district')}.",
+        "primary_amenity_category": category,
+    }
