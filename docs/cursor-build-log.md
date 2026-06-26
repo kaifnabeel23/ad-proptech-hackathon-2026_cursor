@@ -212,13 +212,91 @@ We did not argue in standup about which district “looks best.” The script ra
 
 ---
 
+## 11. AI Recommendation Layer
+
+**Goal**  
+Build a server-side AI layer that turns **one selected district object** from `processed/community_gap_outputs.json` into a concise, planner-style recommendation — without inventing scores, amenity counts, or confidence levels. The AI layer **explains deterministic evidence from the data pipeline** instead of replacing it.
+
+**Cursor prompts used** (implemented in sequence)
+
+> Inspect finalized data pipeline docs and output files… summarize available JSON fields, AI guardrails, demo districts, and safest implementation plan. Do not write code yet.
+
+> Implement the AI recommendation layer… consume one district object… return structured JSON (district_summary, main_gap, recommended_intervention, why_this_matters, confidence_note, uncertainty_note)… deterministic fallback without API key… OpenRouter with OPENROUTER_API_KEY server-side only.
+
+> Create the exact prompt template… system prompt for Abu Dhabi community planning copilot… user prompt with district evidence fields… special wording: Al Ghadeer / rank-1 + Medium gap → “top priority in the current dataset,” not “High gap.”
+
+> Implement deterministic fallbackRecommendation(districtObject)… use only pipeline fields… top 2–3 evidence bullets… cautious wording for Medium/Low confidence.
+
+> Create server-side API route app/api/recommendation/route.ts… validate district object… call generateRecommendation… never expose OPENROUTER_API_KEY.
+
+> Create check scripts (Python + TypeScript)… load JSON, select Al Ghadeer, test fallback, optionally test OpenRouter… must pass without API key.
+
+> Create docs/ai_handoff.md for frontend teammate and judges.
+
+**Output created / changed**
+
+| Area | Files |
+|------|--------|
+| Prompt template | `lib/aiRecommendationPrompt.ts`, `ai/prompt.py` |
+| OpenRouter + orchestration | `lib/aiRecommendation.ts`, `ai/recommendation.py` |
+| Deterministic fallback | `lib/fallbackRecommendation.ts`, `ai/fallback.py` |
+| Types + data loader | `lib/communityGapTypes.ts`, `lib/communityGapData.ts` |
+| API route + validation | `app/api/recommendation/route.ts`, `lib/validateDistrictPayload.ts` |
+| Frontend helper | `lib/recommendationClient.ts`, `lib/recommendationEngine.ts` |
+| Check scripts | `scripts/check_ai_recommendation.py`, `scripts/check-ai-recommendation.ts`, `npm run check:ai` |
+| Handoff doc | `docs/ai_handoff.md` |
+| Legacy route | `app/api/recommend/route.ts` (re-exports recommendation handler) |
+
+**How OpenRouter was integrated**
+
+- Server-only call in `lib/aiRecommendation.ts` → `POST https://openrouter.ai/api/v1/chat/completions`
+- Key read from `process.env.OPENROUTER_API_KEY` (optional `OPENROUTER_MODEL`, default `openai/gpt-4o-mini`)
+- Frontend calls `POST /api/recommendation` via `fetchDistrictRecommendation()` — **never OpenRouter directly**
+- No `NEXT_PUBLIC_` prefix; key is not logged or returned in API responses
+- System + user prompts in `lib/aiRecommendationPrompt.ts` embed only the selected district’s structured evidence
+- LLM response parsed as JSON, then passed through `validateAndEnforceOutput()` to correct drift (e.g. wrong intervention label)
+
+**How fallback protects the demo**
+
+- `fallbackRecommendation()` runs with **zero API keys** — stitches pipeline `evidence_bullets`, `top_gap_drivers`, and `classification` into the same six-field JSON shape
+- If OpenRouter fails, times out, or `OPENROUTER_API_KEY` is missing, `generateRecommendation()` silently falls back — the UI always gets a recommendation
+- `source: "fallback" | "llm"` in the API response lets the frontend badge which path was used
+- Check scripts (`python scripts/check_ai_recommendation.py`, `npm run check:ai`) **require fallback to pass**; OpenRouter test is optional
+- Demo rehearsal is safe even when Wi‑Fi or API quotas fail on judging day
+
+**How AI guardrails prevent hallucination**
+
+- Prompt rules: use only provided evidence; do not calculate scores; do not invent amenity counts; do not change confidence; do not claim live data
+- LLM input limited to one district object — no full 20-district dump, no raw CSVs
+- Post-processing enforces `recommended_intervention` = `classification.recommended_intervention_category`
+- `confidence_note` must reflect pipeline `confidence_level` and `confidence_reason`
+- Demo wording guard: rank-1 + Medium gap (Al Ghadeer) → “top priority in the current dataset,” never “High gap”
+- UI rule in `.cursor/rules/003-ai-guardrails.mdc`: show evidence bullets and confidence badge beside every AI recommendation
+
+**How this supports hackathon judging criteria**
+
+| Criterion | How the AI layer helps |
+|-----------|-------------------------|
+| **Future Communities impact** | Translates community need + OSM amenity gaps into actionable planner language for intervention decisions |
+| **Honesty / transparency** | AI narrates pipeline evidence; scores and classifications remain deterministic and auditable in JSON |
+| **Confidence & uncertainty** | `confidence_note` and `uncertainty_note` surface mixed evidence (e.g. Al Raha Beach) instead of overclaiming |
+| **Demo readiness** | Fallback guarantees a working 2-minute walkthrough; three demo districts documented in `docs/demo_districts.md` |
+| **Best Use of Cursor** | Incremental prompts built prompt → fallback → API → checks → handoff doc in one session, aligned with data layer contract |
+| **Technical integration** | Clear JSON contract (`docs/ai_handoff.md`) lets frontend consume `processed/community_gap_outputs.json` + `/api/recommendation` without re-implementing scoring |
+
+**Why it helped the team move faster**  
+The data teammate froze scores and evidence in JSON; Cursor generated the explanation layer, API route, and validation in parallel with frontend work. We did not rebuild scoring in the LLM or block the demo on API keys — fallback and OpenRouter share one output shape, so the dashboard works on day one and improves when OpenRouter is configured.
+
+---
+
 ## How we worked with Cursor (honest notes)
 
 - **Small prompts, small modules** — scaffold first, then implement `data_loader` → `features` → `scoring` → `evidence` → `export` in order.
 - **Human review mattered** — we checked that market/listing data stayed supporting-only and that evidence bullets quoted real medians.
 - **Rules files helped** — `.cursor/rules/002-data-layer.mdc` and `005-hackathon-workflow.mdc` kept output paths and guardrails consistent across sessions.
 - **Run after every step** — `python scripts/build_community_gap_data.py` and `python scripts/check_community_gap_data.py` from repo root.
+- **AI layer checks** — `python scripts/check_ai_recommendation.py` or `npm run check:ai` after changing prompts, fallback, or API route.
 
 ---
 
-Cursor helped us move from raw challenge datasets to a working, explainable community intelligence data layer in a short hackathon window.
+Cursor helped us move from raw challenge datasets to a working, explainable community intelligence data layer — and an AI copilot that explains that evidence instead of inventing scores — in a short hackathon window.
