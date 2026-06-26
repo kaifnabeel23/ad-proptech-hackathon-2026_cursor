@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
 import CommunityHero from "@/components/CommunityHero";
 import ConfidenceBadge from "@/components/ConfidenceBadge";
+import AmenityBreakdown from "@/components/AmenityBreakdown";
 import MetricCard from "@/components/MetricCard";
 import ScoreCard from "@/components/ScoreCard";
 import {
@@ -277,43 +278,7 @@ export default function CommunityDashboard({
           </div>
         </Panel>
 
-        {/* OSM amenities */}
-        <Panel title="OSM amenity coverage">
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <MetricRow
-              label="Education"
-              value={formatNumber(amenity_counts.education)}
-            />
-            <MetricRow
-              label="Healthcare"
-              value={formatNumber(amenity_counts.healthcare)}
-            />
-            <MetricRow
-              label="Retail"
-              value={formatNumber(amenity_counts.retail)}
-            />
-            <MetricRow
-              label="Services"
-              value={formatNumber(amenity_counts.services)}
-            />
-            <MetricRow
-              label="Community"
-              value={formatNumber(amenity_counts.community)}
-            />
-            <MetricRow
-              label="Mobility"
-              value={formatNumber(amenity_counts.mobility)}
-            />
-            <MetricRow
-              label="Total amenities"
-              value={formatNumber(amenity_counts.total_amenities)}
-            />
-            <MetricRow
-              label="Category diversity"
-              value={formatNumber(amenity_counts.amenity_diversity_count)}
-            />
-          </div>
-        </Panel>
+        <AmenityBreakdown amenity_counts={amenity_counts} />
 
         {/* AI recommendation */}
         <Panel
