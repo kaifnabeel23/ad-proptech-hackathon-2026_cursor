@@ -3,7 +3,6 @@ import { formatScore } from "@/lib/communityData";
 export interface ScoreCardProps {
   label: string;
   value: number;
-  /** Visually emphasise primary scores such as community_gap_score */
   emphasized?: boolean;
   className?: string;
 }
@@ -16,22 +15,28 @@ export default function ScoreCard({
 }: ScoreCardProps) {
   return (
     <div
-      className={`rounded-xl border p-4 ${
+      className={`rounded-xl border p-4 lg:p-5 ${
         emphasized
-          ? "border-amber-400/25 bg-amber-400/[0.06]"
-          : "border-white/[0.08] bg-night-800/40"
+          ? "border-amber-400/30 bg-amber-400/[0.08]"
+          : "border-white/[0.08] bg-night-900/40"
       } ${className}`}
     >
-      <p className="text-xs font-medium uppercase tracking-wider text-sand-50/45">
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-sand-50/50">
         {label}
       </p>
       <p
-        className={`mt-2 font-semibold tabular-nums tracking-tight text-sand-50 ${
-          emphasized ? "text-3xl" : "text-2xl"
+        className={`mt-2 font-bold tabular-nums tracking-tight text-sand-50 ${
+          emphasized ? "text-4xl" : "text-3xl"
         }`}
       >
         {formatScore(value)}
-        <span className="text-base font-medium text-sand-50/40">/100</span>
+        <span
+          className={`font-semibold text-sand-50/35 ${
+            emphasized ? "text-xl" : "text-lg"
+          }`}
+        >
+          /100
+        </span>
       </p>
     </div>
   );

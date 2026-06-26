@@ -1,27 +1,69 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import SectionCard from "@/components/SectionCard";
 import type { ConfidenceLevel, District } from "@/lib/communityTypes";
 import type { DistrictRecord, DistrictRecommendation } from "@/lib/communityGapTypes";
 import { frontendFallbackRecommendation } from "@/lib/frontendFallbackRecommendation";
 import { fetchRecommendationFromApi } from "@/lib/recommendationClient";
 
-type RecommendationSource = "local" | "llm" | "fallback";
+type DisplayStatus = "loading" | "local" | "ai" | "ready";
+
+const STATUS_LABELS: Record<Exclude<DisplayStatus, "ready">, string> = {
+  loading: "Generating recommendation from structured evidence...",
+  local: "Generated from local evidence",
+  ai: "AI recommendation",
+};
 
 function RecommendationField({
   label,
   value,
+  primary = false,
 }: {
   label: string;
   value: string;
+  primary?: boolean;
 }) {
   return (
-    <div>
-      <p className="text-xs font-medium uppercase tracking-wider text-sand-50/45">
+    <div
+      className={`rounded-xl border px-4 py-3.5 ${
+        primary
+          ? "border-amber-400/20 bg-amber-400/[0.05] sm:col-span-2"
+          : "border-white/[0.06] bg-night-900/40"
+      }`}
+    >
+      <p className="text-[11px] font-semibold uppercase tracking-wider text-sand-50/45">
         {label}
       </p>
-      <p className="mt-1.5 text-sm leading-relaxed text-sand-50/85">{value}</p>
+      <p
+        className={`mt-2 leading-relaxed text-sand-50 ${
+          primary ? "text-base font-medium" : "text-sm text-sand-50/90"
+        }`}
+      >
+        {value}
+      </p>
     </div>
+  );
+}
+
+function StatusBanner({ status }: { status: DisplayStatus }) {
+  if (status === "ready") return null;
+
+  const tone =
+    status === "loading"
+      ? "border-white/10 bg-night-900/50 text-sand-50/70"
+      : status === "ai"
+        ? "border-emerald-400/25 bg-emerald-400/[0.07] text-emerald-200"
+        : "border-white/10 bg-night-900/50 text-sand-50/55";
+
+  return (
+    <p
+      className={`rounded-lg border px-3 py-2 text-sm ${tone}`}
+      role="status"
+      aria-live="polite"
+    >
+      {STATUS_LABELS[status]}
+    </p>
   );
 }
 
@@ -39,14 +81,13 @@ export default function RecommendationPanel({
   const [recommendation, setRecommendation] = useState<DistrictRecommendation>(
     () => frontendFallbackRecommendation(district)
   );
-  const [source, setSource] = useState<RecommendationSource>("local");
-  const [apiFailed, setApiFailed] = useState(false);
+  const [displayStatus, setDisplayStatus] = useState<DisplayStatus>("local");
   const [isFetching, setIsFetching] = useState(false);
 
   const loadFromApi = useCallback(
     async (target: District, signal?: AbortSignal) => {
       setIsFetching(true);
-      setApiFailed(false);
+      setDisplayStatus("loading");
 
       try {
         const result = await fetchRecommendationFromApi(target as DistrictRecord, {
@@ -56,15 +97,13 @@ export default function RecommendationPanel({
         if (signal?.aborted) return;
 
         setRecommendation(result.recommendation);
-        setSource(result.source);
-        setApiFailed(false);
+        setDisplayStatus(result.source === "llm" ? "ai" : "ready");
       } catch (err) {
         if (signal?.aborted) return;
         if (err instanceof DOMException && err.name === "AbortError") return;
 
         setRecommendation(frontendFallbackRecommendation(target));
-        setSource("local");
-        setApiFailed(true);
+        setDisplayStatus("local");
       } finally {
         if (!signal?.aborted) {
           setIsFetching(false);
@@ -75,10 +114,8 @@ export default function RecommendationPanel({
   );
 
   useEffect(() => {
-    const local = frontendFallbackRecommendation(district);
-    setRecommendation(local);
-    setSource("local");
-    setApiFailed(false);
+    setRecommendation(frontendFallbackRecommendation(district));
+    setDisplayStatus("local");
 
     const controller = new AbortController();
     loadFromApi(district, controller.signal);
@@ -86,65 +123,46 @@ export default function RecommendationPanel({
     return () => controller.abort();
   }, [district, loadFromApi]);
 
-  const handleRefresh = () => {
-    loadFromApi(district);
-  };
+  const status: DisplayStatus = isFetching ? "loading" : displayStatus;
 
   return (
-    <section
-      className={`rounded-xl border border-white/[0.08] bg-night-800/40 p-5 ${className}`}
+    <SectionCard
+      featured
+      title="Copilot recommendation"
+      description="Planner-style next step from pipeline evidence — always shown beside deterministic scores."
+      className={className}
     >
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h2 className="text-sm font-semibold tracking-tight text-sand-50">
-            AI recommendation
-          </h2>
-          <p className="mt-1 text-sm text-sand-50/55">
-            Planner-style guidance from pipeline evidence — shown alongside
-            deterministic scores.
-          </p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
+          <span className="inline-flex w-fit items-center rounded-full bg-amber-400/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-amber-200 ring-1 ring-inset ring-amber-400/30">
+            Confidence: {confidenceLevel}
+          </span>
+          <StatusBanner status={status} />
         </div>
         <button
           type="button"
-          onClick={handleRefresh}
+          onClick={() => loadFromApi(district)}
           disabled={isFetching}
-          className="rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold text-sand-50/90 transition hover:border-white/30 disabled:opacity-40"
+          className="shrink-0 rounded-lg border border-white/15 bg-night-900/50 px-3 py-1.5 text-xs font-semibold text-sand-50/90 hover:border-white/30 disabled:opacity-40"
         >
-          {isFetching ? "Updating…" : "Refresh"}
+          Refresh
         </button>
       </div>
 
-      <div className="mt-4 flex flex-wrap items-center gap-2">
-        <span className="inline-flex items-center rounded-full bg-amber-400/10 px-2.5 py-1 text-xs font-semibold text-amber-300 ring-1 ring-inset ring-amber-400/25">
-          Pipeline confidence: {confidenceLevel}
-        </span>
-        {source === "llm" ? (
-          <span className="inline-flex items-center rounded-full bg-night-900 px-2.5 py-1 text-xs font-medium text-sand-50/70 ring-1 ring-inset ring-white/10">
-            AI interpretation
-          </span>
-        ) : null}
-        {apiFailed ? (
-          <span className="text-xs text-sand-50/45">
-            Generated from local evidence
-          </span>
-        ) : null}
-        {isFetching && !apiFailed ? (
-          <span className="text-xs text-sand-50/40">Updating recommendation…</span>
-        ) : null}
-      </div>
-
-      <div className="mt-5 grid gap-5 sm:grid-cols-2">
+      <div className="mt-5 grid gap-3 sm:grid-cols-2">
         <RecommendationField
           label="District summary"
           value={recommendation.district_summary}
-        />
-        <RecommendationField
-          label="Main gap"
-          value={recommendation.main_gap}
+          primary
         />
         <RecommendationField
           label="Recommended intervention"
           value={recommendation.recommended_intervention}
+          primary
+        />
+        <RecommendationField
+          label="Main gap"
+          value={recommendation.main_gap}
         />
         <RecommendationField
           label="Why this matters"
@@ -159,6 +177,6 @@ export default function RecommendationPanel({
           value={recommendation.uncertainty_note}
         />
       </div>
-    </section>
+    </SectionCard>
   );
 }

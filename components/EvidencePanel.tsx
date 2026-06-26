@@ -1,4 +1,5 @@
 import GapDrivers from "./GapDrivers";
+import SectionCard from "./SectionCard";
 
 const MIXED_EVIDENCE_MARKERS = [
   "mixed evidence",
@@ -26,7 +27,6 @@ function hasMixedEvidence(
 export interface EvidencePanelProps {
   evidence_bullets: string[];
   top_gap_drivers: string[];
-  /** Optional pipeline confidence_reason — shown verbatim for grounding */
   confidence_reason?: string;
   className?: string;
 }
@@ -40,67 +40,56 @@ export default function EvidencePanel({
   const mixedEvidence = hasMixedEvidence(evidence_bullets, top_gap_drivers);
 
   return (
-    <section
-      className={`rounded-xl border border-white/[0.08] bg-night-800/40 p-5 ${className}`}
+    <SectionCard
+      title="Why this district is flagged"
+      description="Generated from deterministic scoring before AI interpretation."
+      className={className}
     >
-      <div>
-        <h2 className="text-base font-semibold tracking-tight text-sand-50">
-          Why this district is flagged
-        </h2>
-        <p className="mt-1 text-sm text-sand-50/55">
-          Generated from deterministic scoring before AI interpretation.
-        </p>
-      </div>
-
       {mixedEvidence ? (
-        <div className="mt-4 rounded-lg border border-amber-400/20 bg-amber-400/[0.06] px-4 py-3">
-          <p className="text-sm font-medium text-amber-200/90">
+        <div className="mb-5 rounded-xl border border-amber-400/25 bg-amber-400/[0.07] px-4 py-3">
+          <p className="text-sm font-semibold text-amber-200">
             Mixed evidence
           </p>
-          <p className="mt-1 text-sm leading-relaxed text-sand-50/70">
+          <p className="mt-1 text-sm leading-relaxed text-sand-50/75">
             Pipeline signals do not fully agree for this district. Review the
             evidence below before acting on the recommendation.
           </p>
         </div>
       ) : null}
 
-      <div className="mt-5">
-        <p className="text-xs font-medium uppercase tracking-wider text-sand-50/45">
-          Evidence
+      {evidence_bullets.length > 0 ? (
+        <ul className="space-y-2.5">
+          {evidence_bullets.map((bullet) => (
+            <li
+              key={bullet}
+              className="flex gap-3 rounded-xl border border-white/[0.08] bg-night-900/55 px-4 py-3.5 text-[15px] leading-relaxed text-sand-50"
+            >
+              <span
+                aria-hidden
+                className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-400"
+              />
+              <span>{bullet}</span>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-sm text-sand-50/55">
+          No evidence bullets for this district.
         </p>
-        {evidence_bullets.length > 0 ? (
-          <ul className="mt-3 space-y-3">
-            {evidence_bullets.map((bullet) => (
-              <li
-                key={bullet}
-                className="rounded-lg border border-white/[0.06] bg-night-900/50 px-4 py-3 text-sm leading-relaxed text-sand-50/90"
-              >
-                {bullet}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="mt-3 text-sm text-sand-50/55">
-            No evidence bullets for this district.
-          </p>
-        )}
-      </div>
+      )}
 
       <div className="mt-6 border-t border-white/[0.06] pt-5">
-        <p className="text-xs font-medium uppercase tracking-wider text-sand-50/45">
+        <p className="text-xs font-semibold uppercase tracking-wider text-sand-50/45">
           Top gap drivers
         </p>
-        <GapDrivers
-          top_gap_drivers={top_gap_drivers}
-          className="mt-3"
-        />
+        <GapDrivers top_gap_drivers={top_gap_drivers} className="mt-3" />
       </div>
 
       {confidence_reason ? (
-        <p className="mt-5 text-sm leading-relaxed text-sand-50/60">
+        <p className="mt-5 rounded-lg bg-night-900/40 px-3 py-2 text-sm leading-relaxed text-sand-50/60">
           {confidence_reason}
         </p>
       ) : null}
-    </section>
+    </SectionCard>
   );
 }

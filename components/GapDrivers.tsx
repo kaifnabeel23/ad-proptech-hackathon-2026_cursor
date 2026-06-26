@@ -23,10 +23,10 @@ export default function GapDrivers({
         return (
           <span
             key={driver}
-            className={`rounded-full px-3 py-1 text-xs font-medium ring-1 ring-inset ${
+            className={`rounded-full px-3 py-1.5 text-xs font-semibold ring-1 ring-inset ${
               isMixedEvidence
-                ? "bg-amber-400/10 text-amber-200 ring-amber-400/25"
-                : "border border-white/10 bg-night-900/60 text-sand-50/75 ring-transparent"
+                ? "bg-amber-400/12 text-amber-200 ring-amber-400/25"
+                : "bg-night-900/70 text-sand-50/80 ring-white/10"
             }`}
           >
             {driver}
