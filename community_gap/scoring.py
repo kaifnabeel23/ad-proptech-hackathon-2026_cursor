@@ -74,6 +74,46 @@ SCORE_COLUMNS = [
     "community_gap_score",
 ]
 
+SIGNAL_COLUMNS = [
+    "signal_high_service_demand",
+    "signal_weak_mobility",
+    "signal_weak_resident_experience",
+    "signal_low_education",
+    "signal_low_healthcare",
+    "signal_low_mobility_amenities",
+    "signal_high_market_pressure",
+    "signal_high_gap",
+]
+
+CORE_COMPLETENESS_FIELDS = [
+    "population_estimate",
+    "occupancy_rate",
+    "service_demand_index",
+    "mobility_score",
+    "resident_experience_score",
+    "education",
+    "healthcare",
+    "mobility",
+    "total_amenities",
+]
+
+CONFIDENCE_REASONS = {
+    "High": (
+        "High confidence: multiple demand, experience, mobility, amenity, and market "
+        "signals point in the same direction."
+    ),
+    "Medium": (
+        "Medium confidence: several indicators suggest a gap, but the evidence is "
+        "mixed across categories."
+    ),
+    "Low": (
+        "Low confidence: limited or mixed signals support a strong intervention claim."
+    ),
+}
+
+SIGNAL_COUNT = len(SIGNAL_COLUMNS)
+COMPLETENESS_CAP_THRESHOLD = 80
+
 
 def normalize_series(series: pd.Series, higher_is_better: bool = True) -> pd.Series:
     """
@@ -265,13 +305,79 @@ def add_scores(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
+def _compute_data_completeness_score(df: pd.DataFrame) -> pd.Series:
+    """Percentage of required core fields that are non-null (0–100)."""
+    present = pd.Series(0, index=df.index, dtype=int)
+
+    for field in CORE_COMPLETENESS_FIELDS:
+        if field in df.columns:
+            present = present + df[field].notna().astype(int)
+
+    return _round_score(present / len(CORE_COMPLETENESS_FIELDS) * 100)
+
+
+def _confidence_level_from_agreement(count: pd.Series) -> pd.Series:
+    """Map signal agreement count to High / Medium / Low."""
+    return np.select(
+        [count >= 6, count >= 3],
+        ["High", "Medium"],
+        default="Low",
+    )
+
+
+def add_confidence(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Add evidence-agreement confidence fields to a scored dataframe.
+
+    Confidence reflects how many independent signals align — not ML probability.
+    Expects score columns from :func:`add_scores` plus city median feature columns.
+    """
+    out = df.copy()
+
+    # --- Boolean evidence signals ---
+    out["signal_high_service_demand"] = (
+        out["service_demand_index"] > out["city_median_service_demand"]
+    )
+    out["signal_weak_mobility"] = out["mobility_score"] < out["city_median_mobility_score"]
+    out["signal_weak_resident_experience"] = (
+        out["resident_experience_score"] < out["city_median_resident_experience_score"]
+    )
+    out["signal_low_education"] = out["education"] < out["city_median_education"]
+    out["signal_low_healthcare"] = out["healthcare"] < out["city_median_healthcare"]
+    out["signal_low_mobility_amenities"] = (
+        out["mobility"] < out["city_median_mobility_amenities"]
+    )
+    out["signal_high_market_pressure"] = out["market_pressure_score"] >= 60
+    out["signal_high_gap"] = out["community_gap_score"] >= 75
+
+    out["signal_agreement_count"] = out[SIGNAL_COLUMNS].sum(axis=1).astype(int)
+
+    out["confidence_score"] = _round_score(
+        (out["signal_agreement_count"] / SIGNAL_COUNT * 100).clip(upper=100)
+    )
+
+    out["data_completeness_score"] = _compute_data_completeness_score(out)
+
+    out["confidence_level"] = _confidence_level_from_agreement(out["signal_agreement_count"])
+
+    # Sparse core data should not receive High confidence.
+    low_completeness = out["data_completeness_score"] < COMPLETENESS_CAP_THRESHOLD
+    out.loc[low_completeness & (out["confidence_level"] == "High"), "confidence_level"] = (
+        "Medium"
+    )
+
+    out["confidence_reason"] = out["confidence_level"].map(CONFIDENCE_REASONS)
+
+    return out
+
+
 def score_all_districts(features: pd.DataFrame) -> pd.DataFrame:
     """
     Apply scoring and rank rows by community_gap_score (1 = highest priority).
 
     Returns one row per input record (community-level when features are community-level).
     """
-    scored = add_scores(features)
+    scored = add_confidence(add_scores(features))
     scored = scored.sort_values("community_gap_score", ascending=False).reset_index(drop=True)
     scored["intervention_rank"] = range(1, len(scored) + 1)
     return scored
