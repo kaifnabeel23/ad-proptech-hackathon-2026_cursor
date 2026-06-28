@@ -1,4 +1,7 @@
-# Community Gap & Confidence Copilot - https://drive.google.com/drive/folders/1041ImS9HJdGMEMDnn9Od7977gk7hCzwk?usp=sharing
+# Community Gap & Confidence Copilot - 
+
+https://drive.google.com/drive/folders/1041ImS9HJdGMEMDnn9Od7977gk7hCzwk?usp=sharing
+https://urbangap-ai.vercel.app/
 
 **Abu Dhabi AI PropTech Challenge — Future Communities Track**
 
